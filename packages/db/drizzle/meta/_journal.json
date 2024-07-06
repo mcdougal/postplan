@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1719656676471,
+      "tag": "0000_stale_retro_girl",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1719656919496,
+      "tag": "0001_special_iron_patriot",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1719756999288,
+      "tag": "0002_legal_lenny_balinger",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1720187762575,
+      "tag": "0003_wild_ogun",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1720195901250,
+      "tag": "0004_clammy_kronos",
+      "breakpoints": true
+    }
+  ]
+}

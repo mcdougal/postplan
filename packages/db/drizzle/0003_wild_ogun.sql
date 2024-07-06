@@ -1,0 +1,1 @@
+ALTER TABLE "instaplan"."post" ALTER COLUMN "caption" DROP NOT NULL;

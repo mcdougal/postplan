@@ -1,0 +1,20 @@
+{
+  "name": "@instaplan/db",
+  "version": "0.0.1",
+  "scripts": {
+    "check": "npx npm-check --skip-unused",
+    "delta-lint:code": "eslint $(git diff --name-only --diff-filter=ACMRTUXB origin/main | grep -E 'packages/db/.*(.js$|.ts$|.tsx$)' | sed -e 's:packages/[^/]*/::g')",
+    "generate": "drizzle-kit generate",
+    "lint:code": "eslint .",
+    "migrate": "npx --yes tsx bin/migrate.ts",
+    "types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@instaplan/common": "file:../common",
+    "drizzle-orm": "^0.31.2",
+    "postgres": "^3.4.4"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.22.1"
+  }
+}

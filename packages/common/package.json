@@ -1,0 +1,13 @@
+{
+  "name": "@instaplan/common",
+  "version": "0.0.1",
+  "scripts": {
+    "check": "npx npm-check --skip-unused",
+    "delta-lint:code": "eslint $(git diff --name-only --diff-filter=ACMRTUXB origin/main | grep -E 'packages/common/.*(.js$|.ts$|.tsx$)' | sed -e 's:packages/[^/]*/::g')",
+    "lint:code": "eslint .",
+    "types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zod": "^3.22.4"
+  }
+}

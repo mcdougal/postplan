@@ -1,0 +1,18 @@
+{
+  "name": "@instaplan/eslint-plugin",
+  "version": "0.0.1",
+  "main": ".build/index.js",
+  "scripts": {
+    "build": "rm -rf .build && tsc",
+    "check": "npx npm-check --skip-unused",
+    "delta-lint:code": "eslint $(git diff --name-only --diff-filter=ACMRTUXB origin/main | grep -E 'packages/eslint-plugin/.*(.js$|.ts$|.tsx$)' | sed -e 's:packages/[^/]*/::g')",
+    "lint:code": "eslint .",
+    "types": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "eslint": "^8.34.0"
+  },
+  "dependencies": {
+    "@typescript-eslint/utils": "^7.14.1"
+  }
+}

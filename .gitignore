@@ -1,0 +1,39 @@
+# Dependencies
+node_modules
+
+# Temporary editor files
+.DS_Store
+*.swp
+*~
+*.temp
+
+# Logs
+npm-debug.log*
+
+# Local env files
+.env*.local
+.env
+.secrets.yml
+
+# VSCode editor setings
+.vscode
+
+# Typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Sentry
+.sentryclirc
+
+# Vercel
+.vercel
+
+# Supabase
+supabase/migrations
+
+# Production build
+.next
+.build
+
+# Misc
+*.pem

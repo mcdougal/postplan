@@ -1,0 +1,25 @@
+name: Check Code
+
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+
+jobs:
+  check_code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # Need this to fetch main branch for delta-lint command to work
+          fetch-depth: 0
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm ci
+      - name: Type check
+        run: npm run types
+      - name: Delta Lint
+        run: npm run delta-lint

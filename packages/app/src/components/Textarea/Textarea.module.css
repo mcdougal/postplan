@@ -1,0 +1,19 @@
+.textAreaWrapper {
+  display: grid;
+}
+
+.textAreaWrapper::after {
+  content: attr(data-replicated-value) ' ';
+  white-space: pre-wrap;
+  visibility: hidden;
+}
+
+.textAreaWrapper > textarea {
+  resize: none;
+  overflow: hidden;
+}
+
+.textAreaWrapper > textarea,
+.textAreaWrapper::after {
+  grid-area: 1 / 1 / 2 / 2;
+}

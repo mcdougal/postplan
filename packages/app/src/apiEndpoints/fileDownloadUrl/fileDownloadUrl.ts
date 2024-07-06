@@ -1,8 +1,8 @@
-import { generateFileDownloadUrl } from '@/domain/files';
 import {
   FileDownloadUrlRouteParams,
   FileDownloadUrlRouteResponse,
-} from '@/domain/routes/common';
+} from '@/common/routes';
+import { generateFileDownloadUrl } from '@/server/userFiles';
 import { NextResponse } from 'next/server';
 
 import { GetHandlerJson } from '../types';

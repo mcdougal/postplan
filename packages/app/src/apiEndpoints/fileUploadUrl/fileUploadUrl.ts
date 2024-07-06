@@ -1,8 +1,8 @@
-import { generateFileUploadUrl } from '@/domain/files';
 import {
   FileUploadUrlRouteParams,
   FileUploadUrlRouteResponse,
-} from '@/domain/routes/common';
+} from '@/common/routes';
+import { generateFileUploadUrl } from '@/server/userFiles';
 import { NextResponse } from 'next/server';
 
 import { GetHandlerJson } from '../types';

@@ -1,4 +1,4 @@
-import { InstagramMediaItem } from '@/domain/instagram/server';
+import { InstagramMediaItem } from '@/server/instagram';
 import Image from 'next/image';
 
 type Props = {

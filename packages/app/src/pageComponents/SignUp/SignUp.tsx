@@ -1,4 +1,4 @@
-import { getCurrentUser } from '@/domain/users/server';
+import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
 
 import { SiteTopBar } from '@/app/components';

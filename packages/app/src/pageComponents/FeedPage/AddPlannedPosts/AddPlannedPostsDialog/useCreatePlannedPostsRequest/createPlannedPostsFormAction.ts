@@ -1,6 +1,6 @@
 'use server';
 
-import { createPlannedPost } from '@/domain/plannedPosts/server';
+import { createPlannedPost } from '@/server/plannedPosts';
 import { revalidatePath } from 'next/cache';
 
 type Args = {

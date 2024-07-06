@@ -1,6 +1,6 @@
 'use server';
 
-import { logIn } from '@/domain/auth/server';
+import { logIn } from '@/server/auth';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { z } from 'zod';

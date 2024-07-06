@@ -1,5 +1,5 @@
-import { InstagramMediaItem } from '@/domain/instagram/server';
-import { PlannedPost } from '@/domain/plannedPosts/server';
+import { InstagramMediaItem } from '@/server/instagram';
+import { PlannedPost } from '@/server/plannedPosts';
 
 import ActualFeedItem from './ActualFeedItem';
 import styles from './FeedGrid.module.css';

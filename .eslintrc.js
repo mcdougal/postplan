@@ -76,10 +76,7 @@ module.exports = {
         '@instaplan/package-imports': [
           `error`,
           {
-            disallowedPatterns: [
-              `^@/((?!domain).*)/.*/.*$`,
-              `^@/domain/.*/.*/.*$`,
-            ],
+            disallowedPatterns: [`^@/.*/.*/.*$`],
           },
         ],
 

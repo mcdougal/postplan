@@ -1,6 +1,6 @@
 'use client';
 
-import { CurrentUser } from '@/domain/users/common';
+import { CurrentUser } from '@/common/users';
 import { useState } from 'react';
 
 import { Button, Dialog, DialogActions, Typography } from '@/app/components';

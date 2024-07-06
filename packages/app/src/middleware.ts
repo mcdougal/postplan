@@ -1,4 +1,4 @@
-import { updateSession } from '@/domain/auth/server';
+import { updateSession } from '@/server/auth';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export const middleware = async (

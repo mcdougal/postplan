@@ -14,7 +14,7 @@
       "@/app/*": ["./src/*"],
       "@/common/*": ["../common/src/*"],
       "@/db/*": ["../db/src/*"],
-      "@/domain/*": ["../domain/src/*"]
+      "@/server/*": ["../server/src/*"]
     },
     "plugins": [{ "name": "next" }],
     "resolveJsonModule": true,

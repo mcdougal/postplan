@@ -1,6 +1,6 @@
-import { ForbiddenError } from '@/domain/auth/server';
-import { CurrentUser } from '@/domain/users/common';
-import { getCurrentUser } from '@/domain/users/server';
+import { CurrentUser } from '@/common/users';
+import { ForbiddenError } from '@/server/auth';
+import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 

@@ -1,7 +1,7 @@
-import { fetchInstagramMediaItems } from '@/domain/instagram/server';
-import { queryPlannedPosts } from '@/domain/plannedPosts/server';
-import { LogInRoute } from '@/domain/routes/common';
-import { getCurrentUser } from '@/domain/users/server';
+import { LogInRoute } from '@/common/routes';
+import { fetchInstagramMediaItems } from '@/server/instagram';
+import { queryPlannedPosts } from '@/server/plannedPosts';
+import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 

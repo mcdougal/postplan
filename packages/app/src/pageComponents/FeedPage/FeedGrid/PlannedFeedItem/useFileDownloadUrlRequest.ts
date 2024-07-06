@@ -1,8 +1,8 @@
-import { PlannedPost } from '@/domain/plannedPosts/server';
 import {
   FileDownloadUrlRoute,
   FileDownloadUrlRouteResponseSchema,
-} from '@/domain/routes/common';
+} from '@/common/routes';
+import { PlannedPost } from '@/server/plannedPosts';
 import { useEffect, useState } from 'react';
 
 type FileDownloadUrlRequestData = { fileDownloadUrl: string };

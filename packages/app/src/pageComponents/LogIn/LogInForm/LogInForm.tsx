@@ -1,6 +1,6 @@
 'use client';
 
-import { HomePageRoute } from '@/domain/routes/common';
+import { HomePageRoute } from '@/common/routes';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 

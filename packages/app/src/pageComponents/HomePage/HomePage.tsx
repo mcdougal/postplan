@@ -1,5 +1,5 @@
-import { FeedRoute, LogInRoute } from '@/domain/routes/common';
-import { getCurrentUser } from '@/domain/users/server';
+import { FeedRoute, LogInRoute } from '@/common/routes';
+import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 

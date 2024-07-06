@@ -1,6 +1,6 @@
 'use client';
 
-import { PlannedPost } from '@/domain/plannedPosts/server';
+import { PlannedPost } from '@/server/plannedPosts';
 import Image from 'next/image';
 
 import useFileDownloadUrlRequest from './useFileDownloadUrlRequest';

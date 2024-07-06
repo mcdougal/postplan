@@ -1,7 +1,7 @@
-import { CurrentUser } from '@/domain/users/common';
+import { CurrentUser } from '@/common/users';
 import { useState } from 'react';
 
-import { uploadFile } from '@/app/files';
+import { uploadPlannedPostImageFile } from '@/app/plannedPosts';
 
 import { Post } from '../types';
 
@@ -32,10 +32,12 @@ export default (
     try {
       await Promise.all(
         posts.map(async (post) => {
-          await uploadFile({ file: post.file, userId: currentUser.id });
+          await uploadPlannedPostImageFile(post.file, currentUser);
         })
       );
     } catch (err) {
+      // eslint-disable-next-line no-console
+      console.error(err);
       setLoading(false);
       setError(`Error uploading files`);
       return;

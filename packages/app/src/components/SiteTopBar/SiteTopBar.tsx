@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { LogOutRoute, LogInRoute } from '@/domain/routes/common';
-import { CurrentUser } from '@/domain/users/common';
+import { LogOutRoute, LogInRoute } from '@/common/routes';
+import { CurrentUser } from '@/common/users';
 import { HTMLAttributes, forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 

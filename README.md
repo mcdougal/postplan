@@ -9,11 +9,11 @@
 - Show reel icon on reels on feed
 - Support carousel in AddPlannedPostsDialog
 - Fix bug where images sometimes aren't loaded on the feed
-- Rename repo to instaplan
 
 ## Getting Started
 
 - `npm install`
 - `npm run db:start`
+- `npm run db:migrate`
 - Create `instaplan` bucket in Supabase
 - Create new `all_access` bucket policy

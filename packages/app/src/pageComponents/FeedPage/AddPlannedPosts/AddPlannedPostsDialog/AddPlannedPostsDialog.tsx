@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Button, Dialog, DialogActions, Typography } from '@/app/components';
 
 import DragAndDrop from './DragAndDrop';
+import postIsNotImage from './postIsNotImage';
 import { Post } from './types';
 import useCreatePlannedPostsRequest from './useCreatePlannedPostsRequest';
 
@@ -35,6 +36,11 @@ const AddPlannedPostsDialog = ({
     }
   );
 
+  const hasNonImageFile = posts.some(postIsNotImage);
+  const errorMessage = hasNonImageFile
+    ? `Only image files are allowed`
+    : createPlannedPostsRequest.error;
+
   return (
     <Dialog maxWidth="2xl" onClose={onClose} open={open}>
       <div className="mb-5">
@@ -44,9 +50,9 @@ const AddPlannedPostsDialog = ({
       </div>
       <DragAndDrop onPostsChange={setPosts} posts={posts} />
       <DialogActions className="mt-6">
-        {createPlannedPostsRequest.error && (
+        {errorMessage && (
           <Typography color="red" size="md">
-            {createPlannedPostsRequest.error}
+            {errorMessage}
           </Typography>
         )}
         <Button
@@ -59,6 +65,7 @@ const AddPlannedPostsDialog = ({
         </Button>
         {posts.length > 0 && (
           <Button
+            disabled={hasNonImageFile}
             loading={createPlannedPostsRequest.loading}
             onClick={createPlannedPostsRequest.createPlannedPosts}
             size="xl">

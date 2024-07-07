@@ -2,6 +2,7 @@ import {
   FileDownloadUrlRoute,
   FileDownloadUrlRouteResponseSchema,
 } from '@/common/routes';
+import { getThumbnailFileName } from '@/common/userFiles';
 import { PlannedPost } from '@/server/plannedPosts';
 import { useEffect, useState } from 'react';
 
@@ -33,7 +34,7 @@ export default (plannedPost: PlannedPost): FileDownloadUrlRequest => {
       const fileDownloadUrlResponse = await fetch(
         FileDownloadUrlRoute.getPath({
           params: {
-            fileName: firstMediaItem.fileName,
+            fileName: getThumbnailFileName(firstMediaItem.fileName),
             userId: plannedPost.userId,
           },
         })

@@ -1,5 +1,7 @@
 import { createImage, scaleImage } from '@/app/image';
 
+import dataUrlToFile from '../dataUrlToFile';
+import getDataUrlMimeType from '../getDataUrlMimeType';
 import readFileAsDataUrl from '../readFileAsDataUrl';
 
 export default async (
@@ -8,7 +10,11 @@ export default async (
 ): Promise<File> => {
   const dataUrl = await readFileAsDataUrl(imageFile);
   const image = await createImage(dataUrl);
-  const scaledImageDataUrl = await scaleImage(image, { maxSize });
+  const scaledImageDataUrl = await scaleImage(
+    image,
+    getDataUrlMimeType(dataUrl),
+    { maxSize }
+  );
 
-  return new File([scaledImageDataUrl], fileName, { type: `image/jpeg` });
+  return dataUrlToFile(scaledImageDataUrl, fileName);
 };

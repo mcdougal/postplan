@@ -1,5 +1,6 @@
 export default async (
   image: HTMLImageElement,
+  mimeType: string,
   { maxSize }: { maxSize: number }
 ): Promise<string> => {
   const canvas = document.createElement(`canvas`);
@@ -28,5 +29,5 @@ export default async (
   canvas.height = height;
   context.drawImage(image, 0, 0, width, height);
 
-  return canvas.toDataURL(`image/jpeg`);
+  return canvas.toDataURL(mimeType);
 };

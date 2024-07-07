@@ -21,6 +21,7 @@ const PlannedFeedItem = ({ plannedPost }: Props): React.ReactElement => {
           sizes="250px"
           src={data.fileDownloadUrl}
           style={{ objectFit: `cover`, objectPosition: `center` }}
+          unoptimized
         />
       )}
     </div>

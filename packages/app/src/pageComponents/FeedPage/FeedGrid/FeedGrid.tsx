@@ -2,13 +2,12 @@
 
 import { InstagramMediaItem } from '@/server/instagram';
 import { PlannedPost } from '@/server/plannedPosts';
-import { useState } from 'react';
 
 import ActualFeedItem from './ActualFeedItem';
 import styles from './FeedGrid.module.css';
 import { getGridSize, getItemBounds } from './gridPositioning';
 import PlannedFeedItem from './PlannedFeedItem';
-import reorderPlannedPosts from './reorderPlannedPosts';
+import useDragToReorder from './useDragToReorder';
 
 type Props = {
   actualPosts: Array<InstagramMediaItem>;
@@ -16,16 +15,10 @@ type Props = {
 };
 
 const FeedGrid = ({ actualPosts, plannedPosts }: Props): React.ReactElement => {
-  const [draggedPostId, setDraggedPostId] = useState<string | null>(null);
-  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
-
-  const reorderedPlannedPosts =
-    draggedPostId !== null && dragOverIndex !== null
-      ? reorderPlannedPosts(plannedPosts, draggedPostId, dragOverIndex)
-      : plannedPosts;
+  const dragToReorder = useDragToReorder();
 
   const gridSize = getGridSize({
-    numItems: actualPosts.length + reorderedPlannedPosts.length,
+    numItems: actualPosts.length + plannedPosts.length,
   });
 
   return (
@@ -34,32 +27,25 @@ const FeedGrid = ({ actualPosts, plannedPosts }: Props): React.ReactElement => {
         <div
           className="relative"
           style={{ height: gridSize.height, width: gridSize.width }}>
-          {reorderedPlannedPosts.map((plannedPost, i) => {
-            const bounds = getItemBounds({ index: i });
+          {plannedPosts.map((plannedPost, i) => {
+            const reorderedIndex = dragToReorder.calculateReorderedIndex(i);
+            const bounds = getItemBounds({ index: reorderedIndex });
 
             return (
               <PlannedFeedItem
                 key={plannedPost.id}
                 bounds={bounds}
-                isDragging={draggedPostId === plannedPost.id}
-                onDragEnd={() => {
-                  setDraggedPostId(null);
-                  setDragOverIndex(null);
-                }}
-                onDragEnter={() => {
-                  setDragOverIndex(i);
-                }}
-                onDragStart={() => {
-                  setDraggedPostId(plannedPost.id);
-                }}
+                isAnimating={dragToReorder.isMoveAnimationActive}
+                isDragging={dragToReorder.isDragging(plannedPost.id)}
+                onDragEnd={dragToReorder.onDragEnd}
+                onDragEnter={dragToReorder.onDragEnter(reorderedIndex)}
+                onDragStart={dragToReorder.onDragStart(plannedPost.id)}
                 plannedPost={plannedPost}
               />
             );
           })}
           {actualPosts.map((actualPost, i) => {
-            const bounds = getItemBounds({
-              index: reorderedPlannedPosts.length + i,
-            });
+            const bounds = getItemBounds({ index: plannedPosts.length + i });
 
             return (
               <ActualFeedItem

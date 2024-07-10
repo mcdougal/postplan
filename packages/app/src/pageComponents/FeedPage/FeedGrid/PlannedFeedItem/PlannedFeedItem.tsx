@@ -2,11 +2,13 @@
 
 import { PlannedPost } from '@/server/plannedPosts';
 import NextImage from 'next/image';
+import { twMerge } from 'tailwind-merge';
 
 import useFileDownloadUrlRequest from './useFileDownloadUrlRequest';
 
 type Props = {
   bounds: { height: number; width: number; x: number; y: number };
+  isAnimating: boolean;
   isDragging: boolean;
   onDragEnd: () => void;
   onDragEnter: () => void;
@@ -16,6 +18,7 @@ type Props = {
 
 const PlannedFeedItem = ({
   bounds,
+  isAnimating,
   isDragging,
   onDragEnd,
   onDragEnter,
@@ -25,57 +28,46 @@ const PlannedFeedItem = ({
   const { data } = useFileDownloadUrlRequest(plannedPost);
 
   return (
-    <>
-      <div
-        className="absolute transition-all"
-        style={{
-          height: `${bounds.height}px`,
-          left: `${bounds.x}px`,
-          top: `${bounds.y}px`,
-          width: `${bounds.width}px`,
-        }}>
-        {data?.fileDownloadUrl && (
-          <NextImage
-            alt={plannedPost.caption || `Planned post thumbnail`}
-            draggable
-            fill
-            onDragEnd={() => {
-              onDragEnd();
-            }}
-            onDragEnter={(event) => {
-              event.preventDefault();
-              if (!isDragging) {
-                onDragEnter();
-              }
-            }}
-            onDragOver={(event) => {
-              event.preventDefault();
-            }}
-            onDragStart={() => {
-              onDragStart();
-            }}
-            onDrop={(event) => {
-              event.preventDefault();
-            }}
-            sizes="250px"
-            src={data.fileDownloadUrl}
-            style={{ objectFit: `cover`, objectPosition: `center` }}
-            unoptimized
-          />
-        )}
-      </div>
-      {isDragging && (
-        <div
-          className="pointer-events-none absolute bg-white"
-          style={{
-            height: `${bounds.height}px`,
-            left: `${bounds.x}px`,
-            top: `${bounds.y}px`,
-            width: `${bounds.width}px`,
+    <div
+      className={twMerge(
+        `absolute transition-all`,
+        isDragging && `opacity-0`,
+        isAnimating && `pointer-events-none`
+      )}
+      style={{
+        height: `${bounds.height}px`,
+        left: `${bounds.x}px`,
+        top: `${bounds.y}px`,
+        width: `${bounds.width}px`,
+      }}>
+      {data?.fileDownloadUrl && (
+        <NextImage
+          alt={plannedPost.caption || `Planned post thumbnail`}
+          draggable
+          fill
+          onDragEnd={() => {
+            onDragEnd();
           }}
+          onDragEnter={(event) => {
+            event.preventDefault();
+            onDragEnter();
+          }}
+          onDragOver={(event) => {
+            event.preventDefault();
+          }}
+          onDragStart={() => {
+            onDragStart();
+          }}
+          onDrop={(event) => {
+            event.preventDefault();
+          }}
+          sizes="250px"
+          src={data.fileDownloadUrl}
+          style={{ objectFit: `cover`, objectPosition: `center` }}
+          unoptimized
         />
       )}
-    </>
+    </div>
   );
 };
 

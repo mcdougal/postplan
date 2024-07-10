@@ -6,9 +6,10 @@ import { useEffect, useState } from 'react';
 
 type Props = {
   actualPost: InstagramMediaItem;
+  bounds: { height: number; width: number; x: number; y: number };
 };
 
-const ActualFeedItem = ({ actualPost }: Props): React.ReactElement => {
+const ActualFeedItem = ({ actualPost, bounds }: Props): React.ReactElement => {
   // Fixes bug where image would not render on page load for some reason
   const [shouldRenderImage, setShouldRenderImage] = useState(false);
 
@@ -17,7 +18,14 @@ const ActualFeedItem = ({ actualPost }: Props): React.ReactElement => {
   }, []);
 
   return (
-    <div className="relative h-[106px] w-[106px] bg-gray-200">
+    <div
+      className="absolute"
+      style={{
+        height: `${bounds.height}px`,
+        left: `${bounds.x}px`,
+        top: `${bounds.y}px`,
+        width: `${bounds.width}px`,
+      }}>
       {shouldRenderImage && (
         <Image
           alt={actualPost.caption || `Instagram post thumbnail`}

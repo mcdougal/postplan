@@ -35,11 +35,11 @@ const FeedGrid = ({ actualPosts, plannedPosts }: Props): React.ReactElement => {
               <PlannedFeedItem
                 key={plannedPost.id}
                 bounds={bounds}
-                isAnimating={dragToReorder.isMoveAnimationActive}
-                isDragging={dragToReorder.isDragging(plannedPost.id)}
+                isAnimating={dragToReorder.isMoveAnimationActive()}
+                isDragging={dragToReorder.isDragging(i)}
                 onDragEnd={dragToReorder.onDragEnd}
                 onDragEnter={dragToReorder.onDragEnter(reorderedIndex)}
-                onDragStart={dragToReorder.onDragStart(plannedPost.id)}
+                onDragStart={dragToReorder.onDragStart(i)}
                 plannedPost={plannedPost}
               />
             );

@@ -2,24 +2,22 @@ import { useEffect, useState } from 'react';
 
 type DragToReorder = {
   calculateReorderedIndex: (itemIndex: number) => number;
-  draggedPostId: string | null;
-  dragOverIndex: number | null;
-  isDragging: (plannedPostId: string) => boolean;
-  isMoveAnimationActive: boolean;
+  isDragging: (plannedPostIndex: number) => boolean;
+  isMoveAnimationActive: () => boolean;
   onDragEnd: () => void;
   onDragEnter: (reorderedIndex: number) => () => void;
-  onDragStart: (plannedPostId: string) => () => void;
+  onDragStart: (plannedPostIndex: number) => () => void;
 };
 
 export default (): DragToReorder => {
-  const [draggedPostId, setDraggedPostId] = useState<string | null>(null);
+  const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
-  const [isMoveAnimationActive, setIsMoveAnimationActive] = useState(false);
+  const [moveAnimationActive, setMoveAnimationActive] = useState(false);
 
   useEffect(() => {
-    setIsMoveAnimationActive(true);
+    setMoveAnimationActive(true);
     const timeout = setTimeout(() => {
-      setIsMoveAnimationActive(false);
+      setMoveAnimationActive(false);
     }, 200);
     return (): void => {
       clearTimeout(timeout);
@@ -27,23 +25,35 @@ export default (): DragToReorder => {
   }, [dragOverIndex]);
 
   const calculateReorderedIndex = (itemIndex: number): number => {
-    if (dragOverIndex === null) {
+    if (
+      draggingIndex === null ||
+      dragOverIndex === null ||
+      dragOverIndex === draggingIndex
+    ) {
       return itemIndex;
     }
 
-    if (dragOverIndex >= itemIndex) {
+    if (dragOverIndex <= itemIndex && itemIndex <= draggingIndex) {
+      return itemIndex + 1;
+    }
+
+    if (draggingIndex <= itemIndex && itemIndex <= dragOverIndex) {
       return itemIndex - 1;
     }
 
     return itemIndex;
   };
 
-  const isDragging: DragToReorder['isDragging'] = (plannedPostId) => {
-    return draggedPostId === plannedPostId;
+  const isDragging: DragToReorder['isDragging'] = (plannedPostIndex) => {
+    return draggingIndex === plannedPostIndex;
+  };
+
+  const isMoveAnimationActive: DragToReorder['isMoveAnimationActive'] = () => {
+    return moveAnimationActive;
   };
 
   const onDragEnd: DragToReorder['onDragEnd'] = () => {
-    setDraggedPostId(null);
+    setDraggingIndex(null);
     setDragOverIndex(null);
   };
 
@@ -53,16 +63,14 @@ export default (): DragToReorder => {
     };
   };
 
-  const onDragStart: DragToReorder['onDragStart'] = (plannedPostId) => {
+  const onDragStart: DragToReorder['onDragStart'] = (plannedPostIndex) => {
     return () => {
-      setDraggedPostId(plannedPostId);
+      setDraggingIndex(plannedPostIndex);
     };
   };
 
   return {
     calculateReorderedIndex,
-    draggedPostId,
-    dragOverIndex,
     isDragging,
     isMoveAnimationActive,
     onDragEnd,

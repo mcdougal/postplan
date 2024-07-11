@@ -5,7 +5,7 @@ import { uploadPlannedPostImageFile } from '@/app/plannedPosts';
 
 import { Post } from '../types';
 
-import createPlannedPostsFormAction from './createPlannedPostsFormAction';
+import createPlannedPostsServerAction from './createPlannedPostsServerAction';
 
 type Callbacks = {
   onCompleted: () => void;
@@ -22,7 +22,7 @@ export default (
   posts: Array<Post>,
   { onCompleted }: Callbacks
 ): CreatePlannedPostsRequest => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const createPlannedPosts = async (): Promise<void> => {
@@ -49,7 +49,7 @@ export default (
       };
     });
 
-    const response = await createPlannedPostsFormAction({
+    const response = await createPlannedPostsServerAction({
       auth: {
         currentUserId: currentUser.id,
       },

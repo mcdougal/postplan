@@ -6,8 +6,8 @@ import { useState } from 'react';
 
 import { Typography } from '@/app/components';
 
-import signUpFormAction from './signUpFormAction';
 import SignUpFormFields from './SignUpFormFields';
+import signUpServerAction from './signUpServerAction';
 
 const SignUpForm = (): React.ReactElement => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const SignUpForm = (): React.ReactElement => {
       </Typography>
       <form
         action={async (formData) => {
-          const response = await signUpFormAction(formData);
+          const response = await signUpServerAction(formData);
 
           if (response.status === `success`) {
             router.push(HomePageRoute.getPath({}));

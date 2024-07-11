@@ -1,22 +1,27 @@
 'use client';
 
+import { CurrentUser } from '@/common/users';
 import { InstagramMediaItem } from '@/server/instagram';
 import { PlannedPost } from '@/server/plannedPosts';
 
-import ActualFeedItem from './ActualFeedItem';
+import ActualFeedItems from './ActualFeedItems';
 import styles from './FeedGrid.module.css';
-import { getGridSize, getItemBounds } from './gridPositioning';
-import PlannedFeedItem from './PlannedFeedItem';
-import useDragToReorder from './useDragToReorder';
+import { getGridSize } from './gridPositioning';
+import PlannedFeedItems from './PlannedFeedItems';
 
 type Props = {
   actualPosts: Array<InstagramMediaItem>;
+  currentUser: CurrentUser;
+  downloadUrlByMediaItemId: Map<string, string>;
   plannedPosts: Array<PlannedPost>;
 };
 
-const FeedGrid = ({ actualPosts, plannedPosts }: Props): React.ReactElement => {
-  const dragToReorder = useDragToReorder();
-
+const FeedGrid = ({
+  actualPosts,
+  currentUser,
+  downloadUrlByMediaItemId,
+  plannedPosts,
+}: Props): React.ReactElement => {
   const gridSize = getGridSize({
     numItems: actualPosts.length + plannedPosts.length,
   });
@@ -27,34 +32,15 @@ const FeedGrid = ({ actualPosts, plannedPosts }: Props): React.ReactElement => {
         <div
           className="relative"
           style={{ height: gridSize.height, width: gridSize.width }}>
-          {plannedPosts.map((plannedPost, i) => {
-            const reorderedIndex = dragToReorder.calculateReorderedIndex(i);
-            const bounds = getItemBounds({ index: reorderedIndex });
-
-            return (
-              <PlannedFeedItem
-                key={plannedPost.id}
-                bounds={bounds}
-                isAnimating={dragToReorder.isMoveAnimationActive()}
-                isDragging={dragToReorder.isDragging(i)}
-                onDragEnd={dragToReorder.onDragEnd}
-                onDragEnter={dragToReorder.onDragEnter(reorderedIndex)}
-                onDragStart={dragToReorder.onDragStart(i)}
-                plannedPost={plannedPost}
-              />
-            );
-          })}
-          {actualPosts.map((actualPost, i) => {
-            const bounds = getItemBounds({ index: plannedPosts.length + i });
-
-            return (
-              <ActualFeedItem
-                key={actualPost.id}
-                actualPost={actualPost}
-                bounds={bounds}
-              />
-            );
-          })}
+          <PlannedFeedItems
+            currentUser={currentUser}
+            downloadUrlByMediaItemId={downloadUrlByMediaItemId}
+            plannedPosts={plannedPosts}
+          />
+          <ActualFeedItems
+            actualPosts={actualPosts}
+            startIndex={plannedPosts.length}
+          />
         </div>
       </div>
     </div>

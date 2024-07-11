@@ -1,7 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 /* eslint-disable arrow-body-style */
 import { relations, sql } from 'drizzle-orm';
-import { uniqueIndex, pgSchema, text, timestamp } from 'drizzle-orm/pg-core';
+import {
+  integer,
+  uniqueIndex,
+  pgSchema,
+  text,
+  timestamp,
+} from 'drizzle-orm/pg-core';
 
 export const schema = pgSchema(`instaplan`);
 
@@ -31,8 +37,9 @@ export const plannedPost = schema.table(`planned_post`, {
   caption: text(`caption`),
   createdAt: timestamp(`created_at`).defaultNow().notNull(),
   id: text(`id`).primaryKey(),
-  userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
+  order: integer(`order`),
   updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
+  userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
 });
 
 const plannedPostId = () => plannedPost.id;

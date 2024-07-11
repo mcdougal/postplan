@@ -1,6 +1,9 @@
 import { LogInRoute } from '@/common/routes';
 import { fetchInstagramMediaItems } from '@/server/instagram';
-import { queryPlannedPosts } from '@/server/plannedPosts';
+import {
+  getDownloadUrlByMediaItemId,
+  queryPlannedPosts,
+} from '@/server/plannedPosts';
 import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -21,9 +24,16 @@ const FeedPage: Page = async () => {
     queryPlannedPosts({
       auth: { currentUserId: currentUser.id },
       where: { userId: currentUser.id },
+      orderBy: { order: `asc` },
     }),
     fetchInstagramMediaItems(),
   ]);
+
+  const downloadUrlByMediaItemId = await getDownloadUrlByMediaItemId({
+    auth: { currentUserId: currentUser.id },
+    where: { plannedPosts },
+    size: `thumbnail`,
+  });
 
   return (
     <>
@@ -32,6 +42,8 @@ const FeedPage: Page = async () => {
         <div className="flex flex-col items-center">
           <FeedGrid
             actualPosts={actualPosts.slice(0, 24)}
+            currentUser={currentUser}
+            downloadUrlByMediaItemId={downloadUrlByMediaItemId}
             plannedPosts={plannedPosts}
           />
         </div>

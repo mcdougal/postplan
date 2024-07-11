@@ -1,0 +1,1 @@
+ALTER TABLE "instaplan"."planned_post" ADD COLUMN "order" integer;

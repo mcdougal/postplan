@@ -1,9 +1,4 @@
 import FeedRoute from './FeedRoute';
-import FileDownloadUrlRoute, {
-  FileDownloadUrlRouteResponseSchema,
-  FileDownloadUrlRouteParams,
-  FileDownloadUrlRouteResponse,
-} from './FileDownloadUrlRoute';
 import FileUploadUrlRoute, {
   FileUploadUrlRouteResponseSchema,
   FileUploadUrlRouteParams,
@@ -14,17 +9,10 @@ import LogInRoute from './LogInRoute';
 import LogOutRoute from './LogOutRoute';
 import SignUpRoute from './SignUpRoute';
 
-export type {
-  FileDownloadUrlRouteParams,
-  FileDownloadUrlRouteResponse,
-  FileUploadUrlRouteParams,
-  FileUploadUrlRouteResponse,
-};
+export type { FileUploadUrlRouteParams, FileUploadUrlRouteResponse };
 
 export {
   FeedRoute,
-  FileDownloadUrlRoute,
-  FileDownloadUrlRouteResponseSchema,
   FileUploadUrlRoute,
   FileUploadUrlRouteResponseSchema,
   HomePageRoute,

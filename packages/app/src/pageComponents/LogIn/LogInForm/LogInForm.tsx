@@ -6,8 +6,8 @@ import { useState } from 'react';
 
 import { Typography } from '@/app/components';
 
-import logInFormAction from './logInFormAction';
 import LogInFormFields from './LogInFormFields';
+import logInServerAction from './logInServerAction';
 
 const LogInForm = (): React.ReactElement => {
   const router = useRouter();
@@ -20,7 +20,7 @@ const LogInForm = (): React.ReactElement => {
       </Typography>
       <form
         action={async (formData) => {
-          const response = await logInFormAction(formData);
+          const response = await logInServerAction(formData);
 
           if (response.status === `success`) {
             router.push(HomePageRoute.getPath({}));

@@ -1,6 +1,6 @@
 import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { toast } from 'react-hot-toast';
 
 import reorderPlannedPostsServerAction from './reorderPlannedPostsServerAction';
@@ -20,13 +20,9 @@ export default (
   const [optimisticPlannedPosts, setOptimisticPlannedPosts] =
     useState(plannedPosts);
 
-  useEffect(() => {
-    setOptimisticPlannedPosts(plannedPosts);
-  }, [plannedPosts]);
-
   const reorderPlannedPosts = async (): Promise<void> => {
     const reorderedPosts = sortPlannedPosts(
-      plannedPosts,
+      optimisticPlannedPosts,
       draggingIndex,
       dragOverIndex
     );
@@ -39,7 +35,6 @@ export default (
     });
 
     if (response.status === `error`) {
-      setOptimisticPlannedPosts(plannedPosts);
       toast.error(`Error reordering posts`);
     }
   };

@@ -1,7 +1,6 @@
 'use server';
 
 import { reorderPlannedPosts } from '@/server/plannedPosts';
-import { revalidatePath } from 'next/cache';
 
 type Args = {
   auth: {
@@ -23,8 +22,6 @@ export default async (args: Args): Promise<Response> => {
       auth: { currentUserId },
       data: { plannedPosts },
     });
-
-    revalidatePath(`/`, `layout`);
 
     return {
       status: `success`,

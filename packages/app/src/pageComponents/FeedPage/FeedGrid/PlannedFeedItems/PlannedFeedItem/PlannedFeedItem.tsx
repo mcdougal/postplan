@@ -11,6 +11,8 @@ type Props = {
   downloadUrlByMediaItemId: Map<string, string>;
   draggingIndex: number | null;
   dragOverIndex: number | null;
+  isSelected: boolean;
+  onClick: () => void;
   onDragEnd: () => void;
   onDragEnter: () => void;
   onDragStart: () => void;
@@ -23,6 +25,8 @@ const PlannedFeedItem = ({
   downloadUrlByMediaItemId,
   draggingIndex,
   dragOverIndex,
+  isSelected,
+  onClick,
   onDragEnd,
   onDragEnter,
   onDragStart,
@@ -48,13 +52,15 @@ const PlannedFeedItem = ({
 
   return (
     <>
-      <div
+      <button
         className={twMerge(
           `absolute`,
           draggingIndex !== null && `transition-all`,
-          isDragging && `opacity-0`
+          isDragging && `opacity-0`,
+          isSelected && `opacity-50`
         )}
         draggable
+        onClick={onClick}
         onDragEnd={onDragEnd}
         onDragStart={onDragStart}
         style={{
@@ -74,7 +80,7 @@ const PlannedFeedItem = ({
             unoptimized
           />
         )}
-      </div>
+      </button>
       {dropZoneActive && (
         <div
           className="absolute"

@@ -3,14 +3,13 @@
 import { CurrentUser } from '@/common/users';
 import { InstagramMediaItem } from '@/server/instagram';
 import { PlannedPost } from '@/server/plannedPosts';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import ActualFeedItems from './ActualFeedItems';
 import styles from './FeedGrid.module.css';
 import { getGridSize } from './gridPositioning';
 import PlannedFeedItems from './PlannedFeedItems';
-import PlannedPostActions from './PlannedPostActions';
 
 type Props = {
   actualPosts: Array<InstagramMediaItem>;
@@ -25,31 +24,21 @@ const FeedGrid = ({
   downloadUrlByMediaItemId,
   plannedPosts,
 }: Props): React.ReactElement => {
+  const phoneContainerRef = useRef<HTMLDivElement>(null);
+
+  const [optimisticPlannedPosts, setOptimisticPlannedPosts] =
+    useState(plannedPosts);
+
+  useEffect(() => {
+    setOptimisticPlannedPosts(plannedPosts);
+  }, [plannedPosts]);
+
   const gridSize = getGridSize({
-    numItems: actualPosts.length + plannedPosts.length,
+    numItems: actualPosts.length + optimisticPlannedPosts.length,
   });
-  const [selectedPlannedPosts, setSelectedPlannedPosts] = useState<
-    Array<PlannedPost>
-  >([]);
-
-  const handleClickPlannedPost = (plannedPost: PlannedPost): void => {
-    const alreadySelected = selectedPlannedPosts.some((selectedPlannedPost) => {
-      return selectedPlannedPost.id === plannedPost.id;
-    });
-
-    if (alreadySelected) {
-      setSelectedPlannedPosts(
-        selectedPlannedPosts.filter((selectedPlannedPost) => {
-          return selectedPlannedPost.id !== plannedPost.id;
-        })
-      );
-    } else {
-      setSelectedPlannedPosts([...selectedPlannedPosts, plannedPost]);
-    }
-  };
 
   return (
-    <div className={twMerge(styles.phone, `relative`)}>
+    <div ref={phoneContainerRef} className={twMerge(styles.phone, `relative`)}>
       <div className={styles.phoneScreen}>
         <div
           className="relative"
@@ -57,25 +46,16 @@ const FeedGrid = ({
           <PlannedFeedItems
             currentUser={currentUser}
             downloadUrlByMediaItemId={downloadUrlByMediaItemId}
-            onClickPlannedPost={handleClickPlannedPost}
-            plannedPosts={plannedPosts}
-            selectedPlannedPosts={selectedPlannedPosts}
+            optimisticPlannedPosts={optimisticPlannedPosts}
+            phoneContainerRef={phoneContainerRef}
+            setOptimisticPlannedPosts={setOptimisticPlannedPosts}
           />
           <ActualFeedItems
             actualPosts={actualPosts}
-            startIndex={plannedPosts.length}
+            startIndex={optimisticPlannedPosts.length}
           />
         </div>
       </div>
-      {selectedPlannedPosts.length > 0 && (
-        <PlannedPostActions
-          allPlannedPosts={plannedPosts}
-          onDeselectAll={() => {
-            return setSelectedPlannedPosts([]);
-          }}
-          selectedPlannedPosts={selectedPlannedPosts}
-        />
-      )}
     </div>
   );
 };

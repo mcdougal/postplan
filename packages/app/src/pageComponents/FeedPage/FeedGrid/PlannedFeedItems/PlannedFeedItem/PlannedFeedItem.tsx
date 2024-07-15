@@ -12,7 +12,7 @@ type Props = {
   draggingIndex: number | null;
   dragOverIndex: number | null;
   isSelected: boolean;
-  onClick: () => void;
+  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
   onDragEnd: () => void;
   onDragEnter: () => void;
   onDragStart: () => void;

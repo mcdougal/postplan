@@ -3,32 +3,50 @@
 import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 
 import PlannedFeedItem from './PlannedFeedItem';
+import PlannedPostActions from './PlannedPostActions';
+import useDeleteRequest from './useDeleteRequest';
+import usePlannedPostsSelector from './usePlannedPostsSelector';
 import useReorderRequest from './useReorderRequest';
 
 type Props = {
   currentUser: CurrentUser;
   downloadUrlByMediaItemId: Map<string, string>;
-  onClickPlannedPost: (plannedPost: PlannedPost) => void;
-  plannedPosts: Array<PlannedPost>;
-  selectedPlannedPosts: Array<PlannedPost>;
+  optimisticPlannedPosts: Array<PlannedPost>;
+  phoneContainerRef: React.RefObject<HTMLDivElement>;
+  setOptimisticPlannedPosts: (plannedPosts: Array<PlannedPost>) => void;
 };
 
 const PlannedFeedItems = ({
   currentUser,
   downloadUrlByMediaItemId,
-  onClickPlannedPost,
-  plannedPosts,
-  selectedPlannedPosts,
+  optimisticPlannedPosts,
+  phoneContainerRef,
+  setOptimisticPlannedPosts,
 }: Props): React.ReactElement => {
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
-  const { optimisticPlannedPosts, reorderPlannedPosts } = useReorderRequest(
+
+  const {
+    onClickPlannedPost,
+    onDeselectAllPlannedPosts,
+    selectedPlannedPosts,
+  } = usePlannedPostsSelector();
+
+  const { reorderPlannedPosts } = useReorderRequest(
     currentUser,
-    plannedPosts,
+    optimisticPlannedPosts,
+    setOptimisticPlannedPosts,
     draggingIndex,
     dragOverIndex
+  );
+
+  const { deletePlannedPosts } = useDeleteRequest(
+    currentUser,
+    optimisticPlannedPosts,
+    setOptimisticPlannedPosts
   );
 
   return (
@@ -43,8 +61,8 @@ const PlannedFeedItems = ({
             isSelected={selectedPlannedPosts.some((selectedPlannedPost) => {
               return selectedPlannedPost.id === plannedPost.id;
             })}
-            onClick={() => {
-              onClickPlannedPost(plannedPost);
+            onClick={(event) => {
+              onClickPlannedPost(plannedPost, { multiSelect: event.metaKey });
             }}
             onDragEnd={() => {
               setDraggingIndex(null);
@@ -64,6 +82,20 @@ const PlannedFeedItems = ({
           />
         );
       })}
+      {selectedPlannedPosts.length > 0 &&
+        phoneContainerRef.current &&
+        createPortal(
+          <PlannedPostActions
+            allPlannedPosts={optimisticPlannedPosts}
+            onDelete={(plannedPosts) => {
+              onDeselectAllPlannedPosts();
+              deletePlannedPosts(plannedPosts);
+            }}
+            onDeselectAll={onDeselectAllPlannedPosts}
+            selectedPlannedPosts={selectedPlannedPosts}
+          />,
+          phoneContainerRef.current
+        )}
     </>
   );
 };

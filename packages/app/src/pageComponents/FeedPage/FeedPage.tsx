@@ -13,6 +13,7 @@ import { Page } from '@/app/pageUtils';
 
 import AddPlannedPosts from './AddPlannedPosts';
 import FeedGrid from './FeedGrid';
+import sortPlannedPosts from './sortPlannedPosts';
 
 const FeedPage: Page = async () => {
   const currentUser = await getCurrentUser(cookies());
@@ -24,7 +25,6 @@ const FeedPage: Page = async () => {
     queryPlannedPosts({
       auth: { currentUserId: currentUser.id },
       where: { userId: currentUser.id },
-      orderBy: { order: `asc` },
     }),
     fetchInstagramMediaItems(),
   ]);
@@ -44,7 +44,7 @@ const FeedPage: Page = async () => {
             actualPosts={actualPosts.slice(0, 24)}
             currentUser={currentUser}
             downloadUrlByMediaItemId={downloadUrlByMediaItemId}
-            plannedPosts={plannedPosts}
+            plannedPosts={sortPlannedPosts(plannedPosts)}
           />
         </div>
       </Container>

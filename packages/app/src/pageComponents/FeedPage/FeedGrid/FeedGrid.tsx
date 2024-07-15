@@ -68,7 +68,13 @@ const FeedGrid = ({
         </div>
       </div>
       {selectedPlannedPosts.length > 0 && (
-        <PlannedPostActions selectedPlannedPosts={selectedPlannedPosts} />
+        <PlannedPostActions
+          allPlannedPosts={plannedPosts}
+          onDeselectAll={() => {
+            return setSelectedPlannedPosts([]);
+          }}
+          selectedPlannedPosts={selectedPlannedPosts}
+        />
       )}
     </div>
   );

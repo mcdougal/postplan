@@ -10,7 +10,7 @@ type DragAndDrop = {
   };
 };
 
-type OnDropFilesCallback = (files: Array<File>) => void;
+type OnDropFilesCallback = (files: Array<File>) => Promise<void>;
 
 export default (onDropFiles: OnDropFilesCallback): DragAndDrop => {
   const [isDragOver, setIsDragOver] = useState(false);

@@ -29,6 +29,8 @@ export type PlannedPost = QueryResult<
       columns: {
         id: true;
         fileName: true;
+        height: true;
+        width: true;
       };
     };
   }
@@ -56,6 +58,8 @@ export default async (args: Args): Promise<Array<PlannedPost>> => {
         columns: {
           id: true,
           fileName: true,
+          height: true,
+          width: true,
         },
       },
     },

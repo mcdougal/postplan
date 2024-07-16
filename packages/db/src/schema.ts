@@ -47,11 +47,13 @@ const plannedPostId = () => plannedPost.id;
 export const plannedPostMediaItem = schema.table(`planned_post_media_item`, {
   createdAt: timestamp(`created_at`).defaultNow().notNull(),
   fileName: text(`file_name`).notNull(),
+  height: integer(`height`).notNull(),
   id: text(`id`).primaryKey(),
   plannedPostId: text(`planned_post_id`)
     .references(plannedPostId, { onDelete: `cascade` })
     .notNull(),
   updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
+  width: integer(`width`).notNull(),
 });
 
 // -----------------------------------------------------------------------------

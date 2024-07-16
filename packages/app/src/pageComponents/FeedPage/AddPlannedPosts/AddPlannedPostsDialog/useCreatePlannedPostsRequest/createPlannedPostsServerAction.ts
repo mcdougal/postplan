@@ -8,7 +8,9 @@ type Args = {
     currentUserId: string;
   };
   data: {
-    plannedPosts: Array<{ mediaItems: Array<{ fileName: string }> }>;
+    plannedPosts: Array<{
+      mediaItems: Array<{ fileName: string; height: number; width: number }>;
+    }>;
     userId: string;
   };
 };

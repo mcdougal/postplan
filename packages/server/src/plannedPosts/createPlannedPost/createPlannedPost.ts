@@ -9,7 +9,11 @@ type Args = {
     currentUserId: string;
   };
   data: {
-    plannedPostMediaItems: Array<{ fileName: string }>;
+    plannedPostMediaItems: Array<{
+      fileName: string;
+      height: number;
+      width: number;
+    }>;
     userId: string;
   };
 };
@@ -40,14 +44,16 @@ export default async (args: Args): Promise<Response> => {
     );
 
     await Promise.all(
-      plannedPostMediaItems.map(async ({ fileName }) => {
+      plannedPostMediaItems.map(async ({ fileName, height, width }) => {
         firstOrThrow(
           await tx
             .insert(plannedPostMediaItem)
             .values({
               fileName,
+              height,
               id: createId(),
               plannedPostId: insertedPlannedPost.id,
+              width,
             })
             .returning({
               id: plannedPostMediaItem.id,

@@ -51,13 +51,23 @@ export default (
       ? [
           {
             mediaItems: posts.map((post) => {
-              return { fileName: post.file.name };
+              return {
+                fileName: post.file.name,
+                height: post.resolution.height,
+                width: post.resolution.width,
+              };
             }),
           },
         ]
       : posts.map((post) => {
           return {
-            mediaItems: [{ fileName: post.file.name }],
+            mediaItems: [
+              {
+                fileName: post.file.name,
+                height: post.resolution.height,
+                width: post.resolution.width,
+              },
+            ],
           };
         });
 

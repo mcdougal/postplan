@@ -50,7 +50,7 @@ const FeedPageContent = ({
       <div className="absolute bottom-0 left-1/3 right-0 top-12 flex px-6">
         <div className="absolute inset-0 bg-black bg-opacity-70" />
         <div className="absolute inset-0 flex items-center p-12 pb-20">
-          <div className="flex-1 bg-white">
+          <div className="max-w-full flex-1 bg-white">
             {selectedPlannedPost && (
               <PlannedPostDetails
                 fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}

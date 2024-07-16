@@ -17,8 +17,9 @@ type Props = {
 };
 
 const DragAndDrop = ({ onPostsChange, posts }: Props): React.ReactElement => {
-  const dragAndDrop = useDragAndDrop((files) => {
-    onPostsChange([...posts, ...files.map(makePostForFile)]);
+  const dragAndDrop = useDragAndDrop(async (files) => {
+    const newPosts = await Promise.all(files.map(makePostForFile));
+    onPostsChange([...posts, ...newPosts]);
   });
 
   return (

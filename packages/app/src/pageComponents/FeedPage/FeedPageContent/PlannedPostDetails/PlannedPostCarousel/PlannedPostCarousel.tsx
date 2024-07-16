@@ -2,7 +2,8 @@ import { PlannedPost } from '@/server/plannedPosts';
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { getCarouselSize, getItemBounds } from '../carouselPositioning';
+import getAspectRatio from './getAspectRatio';
+import getSizes from './getSizes';
 
 type Props = {
   fullSizeUrlByMediaItemId: Map<string, string>;
@@ -14,17 +15,16 @@ const PlannedPostCarousel = ({
   plannedPost,
 }: Props): React.ReactElement => {
   const [currentMediaItemIndex, setCurrentMediaItemIndex] = useState(0);
-  const carouselSize = getCarouselSize();
+  const sizes = getSizes(plannedPost.mediaItems[0]);
 
   return (
     <div
-      className="relative overflow-hidden"
+      className="relative flex h-[620px] items-center overflow-hidden bg-black"
       style={{
-        height: `${carouselSize.height}px`,
-        width: `${carouselSize.width}px`,
+        height: `${sizes.container.height}px`,
+        width: `${sizes.container.width}px`,
       }}>
       {plannedPost.mediaItems.map((mediaItem, i) => {
-        const bounds = getItemBounds({ index: i });
         const downloadUrl = fullSizeUrlByMediaItemId.get(mediaItem.id);
 
         return (
@@ -32,10 +32,9 @@ const PlannedPostCarousel = ({
             key={mediaItem.id}
             className="absolute"
             style={{
-              height: `${bounds.height}px`,
-              left: `${bounds.x}px`,
-              top: `${bounds.y}px`,
-              width: `${bounds.width}px`,
+              height: `${sizes.image.height}px`,
+              left: `${sizes.image.width * i}px`,
+              width: `${sizes.image.width}px`,
             }}>
             {downloadUrl && (
               <Image
@@ -43,7 +42,7 @@ const PlannedPostCarousel = ({
                 fill
                 priority
                 src={downloadUrl}
-                style={{ objectFit: `cover`, objectPosition: `center` }}
+                style={{ objectFit: `contain`, objectPosition: `center` }}
                 unoptimized
               />
             )}

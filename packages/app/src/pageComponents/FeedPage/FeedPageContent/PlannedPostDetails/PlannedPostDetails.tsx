@@ -17,7 +17,7 @@ const PlannedPostDetails = ({
   const [caption, setCaption] = useState(plannedPost.caption);
 
   return (
-    <div className="flex">
+    <div key={plannedPost.id} className="flex">
       <PlannedPostCarousel
         fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
         plannedPost={plannedPost}

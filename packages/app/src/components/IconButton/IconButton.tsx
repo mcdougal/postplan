@@ -37,7 +37,9 @@ const IconButton = forwardRef<Ref, Props>(
       sm: `p-2`,
       md: `p-2`,
       lg: `p-2`,
-      xl: `p-2`,
+      xl: `p-1`,
+      '2xl': `p-0`,
+      '3xl': `p-0`,
     };
 
     const classNameBySizeAndEdge: {
@@ -48,6 +50,8 @@ const IconButton = forwardRef<Ref, Props>(
       md: { start: `-ml-2`, end: `-mr-2` },
       lg: { start: `-ml-2`, end: `-mr-2` },
       xl: { start: `-ml-2`, end: `-mr-2` },
+      '2xl': { start: `-ml-2`, end: `-mr-2` },
+      '3xl': { start: `-ml-2`, end: `-mr-2` },
     };
 
     const iconClassNameBySize: { [key in IconButtonSize]: string } = {
@@ -56,12 +60,14 @@ const IconButton = forwardRef<Ref, Props>(
       md: `h-5 w-5`,
       lg: `h-6 w-6`,
       xl: `h-7 w-7`,
+      '2xl': `h-8 w-8`,
+      '3xl': `h-9 w-9`,
     };
 
     const containerProps = {
       'aria-label': label,
       className: twMerge(
-        `rounded-full hover:bg-gray-200`,
+        `rounded-full hover:bg-gray-800 hover:bg-opacity-40`,
         classNameBySize[size],
         edge ? classNameBySizeAndEdge[size][edge] : undefined,
         className

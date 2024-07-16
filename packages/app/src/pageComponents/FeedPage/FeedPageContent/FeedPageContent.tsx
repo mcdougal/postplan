@@ -1,11 +1,13 @@
 'use client';
 
+import { isCarousel } from '@/common/plannedPosts';
 import { CurrentUser } from '@/common/users';
 import { InstagramMediaItem } from '@/server/instagram';
 import { PlannedPost } from '@/server/plannedPosts';
 import { useEffect, useState } from 'react';
 
 import FeedGrid from './FeedGrid';
+import MediaItemReorder from './MediaItemReorder';
 import PlannedPostDetails from './PlannedPostDetails';
 import usePlannedPostsSelector from './usePlannedPostsSelector';
 
@@ -49,16 +51,24 @@ const FeedPageContent = ({
       </div>
       <div className="absolute bottom-0 left-1/3 right-0 top-12 flex px-6">
         <div className="absolute inset-0 bg-black bg-opacity-70" />
-        <div className="absolute inset-0 flex items-center p-12 pb-20">
-          <div className="max-w-full flex-1 bg-white">
-            {selectedPlannedPost && (
-              <PlannedPostDetails
-                fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
-                plannedPost={selectedPlannedPost}
-              />
-            )}
+        {selectedPlannedPost && (
+          <div className="absolute inset-0 flex items-center p-12 pb-20">
+            <div className="flex flex-1 flex-col gap-2">
+              <div className="max-w-full flex-1 bg-white">
+                <PlannedPostDetails
+                  fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
+                  plannedPost={selectedPlannedPost}
+                />
+              </div>
+              {isCarousel(selectedPlannedPost) && (
+                <MediaItemReorder
+                  plannedPost={selectedPlannedPost}
+                  thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
+                />
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

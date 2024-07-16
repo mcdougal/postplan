@@ -3,7 +3,16 @@ type Sizes = {
   image: { height: number; width: number };
 };
 
-export default (resolution: { height: number; width: number }): Sizes => {
+export default (
+  resolution: { height: number; width: number } | null
+): Sizes => {
+  if (resolution === null) {
+    return {
+      container: { height: 620, width: 465 },
+      image: { height: 620, width: 465 },
+    };
+  }
+
   const containerHeight = 620;
   const aspectRatio = resolution.width / resolution.height;
 

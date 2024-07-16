@@ -1,3 +1,4 @@
+import { getMediaItems } from '@/common/plannedPosts';
 import { PlannedPost } from '@/server/plannedPosts';
 import { useState } from 'react';
 
@@ -11,7 +12,7 @@ export default (plannedPost: PlannedPost): Slide => {
   const [currentMediaItemIndex, setCurrentMediaItemIndex] = useState(0);
 
   const nextIndex =
-    currentMediaItemIndex >= plannedPost.mediaItems.length - 1
+    currentMediaItemIndex >= getMediaItems(plannedPost).length - 1
       ? null
       : currentMediaItemIndex + 1;
 

@@ -49,6 +49,7 @@ export const plannedPostMediaItem = schema.table(`planned_post_media_item`, {
   fileName: text(`file_name`).notNull(),
   height: integer(`height`).notNull(),
   id: text(`id`).primaryKey(),
+  order: integer(`order`),
   plannedPostId: text(`planned_post_id`)
     .references(plannedPostId, { onDelete: `cascade` })
     .notNull(),

@@ -1,3 +1,4 @@
+import { getMediaItems } from '@/common/plannedPosts';
 import { getThumbnailFileName } from '@/common/userFiles';
 
 import { generateFileDownloadUrl } from '@/server/userFiles';
@@ -24,7 +25,7 @@ export default async (args: Args): Promise<Map<string, string>> => {
   await Promise.all(
     plannedPosts.map(async (plannedPost) => {
       await Promise.all(
-        plannedPost.mediaItems.map(async (mediaItem) => {
+        getMediaItems(plannedPost).map(async (mediaItem) => {
           const fileName =
             size === `thumbnail`
               ? getThumbnailFileName(mediaItem.fileName)

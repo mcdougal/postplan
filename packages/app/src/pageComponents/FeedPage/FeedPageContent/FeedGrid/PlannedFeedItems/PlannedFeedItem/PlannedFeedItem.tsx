@@ -1,6 +1,8 @@
 'use client';
 
+import { getFirstMediaItem, isCarousel } from '@/common/plannedPosts';
 import { PlannedPost } from '@/server/plannedPosts';
+import { Square2StackIcon } from '@heroicons/react/24/solid';
 import NextImage from 'next/image';
 import { twMerge } from 'tailwind-merge';
 
@@ -42,10 +44,10 @@ const PlannedFeedItem = ({
   );
   const reorderedBounds = getItemBounds({ index: reorderedIndex });
   const isDragging = draggingIndex === plannedPostIndex;
-  const firstMediaItemThumbnailUrl =
-    plannedPost.mediaItems.length > 0
-      ? thumbnailUrlByMediaItemId.get(plannedPost.mediaItems[0].id)
-      : null;
+  const firstMediaItem = getFirstMediaItem(plannedPost);
+  const firstMediaItemThumbnailUrl = firstMediaItem
+    ? thumbnailUrlByMediaItemId.get(firstMediaItem.id)
+    : null;
   const dropZoneActive =
     draggingIndex !== null &&
     (plannedPostIndex !== draggingIndex || dragOverIndex !== null);
@@ -78,6 +80,9 @@ const PlannedFeedItem = ({
             style={{ objectFit: `cover`, objectPosition: `center` }}
             unoptimized
           />
+        )}
+        {isCarousel(plannedPost) && (
+          <Square2StackIcon className="absolute right-1 top-1 h-5 w-5 rotate-180 text-white opacity-80" />
         )}
       </button>
       {dropZoneActive && (

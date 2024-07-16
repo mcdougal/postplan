@@ -33,11 +33,11 @@ const IconButton = forwardRef<Ref, Props>(
     const Icon = icon;
 
     const classNameBySize: { [key in IconButtonSize]: string } = {
-      xs: `p-2`,
-      sm: `p-2`,
-      md: `p-2`,
-      lg: `p-2`,
-      xl: `p-1`,
+      xs: `p-0`,
+      sm: `p-0`,
+      md: `p-0`,
+      lg: `p-0`,
+      xl: `p-0`,
       '2xl': `p-0`,
       '3xl': `p-0`,
     };

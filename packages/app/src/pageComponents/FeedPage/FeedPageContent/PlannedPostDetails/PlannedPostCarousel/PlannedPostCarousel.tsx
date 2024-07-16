@@ -1,3 +1,4 @@
+import { getFirstMediaItem, getMediaItems } from '@/common/plannedPosts';
 import { PlannedPost } from '@/server/plannedPosts';
 import {
   ArrowLeftCircleIcon,
@@ -20,7 +21,8 @@ const PlannedPostCarousel = ({
   plannedPost,
 }: Props): React.ReactElement => {
   const slide = useSlide(plannedPost);
-  const sizes = getSizes(plannedPost.mediaItems[0]);
+  const firstMediaItem = getFirstMediaItem(plannedPost);
+  const sizes = getSizes(firstMediaItem);
 
   return (
     <div
@@ -29,7 +31,7 @@ const PlannedPostCarousel = ({
         height: `${sizes.container.height}px`,
         width: `${sizes.container.width}px`,
       }}>
-      {plannedPost.mediaItems.map((mediaItem, i) => {
+      {getMediaItems(plannedPost).map((mediaItem, i) => {
         const downloadUrl = fullSizeUrlByMediaItemId.get(mediaItem.id);
         const left =
           sizes.image.width * i - slide.currentIndex * sizes.image.width;

@@ -27,9 +27,11 @@ export type PlannedPost = QueryResult<
   {
     mediaItems: {
       columns: {
-        id: true;
+        createdAt: true;
         fileName: true;
         height: true;
+        id: true;
+        order: true;
         width: true;
       };
     };
@@ -56,9 +58,11 @@ export default async (args: Args): Promise<Array<PlannedPost>> => {
     with: {
       mediaItems: {
         columns: {
-          id: true,
+          createdAt: true,
           fileName: true,
           height: true,
+          id: true,
+          order: true,
           width: true,
         },
       },

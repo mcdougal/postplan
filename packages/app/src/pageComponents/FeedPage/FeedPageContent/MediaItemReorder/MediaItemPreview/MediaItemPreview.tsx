@@ -1,65 +1,61 @@
-'use client';
-
-import { getFirstMediaItem, isCarousel } from '@/common/plannedPosts';
 import { PlannedPost } from '@/server/plannedPosts';
-import { Square2StackIcon } from '@heroicons/react/24/solid';
+import { XCircleIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 
-import { getItemBounds } from '../../gridPositioning';
+import { IconButton } from '@/app/components';
+
 import calculateReorderedIndex from '../calculateReorderedIndex';
+import { getItemBounds } from '../mediaItemPositioning';
+
+type MediaItem = PlannedPost['mediaItems'][number];
 
 type Props = {
   draggingIndex: number | null;
   dragOverIndex: number | null;
-  onClick: () => void;
+  mediaItem: MediaItem;
+  mediaItemIndex: number;
   onDragEnd: () => void;
   onDragEnter: () => void;
   onDragStart: () => void;
   onDrop: () => void;
-  plannedPost: PlannedPost;
-  plannedPostIndex: number;
   thumbnailUrlByMediaItemId: Map<string, string>;
 };
 
-const PlannedFeedItem = ({
+const MediaItemPreview = ({
   draggingIndex,
   dragOverIndex,
-  onClick,
+  mediaItem,
+  mediaItemIndex,
   onDragEnd,
   onDragEnter,
   onDragStart,
   onDrop,
-  plannedPost,
-  plannedPostIndex,
   thumbnailUrlByMediaItemId,
 }: Props): React.ReactElement => {
-  const bounds = getItemBounds({ index: plannedPostIndex });
+  const thumbnailUrl = thumbnailUrlByMediaItemId.get(mediaItem.id);
+  const bounds = getItemBounds({ index: mediaItemIndex });
   const reorderedIndex = calculateReorderedIndex(
-    plannedPostIndex,
+    mediaItemIndex,
     draggingIndex,
     dragOverIndex
   );
   const reorderedBounds = getItemBounds({ index: reorderedIndex });
-  const isDragging = draggingIndex === plannedPostIndex;
-  const firstMediaItem = getFirstMediaItem(plannedPost);
-  const firstMediaItemThumbnailUrl = firstMediaItem
-    ? thumbnailUrlByMediaItemId.get(firstMediaItem.id)
-    : null;
+  const isDragging = draggingIndex === mediaItemIndex;
   const dropZoneActive =
     draggingIndex !== null &&
-    (plannedPostIndex !== draggingIndex || dragOverIndex !== null);
+    (mediaItemIndex !== draggingIndex || dragOverIndex !== null);
 
   return (
     <>
-      <button
+      <div
+        key={mediaItem.id}
         className={twMerge(
-          `absolute`,
+          `group absolute cursor-grab overflow-hidden rounded-md`,
           draggingIndex !== null && `transition-all`,
           isDragging && `opacity-0`
         )}
         draggable
-        onClick={onClick}
         onDragEnd={onDragEnd}
         onDragStart={onDragStart}
         style={{
@@ -68,20 +64,26 @@ const PlannedFeedItem = ({
           top: `${reorderedBounds.y}px`,
           width: `${reorderedBounds.width}px`,
         }}>
-        {firstMediaItemThumbnailUrl && (
+        {thumbnailUrl && (
           <Image
-            alt={plannedPost.caption || `Planned post thumbnail`}
+            alt="Planned post thumbnail"
             fill
-            priority
-            src={firstMediaItemThumbnailUrl}
+            src={thumbnailUrl}
             style={{ objectFit: `cover`, objectPosition: `center` }}
-            unoptimized
           />
         )}
-        {isCarousel(plannedPost) && (
-          <Square2StackIcon className="absolute right-1 top-1 h-5 w-5 rotate-180 text-white opacity-80" />
-        )}
-      </button>
+        <div className="absolute right-1 top-1 flex items-center justify-center rounded-full bg-black bg-opacity-30 opacity-0 group-hover:opacity-100">
+          <IconButton
+            className="text-white"
+            icon={XCircleIcon}
+            label="Remove"
+            onClick={() => {
+              // todo
+            }}
+            size="lg"
+          />
+        </div>
+      </div>
       {dropZoneActive && (
         <div
           className="absolute"
@@ -109,4 +111,4 @@ const PlannedFeedItem = ({
   );
 };
 
-export default PlannedFeedItem;
+export default MediaItemPreview;

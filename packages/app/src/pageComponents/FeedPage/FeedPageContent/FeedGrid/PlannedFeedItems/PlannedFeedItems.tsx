@@ -48,10 +48,6 @@ const PlannedFeedItems = ({
             key={plannedPost.id}
             draggingIndex={draggingIndex}
             dragOverIndex={dragOverIndex}
-            isSelected={
-              // todo
-              false
-            }
             onClick={() => {
               onSelectPlannedPost(plannedPost);
             }}

@@ -57,7 +57,6 @@ export default async (args: Args): Promise<Array<PlannedPost>> => {
           id: true,
           fileName: true,
         },
-        limit: 1,
       },
     },
   });

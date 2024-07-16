@@ -17,7 +17,7 @@ const SiteTopBar = forwardRef<any, Props>(
       <div
         ref={ref}
         className={twMerge(
-          `flex items-center justify-between border-b border-gray-200 px-4 py-2`,
+          `flex h-12 items-center justify-between border-b border-gray-200 px-4`,
           className
         )}
         {...divProps}>

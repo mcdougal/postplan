@@ -14,13 +14,11 @@ const PlannedPostCarousel = ({
   plannedPost,
 }: Props): React.ReactElement => {
   const [currentMediaItemIndex, setCurrentMediaItemIndex] = useState(0);
-  const carouselSize = getCarouselSize({
-    numItems: plannedPost.mediaItems.length,
-  });
+  const carouselSize = getCarouselSize();
 
   return (
     <div
-      className="relative overflow-hidden rounded-xl"
+      className="relative overflow-hidden"
       style={{
         height: `${carouselSize.height}px`,
         width: `${carouselSize.width}px`,

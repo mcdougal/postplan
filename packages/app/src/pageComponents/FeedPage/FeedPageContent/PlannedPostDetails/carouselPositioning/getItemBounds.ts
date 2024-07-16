@@ -14,9 +14,9 @@ type ItemBounds = {
 export default ({ index }: Args): ItemBounds => {
   const { itemSize } = getCarouselProperties();
 
-  const height = itemSize;
-  const width = itemSize;
-  const x = itemSize * index;
+  const height = itemSize.height;
+  const width = itemSize.width;
+  const x = width * index;
   const y = 0;
 
   return {

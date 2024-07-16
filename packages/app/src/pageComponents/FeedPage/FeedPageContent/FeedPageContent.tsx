@@ -37,7 +37,7 @@ const FeedPageContent = ({
 
   return (
     <div>
-      <div className="absolute bottom-0 left-0 right-1/2 top-0 flex justify-end px-6 pt-24">
+      <div className="absolute bottom-0 left-0 right-2/3 top-12 flex items-center justify-center px-6 pb-16">
         <FeedGrid
           actualPosts={actualPosts}
           currentUser={currentUser}
@@ -47,13 +47,18 @@ const FeedPageContent = ({
           thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
         />
       </div>
-      <div className="absolute bottom-0 left-1/2 right-0 top-0 flex px-6 pt-24">
-        {selectedPlannedPost && (
-          <PlannedPostDetails
-            fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
-            plannedPost={selectedPlannedPost}
-          />
-        )}
+      <div className="absolute bottom-0 left-1/3 right-0 top-12 flex px-6">
+        <div className="absolute inset-0 bg-black bg-opacity-70" />
+        <div className="absolute inset-0 flex items-center p-12 pb-20">
+          <div className="flex-1 bg-white">
+            {selectedPlannedPost && (
+              <PlannedPostDetails
+                fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
+                plannedPost={selectedPlannedPost}
+              />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -17,7 +17,7 @@ const AddPlannedPosts = ({ currentUser }: Props): React.ReactElement => {
   return (
     <>
       <Button
-        className="fixed bottom-8 right-8"
+        className="fixed bottom-8 left-8"
         onClick={() => {
           setDialogOpen(true);
         }}

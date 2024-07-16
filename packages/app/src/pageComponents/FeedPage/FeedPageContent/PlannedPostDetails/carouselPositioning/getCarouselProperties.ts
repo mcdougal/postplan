@@ -1,9 +1,9 @@
 type CarouselProperties = {
-  itemSize: number;
+  itemSize: { height: number; width: number };
 };
 
 export default (): CarouselProperties => {
   return {
-    itemSize: 250,
+    itemSize: { height: 620, width: 496 },
   };
 };

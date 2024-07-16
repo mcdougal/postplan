@@ -33,7 +33,7 @@ const FeedGrid = ({
 
   return (
     <div>
-      <div className={twMerge(styles.phone, `relative`)}>
+      <div className={twMerge(styles.phone, `relative px-2 pb-2 pt-12`)}>
         <div className={styles.phoneScreen}>
           <div
             className="relative"

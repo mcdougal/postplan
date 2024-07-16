@@ -10,6 +10,7 @@ import { IconButton } from '@/app/components';
 
 import { getContainerSize, getItemBounds } from './mediaItemPositioning';
 import MediaItemPreview from './MediaItemPreview';
+import useDeleteRequest from './useDeleteRequest';
 import useReorderRequest from './useReorderRequest';
 
 type Props = {
@@ -41,6 +42,12 @@ const MediaItemReorder = ({
     dragOverIndex
   );
 
+  const { deleteMediaItem } = useDeleteRequest(
+    currentUser,
+    plannedPost.id,
+    setOptimisticPlannedPosts
+  );
+
   return (
     <div className="overflow-x-auto">
       <div
@@ -54,6 +61,13 @@ const MediaItemReorder = ({
               dragOverIndex={dragOverIndex}
               mediaItem={mediaItem}
               mediaItemIndex={i}
+              onDelete={
+                mediaItems.length > 1
+                  ? (): void => {
+                      deleteMediaItem(mediaItem.id);
+                    }
+                  : null
+              }
               onDragEnd={() => {
                 setDraggingIndex(null);
                 setDragOverIndex(null);
@@ -82,7 +96,7 @@ const MediaItemReorder = ({
           <IconButton
             className="text-white opacity-80"
             icon={PlusCircleIcon}
-            label="Add Image"
+            label="Add To Carousel"
             onClick={() => {
               // todo
             }}

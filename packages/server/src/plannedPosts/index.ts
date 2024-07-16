@@ -1,4 +1,5 @@
 import createPlannedPost from './createPlannedPost';
+import deleteMediaItems from './deleteMediaItems';
 import deletePlannedPosts from './deletePlannedPosts';
 import getDownloadUrlByMediaItemId from './getDownloadUrlByMediaItemId';
 import queryPlannedPosts, { PlannedPost } from './queryPlannedPosts';
@@ -9,6 +10,7 @@ export type { PlannedPost };
 
 export {
   createPlannedPost,
+  deleteMediaItems,
   deletePlannedPosts,
   getDownloadUrlByMediaItemId,
   queryPlannedPosts,

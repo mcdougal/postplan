@@ -1,6 +1,5 @@
 'use client';
 
-import { isCarousel } from '@/common/plannedPosts';
 import { CurrentUser } from '@/common/users';
 import { InstagramMediaItem } from '@/server/instagram';
 import { PlannedPost } from '@/server/plannedPosts';
@@ -60,14 +59,12 @@ const FeedPageContent = ({
                   plannedPost={selectedPlannedPost}
                 />
               </div>
-              {isCarousel(selectedPlannedPost) && (
-                <MediaItemReorder
-                  currentUser={currentUser}
-                  plannedPost={selectedPlannedPost}
-                  setOptimisticPlannedPosts={setOptimisticPlannedPosts}
-                  thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
-                />
-              )}
+              <MediaItemReorder
+                currentUser={currentUser}
+                plannedPost={selectedPlannedPost}
+                setOptimisticPlannedPosts={setOptimisticPlannedPosts}
+                thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
+              />
             </div>
           </div>
         )}

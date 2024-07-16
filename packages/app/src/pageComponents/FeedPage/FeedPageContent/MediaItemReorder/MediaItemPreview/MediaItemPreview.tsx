@@ -15,6 +15,7 @@ type Props = {
   dragOverIndex: number | null;
   mediaItem: MediaItem;
   mediaItemIndex: number;
+  onDelete: (() => void) | null;
   onDragEnd: () => void;
   onDragEnter: () => void;
   onDragStart: () => void;
@@ -27,6 +28,7 @@ const MediaItemPreview = ({
   dragOverIndex,
   mediaItem,
   mediaItemIndex,
+  onDelete,
   onDragEnd,
   onDragEnter,
   onDragStart,
@@ -73,17 +75,17 @@ const MediaItemPreview = ({
             unoptimized
           />
         )}
-        <div className="absolute right-1 top-1 flex items-center justify-center rounded-full bg-black bg-opacity-30 opacity-0 group-hover:opacity-100">
-          <IconButton
-            className="text-white"
-            icon={XCircleIcon}
-            label="Remove"
-            onClick={() => {
-              // todo
-            }}
-            size="lg"
-          />
-        </div>
+        {onDelete && (
+          <div className="absolute right-1 top-1 flex items-center justify-center rounded-full bg-black bg-opacity-30 opacity-0 group-hover:opacity-100">
+            <IconButton
+              className="text-white"
+              icon={XCircleIcon}
+              label="Remove"
+              onClick={onDelete}
+              size="lg"
+            />
+          </div>
+        )}
       </div>
       {dropZoneActive && (
         <div

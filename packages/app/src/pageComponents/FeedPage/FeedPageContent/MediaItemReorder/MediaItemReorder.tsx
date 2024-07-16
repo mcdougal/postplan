@@ -1,22 +1,28 @@
 'use client';
 
 import { getMediaItems } from '@/common/plannedPosts';
+import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 import { IconButton } from '@/app/components';
 
 import { getContainerSize, getItemBounds } from './mediaItemPositioning';
 import MediaItemPreview from './MediaItemPreview';
+import useReorderRequest from './useReorderRequest';
 
 type Props = {
-  thumbnailUrlByMediaItemId: Map<string, string>;
+  currentUser: CurrentUser;
   plannedPost: PlannedPost;
+  setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
+  thumbnailUrlByMediaItemId: Map<string, string>;
 };
 
 const MediaItemReorder = ({
+  currentUser,
   plannedPost,
+  setOptimisticPlannedPosts,
   thumbnailUrlByMediaItemId,
 }: Props): React.ReactElement => {
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
@@ -25,6 +31,15 @@ const MediaItemReorder = ({
   const mediaItems = getMediaItems(plannedPost);
   const containerSize = getContainerSize({ numItems: mediaItems.length + 1 });
   const addButtonBounds = getItemBounds({ index: mediaItems.length });
+
+  const { reorderMediaItems } = useReorderRequest(
+    currentUser,
+    plannedPost.id,
+    mediaItems,
+    setOptimisticPlannedPosts,
+    draggingIndex,
+    dragOverIndex
+  );
 
   return (
     <div className="overflow-x-auto">
@@ -50,7 +65,7 @@ const MediaItemReorder = ({
                 setDraggingIndex(i);
               }}
               onDrop={() => {
-                // todo
+                reorderMediaItems();
               }}
               thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
             />

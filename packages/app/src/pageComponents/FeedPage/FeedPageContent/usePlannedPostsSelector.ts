@@ -9,30 +9,34 @@ type PlannedPostsSelector = {
 export default (
   optimisticPlannedPosts: Array<PlannedPost>
 ): PlannedPostsSelector => {
-  const [selectedPlannedPost, setSelectedPlannedPost] = useState(
-    optimisticPlannedPosts.length > 0 ? optimisticPlannedPosts[0] : null
+  const [selectedPlannedPostId, setSelectedPlannedPostId] = useState(
+    optimisticPlannedPosts.length > 0 ? optimisticPlannedPosts[0].id : null
   );
 
   const onSelectPlannedPost = (plannedPost: PlannedPost): void => {
-    setSelectedPlannedPost(plannedPost);
+    setSelectedPlannedPostId(plannedPost.id);
   };
 
   useEffect(() => {
-    if (!selectedPlannedPost || optimisticPlannedPosts.length === 0) {
+    if (!selectedPlannedPostId || optimisticPlannedPosts.length === 0) {
       return;
     }
 
     const selectedExists = optimisticPlannedPosts.some((plannedPost) => {
-      return plannedPost.id === selectedPlannedPost.id;
+      return plannedPost.id === selectedPlannedPostId;
     });
 
     if (!selectedExists) {
-      setSelectedPlannedPost(optimisticPlannedPosts[0]);
+      setSelectedPlannedPostId(optimisticPlannedPosts[0].id);
     }
-  }, [optimisticPlannedPosts, selectedPlannedPost]);
+  }, [optimisticPlannedPosts, selectedPlannedPostId]);
+
+  const selectedPlannedPost = optimisticPlannedPosts.find((plannedPost) => {
+    return plannedPost.id === selectedPlannedPostId;
+  });
 
   return {
     onSelectPlannedPost,
-    selectedPlannedPost,
+    selectedPlannedPost: selectedPlannedPost || null,
   };
 };

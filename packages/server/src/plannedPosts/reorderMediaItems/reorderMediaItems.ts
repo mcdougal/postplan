@@ -1,5 +1,5 @@
 import { db, eq } from '@/db/connection';
-import { plannedPost } from '@/db/schema';
+import { plannedPostMediaItem } from '@/db/schema';
 
 import { ForbiddenError } from '@/server/auth';
 
@@ -10,25 +10,25 @@ type Args = {
     currentUserId: string;
   };
   data: {
-    plannedPosts: Array<{ id: string }>;
+    mediaItems: Array<{ id: string }>;
   };
 };
 
 export default async (args: Args): Promise<void> => {
   const { currentUserId } = args.auth;
-  const { plannedPosts } = args.data;
+  const { mediaItems } = args.data;
 
-  if (!(await isAuthorized(currentUserId, plannedPosts))) {
+  if (!(await isAuthorized(currentUserId, mediaItems))) {
     throw new ForbiddenError();
   }
 
   await db.transaction(async (tx) => {
     await Promise.all(
-      plannedPosts.map(async ({ id }, i) => {
+      mediaItems.map(async ({ id }, i) => {
         await tx
-          .update(plannedPost)
+          .update(plannedPostMediaItem)
           .set({ order: i })
-          .where(eq(plannedPost.id, id));
+          .where(eq(plannedPostMediaItem.id, id));
       })
     );
   });

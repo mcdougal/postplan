@@ -1,41 +1,61 @@
 import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
+import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 
-import reorderPlannedPostsServerAction from './reorderPlannedPostsServerAction';
-import sortPlannedPosts from './sortPlannedPosts';
+import reorderMediaItemsServerAction from './reorderMediaItemsServerAction';
+import sortMediaItems from './sortMediaItems';
+
+type MediaItem = PlannedPost['mediaItems'][number];
 
 type Request = {
-  reorderPlannedPosts: () => Promise<void>;
+  reorderMediaItems: () => Promise<void>;
 };
 
 export default (
   currentUser: CurrentUser,
-  optimisticPlannedPosts: Array<PlannedPost>,
-  setOptimisticPlannedPosts: (plannedPosts: Array<PlannedPost>) => void,
+  plannedPostId: string,
+  mediaItems: Array<MediaItem>,
+  setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>,
   draggingIndex: number | null,
   dragOverIndex: number | null
 ): Request => {
-  const reorderPlannedPosts = async (): Promise<void> => {
-    const reorderedPosts = sortPlannedPosts(
-      optimisticPlannedPosts,
+  const reorderMediaItems = async (): Promise<void> => {
+    const reorderedMediaItems = sortMediaItems(
+      mediaItems,
       draggingIndex,
       dragOverIndex
     );
 
-    setOptimisticPlannedPosts(reorderedPosts);
+    setOptimisticPlannedPosts((prevPlannedPosts) => {
+      return prevPlannedPosts.map((plannedPost) => {
+        if (plannedPost.id === plannedPostId) {
+          return {
+            ...plannedPost,
+            mediaItems: reorderedMediaItems.map((mediaItem, i) => {
+              return {
+                ...mediaItem,
+                order: i,
+              };
+            }),
+          };
+        }
 
-    const response = await reorderPlannedPostsServerAction({
+        return plannedPost;
+      });
+    });
+
+    const response = await reorderMediaItemsServerAction({
       auth: { currentUserId: currentUser.id },
-      data: { plannedPosts: reorderedPosts },
+      data: { mediaItems: reorderedMediaItems },
     });
 
     if (response.status === `error`) {
-      toast.error(`Error reordering posts`);
+      toast.error(response.message);
     }
   };
 
   return {
-    reorderPlannedPosts,
+    reorderMediaItems,
   };
 };

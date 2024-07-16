@@ -2,19 +2,21 @@ import { PlannedPost } from '@/server/plannedPosts';
 
 import calculateReorderedIndex from '../calculateReorderedIndex';
 
+type MediaItem = PlannedPost['mediaItems'][number];
+
 export default (
-  plannedPosts: Array<PlannedPost>,
+  mediaItems: Array<MediaItem>,
   draggingIndex: number | null,
   dragOverIndex: number | null
-): Array<PlannedPost> => {
-  return [...plannedPosts].sort((a, b) => {
+): Array<MediaItem> => {
+  return [...mediaItems].sort((a, b) => {
     const reorderedIndexA = calculateReorderedIndex(
-      plannedPosts.indexOf(a),
+      mediaItems.indexOf(a),
       draggingIndex,
       dragOverIndex
     );
     const reorderedIndexB = calculateReorderedIndex(
-      plannedPosts.indexOf(b),
+      mediaItems.indexOf(b),
       draggingIndex,
       dragOverIndex
     );

@@ -62,7 +62,9 @@ const FeedPageContent = ({
               </div>
               {isCarousel(selectedPlannedPost) && (
                 <MediaItemReorder
+                  currentUser={currentUser}
                   plannedPost={selectedPlannedPost}
+                  setOptimisticPlannedPosts={setOptimisticPlannedPosts}
                   thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
                 />
               )}

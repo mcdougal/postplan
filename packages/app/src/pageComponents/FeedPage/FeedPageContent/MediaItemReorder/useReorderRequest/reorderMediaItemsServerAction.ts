@@ -1,13 +1,13 @@
 'use server';
 
-import { reorderPlannedPosts } from '@/server/plannedPosts';
+import { reorderMediaItems } from '@/server/plannedPosts';
 
 type Args = {
   auth: {
     currentUserId: string;
   };
   data: {
-    plannedPosts: Array<{ id: string }>;
+    mediaItems: Array<{ id: string }>;
   };
 };
 
@@ -15,12 +15,12 @@ type Response = { status: `error`; message: string } | { status: `success` };
 
 export default async (args: Args): Promise<Response> => {
   const { currentUserId } = args.auth;
-  const { plannedPosts } = args.data;
+  const { mediaItems } = args.data;
 
   try {
-    await reorderPlannedPosts({
+    await reorderMediaItems({
       auth: { currentUserId },
-      data: { plannedPosts },
+      data: { mediaItems },
     });
 
     return {
@@ -31,7 +31,7 @@ export default async (args: Args): Promise<Response> => {
     console.error(err);
     return {
       status: `error`,
-      message: `Error reordering posts`,
+      message: `Error updating carousel`,
     };
   }
 };

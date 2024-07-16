@@ -70,6 +70,7 @@ const MediaItemPreview = ({
             fill
             src={thumbnailUrl}
             style={{ objectFit: `cover`, objectPosition: `center` }}
+            unoptimized
           />
         )}
         <div className="absolute right-1 top-1 flex items-center justify-center rounded-full bg-black bg-opacity-30 opacity-0 group-hover:opacity-100">

@@ -8,21 +8,20 @@ import { getItemBounds } from '../../gridPositioning';
 import calculateReorderedIndex from '../calculateReorderedIndex';
 
 type Props = {
-  downloadUrlByMediaItemId: Map<string, string>;
   draggingIndex: number | null;
   dragOverIndex: number | null;
   isSelected: boolean;
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick: () => void;
   onDragEnd: () => void;
   onDragEnter: () => void;
   onDragStart: () => void;
   onDrop: () => void;
   plannedPost: PlannedPost;
   plannedPostIndex: number;
+  thumbnailUrlByMediaItemId: Map<string, string>;
 };
 
 const PlannedFeedItem = ({
-  downloadUrlByMediaItemId,
   draggingIndex,
   dragOverIndex,
   isSelected,
@@ -33,6 +32,7 @@ const PlannedFeedItem = ({
   onDrop,
   plannedPost,
   plannedPostIndex,
+  thumbnailUrlByMediaItemId,
 }: Props): React.ReactElement => {
   const bounds = getItemBounds({ index: plannedPostIndex });
   const reorderedIndex = calculateReorderedIndex(
@@ -42,9 +42,9 @@ const PlannedFeedItem = ({
   );
   const reorderedBounds = getItemBounds({ index: reorderedIndex });
   const isDragging = draggingIndex === plannedPostIndex;
-  const firstMediaItemDownloadUrl =
+  const firstMediaItemThumbnailUrl =
     plannedPost.mediaItems.length > 0
-      ? downloadUrlByMediaItemId.get(plannedPost.mediaItems[0].id)
+      ? thumbnailUrlByMediaItemId.get(plannedPost.mediaItems[0].id)
       : null;
   const dropZoneActive =
     draggingIndex !== null &&
@@ -69,13 +69,12 @@ const PlannedFeedItem = ({
           top: `${reorderedBounds.y}px`,
           width: `${reorderedBounds.width}px`,
         }}>
-        {firstMediaItemDownloadUrl && (
+        {firstMediaItemThumbnailUrl && (
           <NextImage
             alt={plannedPost.caption || `Planned post thumbnail`}
             fill
             priority
-            sizes="250px"
-            src={firstMediaItemDownloadUrl}
+            src={firstMediaItemThumbnailUrl}
             style={{ objectFit: `cover`, objectPosition: `center` }}
             unoptimized
           />

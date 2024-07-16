@@ -12,7 +12,7 @@ import { Container, SiteTopBar } from '@/app/components';
 import { Page } from '@/app/pageUtils';
 
 import AddPlannedPosts from './AddPlannedPosts';
-import FeedGrid from './FeedGrid';
+import FeedPageContent from './FeedPageContent';
 import sortPlannedPosts from './sortPlannedPosts';
 
 const FeedPage: Page = async () => {
@@ -29,10 +29,16 @@ const FeedPage: Page = async () => {
     fetchInstagramMediaItems(),
   ]);
 
-  const downloadUrlByMediaItemId = await getDownloadUrlByMediaItemId({
+  const thumbnailUrlByMediaItemId = await getDownloadUrlByMediaItemId({
     auth: { currentUserId: currentUser.id },
     where: { plannedPosts },
     size: `thumbnail`,
+  });
+
+  const fullSizeUrlByMediaItemId = await getDownloadUrlByMediaItemId({
+    auth: { currentUserId: currentUser.id },
+    where: { plannedPosts },
+    size: `full`,
   });
 
   return (
@@ -40,11 +46,12 @@ const FeedPage: Page = async () => {
       <SiteTopBar currentUser={currentUser} />
       <Container className="mt-10" size="xs">
         <div className="flex flex-col items-center">
-          <FeedGrid
+          <FeedPageContent
             actualPosts={actualPosts.slice(0, 24)}
             currentUser={currentUser}
-            downloadUrlByMediaItemId={downloadUrlByMediaItemId}
+            fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
             plannedPosts={sortPlannedPosts(plannedPosts)}
+            thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
           />
         </div>
       </Container>

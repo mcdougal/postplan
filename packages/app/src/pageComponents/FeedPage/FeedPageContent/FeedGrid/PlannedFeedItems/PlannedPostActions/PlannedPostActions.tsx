@@ -16,6 +16,8 @@ type Props = {
   selectedPlannedPosts: Array<PlannedPost>;
 };
 
+// todo - delete
+
 const PlannedPostActions = ({
   allPlannedPosts,
   onDelete,

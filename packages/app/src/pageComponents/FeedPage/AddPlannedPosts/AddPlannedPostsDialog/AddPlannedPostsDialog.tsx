@@ -3,7 +3,13 @@
 import { CurrentUser } from '@/common/users';
 import { useState } from 'react';
 
-import { Button, Dialog, DialogActions, Typography } from '@/app/components';
+import {
+  Button,
+  Checkbox,
+  Dialog,
+  DialogActions,
+  Typography,
+} from '@/app/components';
 
 import DragAndDrop from './DragAndDrop';
 import postIsNotImage from './postIsNotImage';
@@ -22,6 +28,7 @@ const AddPlannedPostsDialog = ({
   open,
 }: Props): React.ReactElement => {
   const [posts, setPosts] = useState<Array<Post>>([]);
+  const [isCarousel, setIsCarousel] = useState(false);
 
   const createPlannedPostsRequest = useCreatePlannedPostsRequest(
     currentUser,
@@ -43,10 +50,17 @@ const AddPlannedPostsDialog = ({
 
   return (
     <Dialog maxWidth="2xl" onClose={onClose} open={open}>
-      <div className="mb-5">
-        <Typography size="xl" weight="bold">
+      <div className="mb-5 flex">
+        <Typography className="flex-1" size="xl" weight="bold">
           Add Posts
         </Typography>
+        <Checkbox
+          checked={isCarousel}
+          label={<Typography size="md">Carousel</Typography>}
+          onChange={() => {
+            setIsCarousel(!isCarousel);
+          }}
+        />
       </div>
       <DragAndDrop onPostsChange={setPosts} posts={posts} />
       <DialogActions className="mt-6">
@@ -67,9 +81,11 @@ const AddPlannedPostsDialog = ({
           <Button
             disabled={hasNonImageFile}
             loading={createPlannedPostsRequest.loading}
-            onClick={createPlannedPostsRequest.createPlannedPosts}
+            onClick={() => {
+              createPlannedPostsRequest.createPlannedPosts({ isCarousel });
+            }}
             size="xl">
-            Add {posts.length}
+            {isCarousel ? `Add` : `Add ${posts.length}`}
           </Button>
         )}
       </DialogActions>

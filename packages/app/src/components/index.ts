@@ -1,6 +1,7 @@
 import Avatar from './Avatar';
 import BackButton from './BackButton';
 import Button, { ButtonColor, ButtonIcon, ButtonSize } from './Button';
+import Checkbox from './Checkbox';
 import Container, { ContainerSize } from './Container';
 import Dialog from './Dialog';
 import DialogActions from './DialogActions';
@@ -36,6 +37,7 @@ export {
   Avatar,
   BackButton,
   Button,
+  Checkbox,
   Container,
   Dialog,
   DialogActions,

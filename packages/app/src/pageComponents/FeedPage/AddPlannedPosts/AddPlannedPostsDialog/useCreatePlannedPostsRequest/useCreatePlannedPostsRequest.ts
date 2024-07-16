@@ -12,7 +12,7 @@ type Callbacks = {
 };
 
 type CreatePlannedPostsRequest = {
-  createPlannedPosts: () => Promise<void>;
+  createPlannedPosts: (options: { isCarousel: boolean }) => Promise<void>;
   error: string | null;
   loading: boolean;
 };
@@ -25,7 +25,11 @@ export default (
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const createPlannedPosts = async (): Promise<void> => {
+  const createPlannedPosts = async (options: {
+    isCarousel: boolean;
+  }): Promise<void> => {
+    const { isCarousel } = options;
+
     setLoading(true);
     setError(null);
 
@@ -43,11 +47,19 @@ export default (
       return;
     }
 
-    const plannedPostsData = posts.map((post) => {
-      return {
-        fileName: post.file.name,
-      };
-    });
+    const plannedPostsData = isCarousel
+      ? [
+          {
+            mediaItems: posts.map((post) => {
+              return { fileName: post.file.name };
+            }),
+          },
+        ]
+      : posts.map((post) => {
+          return {
+            mediaItems: [{ fileName: post.file.name }],
+          };
+        });
 
     const response = await createPlannedPostsServerAction({
       auth: {

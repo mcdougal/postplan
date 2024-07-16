@@ -8,7 +8,7 @@ type Args = {
     currentUserId: string;
   };
   data: {
-    plannedPosts: Array<{ fileName: string }>;
+    plannedPosts: Array<{ mediaItems: Array<{ fileName: string }> }>;
     userId: string;
   };
 };
@@ -27,7 +27,7 @@ export default async (args: Args): Promise<Response> => {
             currentUserId,
           },
           data: {
-            plannedPostMediaItems: [{ fileName: plannedPost.fileName }],
+            plannedPostMediaItems: plannedPost.mediaItems,
             userId,
           },
         });

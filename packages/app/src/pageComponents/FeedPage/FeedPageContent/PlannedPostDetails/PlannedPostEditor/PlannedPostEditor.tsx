@@ -6,10 +6,7 @@ import { Textarea } from '@/app/components';
 
 import { CarouselSizes } from '../getCarouselSizes';
 
-import CaptionCountdown from './CaptionCountdown';
-import getNumChars from './getNumChars';
-import getNumHashtags from './getNumHashtags';
-import getNumTags from './getNumTags';
+import PlannedPostEditorActions from './PlannedPostEditorActions';
 import useUpdateCaptionRequest from './useUpdateCaptionRequest';
 
 type Props = {
@@ -40,7 +37,7 @@ const PlannedPostEditor = ({
     const timeout = setTimeout(() => {
       updateCaption(plannedPost.id, caption || ``);
       setIsChanging(false);
-    }, 2000);
+    }, 1000);
 
     return (): void => {
       clearTimeout(timeout);
@@ -68,11 +65,12 @@ const PlannedPostEditor = ({
           value={caption || ``}
         />
       </div>
-      <div className="flex h-12 items-center gap-2 bg-white pl-6 pr-3">
-        <CaptionCountdown count={getNumHashtags(caption)} label="#" max={30} />
-        <CaptionCountdown count={getNumTags(caption)} label="@" max={20} />
-        <CaptionCountdown count={getNumChars(caption)} label="Abc" max={2200} />
-      </div>
+      <PlannedPostEditorActions
+        caption={caption}
+        currentUser={currentUser}
+        plannedPost={plannedPost}
+        setOptimisticPlannedPosts={setOptimisticPlannedPosts}
+      />
     </div>
   );
 };

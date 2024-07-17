@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 'use client';
 
+import { MenuButton } from '@headlessui/react';
 import Link from 'next/link';
 import { AnchorHTMLAttributes, ButtonHTMLAttributes, forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -19,6 +20,7 @@ type CommonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 
 type ConditionalProps =
   | ({ as?: `button` } & ButtonHTMLAttributes<HTMLButtonElement>)
+  | ({ as?: `menuButton` } & ButtonHTMLAttributes<HTMLButtonElement>)
   | ({ as: `a` } & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> & {
         href: string;
       });
@@ -33,9 +35,9 @@ const IconButton = forwardRef<Ref, Props>(
     const Icon = icon;
 
     const classNameBySize: { [key in IconButtonSize]: string } = {
-      xs: `p-0`,
-      sm: `p-0`,
-      md: `p-0`,
+      xs: `p-1`,
+      sm: `p-1`,
+      md: `p-1`,
       lg: `p-0`,
       xl: `p-0`,
       '2xl': `p-0`,
@@ -67,7 +69,7 @@ const IconButton = forwardRef<Ref, Props>(
     const containerProps = {
       'aria-label': label,
       className: twMerge(
-        `rounded-full hover:bg-gray-800 hover:bg-opacity-40`,
+        `rounded-full hover:bg-gray-800 hover:bg-opacity-10`,
         classNameBySize[size],
         edge ? classNameBySizeAndEdge[size][edge] : undefined,
         className
@@ -79,12 +81,24 @@ const IconButton = forwardRef<Ref, Props>(
     const inner = <Icon className={iconClassNameBySize[size]} />;
 
     if (!otherProps.as || otherProps.as === `button`) {
-      const { type = `button` } = otherProps;
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { as, type = `button`, ...buttonProps } = otherProps;
 
       return (
-        <button ref={ref} {...containerProps} {...otherProps} type={type}>
+        <button ref={ref} {...containerProps} {...buttonProps} type={type}>
           {inner}
         </button>
+      );
+    }
+
+    if (otherProps.as === `menuButton`) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { as, ...buttonProps } = otherProps;
+
+      return (
+        <MenuButton ref={ref} {...containerProps} {...buttonProps}>
+          {inner}
+        </MenuButton>
       );
     }
 

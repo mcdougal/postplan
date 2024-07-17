@@ -13,14 +13,15 @@ type Args = {
     id: string;
   };
   data: {
-    caption: string;
+    caption?: string;
+    isReel?: boolean;
   };
 };
 
 export default async (args: Args): Promise<void> => {
   const { currentUserId } = args.auth;
   const { id: plannedPostId } = args.where;
-  const { caption } = args.data;
+  const { caption, isReel } = args.data;
 
   if (!(await isAuthorized(currentUserId, plannedPostId))) {
     throw new ForbiddenError();
@@ -28,6 +29,6 @@ export default async (args: Args): Promise<void> => {
 
   await db
     .update(plannedPost)
-    .set({ caption })
+    .set({ caption, isReel })
     .where(eq(plannedPost.id, plannedPostId));
 };

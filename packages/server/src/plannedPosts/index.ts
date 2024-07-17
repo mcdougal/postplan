@@ -6,7 +6,7 @@ import getDownloadUrlByMediaItemId from './getDownloadUrlByMediaItemId';
 import queryPlannedPosts, { PlannedPost } from './queryPlannedPosts';
 import reorderMediaItems from './reorderMediaItems';
 import reorderPlannedPosts from './reorderPlannedPosts';
-import updatePlannedPostCaption from './updatePlannedPostCaption';
+import updatePlannedPost from './updatePlannedPost';
 
 export type { PlannedPost };
 
@@ -19,5 +19,5 @@ export {
   queryPlannedPosts,
   reorderMediaItems,
   reorderPlannedPosts,
-  updatePlannedPostCaption,
+  updatePlannedPost,
 };

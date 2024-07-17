@@ -1,11 +1,13 @@
 import Avatar from './Avatar';
-import BackButton from './BackButton';
 import Button, { ButtonColor, ButtonIcon, ButtonSize } from './Button';
 import CarouselIcon from './CarouselIcon';
 import Checkbox from './Checkbox';
 import Container, { ContainerSize } from './Container';
 import Dialog from './Dialog';
 import DialogActions from './DialogActions';
+import DialogTitle from './DialogTitle';
+import Dropdown from './Dropdown';
+import DropdownItem from './DropdownItem';
 import FileUpload from './FileUpload';
 import IconButton, { IconButtonIcon } from './IconButton';
 import Input from './Input';
@@ -37,13 +39,15 @@ export type {
 
 export {
   Avatar,
-  BackButton,
   Button,
   CarouselIcon,
   Checkbox,
   Container,
   Dialog,
   DialogActions,
+  DialogTitle,
+  Dropdown,
+  DropdownItem,
   FileUpload,
   IconButton,
   Input,

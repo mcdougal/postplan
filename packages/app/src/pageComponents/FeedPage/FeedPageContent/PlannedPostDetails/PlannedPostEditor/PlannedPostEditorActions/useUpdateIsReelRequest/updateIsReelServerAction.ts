@@ -10,7 +10,7 @@ type Args = {
     id: string;
   };
   data: {
-    caption: string;
+    isReel: boolean;
   };
 };
 
@@ -19,13 +19,13 @@ type Response = { status: `error`; message: string } | { status: `success` };
 export default async (args: Args): Promise<Response> => {
   const { currentUserId } = args.auth;
   const { id } = args.where;
-  const { caption } = args.data;
+  const { isReel } = args.data;
 
   try {
     await updatePlannedPost({
       auth: { currentUserId },
       where: { id },
-      data: { caption },
+      data: { isReel },
     });
 
     return {
@@ -36,7 +36,7 @@ export default async (args: Args): Promise<Response> => {
     console.error(err);
     return {
       status: `error`,
-      message: `Error updating caption`,
+      message: `Error updating post`,
     };
   }
 };

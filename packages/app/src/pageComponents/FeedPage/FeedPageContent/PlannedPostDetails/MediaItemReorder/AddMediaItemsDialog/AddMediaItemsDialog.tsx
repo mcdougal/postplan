@@ -3,7 +3,13 @@
 import { CurrentUser } from '@/common/users';
 import { useState } from 'react';
 
-import { Button, Dialog, DialogActions, Typography } from '@/app/components';
+import {
+  Button,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  Typography,
+} from '@/app/components';
 
 import DragAndDrop from './DragAndDrop';
 import postIsNotImage from './postIsNotImage';
@@ -47,9 +53,7 @@ const AddMediaItemsDialog = ({
   return (
     <Dialog maxWidth="2xl" onClose={onClose} open={open}>
       <div className="mb-5 flex">
-        <Typography className="flex-1" size="xl" weight="bold">
-          Add To Carousel
-        </Typography>
+        <DialogTitle className="flex-1">Add To Carousel</DialogTitle>
       </div>
       <DragAndDrop onPostsChange={setPosts} posts={posts} />
       <DialogActions className="mt-6">

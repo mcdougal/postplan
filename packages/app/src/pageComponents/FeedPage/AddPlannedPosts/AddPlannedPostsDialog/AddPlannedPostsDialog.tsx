@@ -8,6 +8,7 @@ import {
   Checkbox,
   Dialog,
   DialogActions,
+  DialogTitle,
   Typography,
 } from '@/app/components';
 
@@ -54,9 +55,7 @@ const AddPlannedPostsDialog = ({
   return (
     <Dialog maxWidth="2xl" onClose={onClose} open={open}>
       <div className="mb-5 flex gap-4">
-        <Typography className="flex-1" size="xl" weight="bold">
-          Add Posts
-        </Typography>
+        <DialogTitle className="flex-1">Add Posts</DialogTitle>
         <Checkbox
           checked={isReel}
           label={<Typography size="md">Reel</Typography>}

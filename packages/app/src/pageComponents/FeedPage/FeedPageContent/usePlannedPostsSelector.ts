@@ -18,7 +18,12 @@ export default (
   };
 
   useEffect(() => {
-    if (!selectedPlannedPostId || optimisticPlannedPosts.length === 0) {
+    if (!selectedPlannedPostId) {
+      return;
+    }
+
+    if (optimisticPlannedPosts.length === 0) {
+      setSelectedPlannedPostId(null);
       return;
     }
 

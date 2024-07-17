@@ -5,7 +5,6 @@ import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 import PlannedFeedItem from './PlannedFeedItem';
-import useDeleteRequest from './useDeleteRequest';
 import useReorderRequest from './useReorderRequest';
 
 type Props = {
@@ -32,11 +31,6 @@ const PlannedFeedItems = ({
     setOptimisticPlannedPosts,
     draggingIndex,
     dragOverIndex
-  );
-
-  const { deletePlannedPost } = useDeleteRequest(
-    currentUser,
-    setOptimisticPlannedPosts
   );
 
   return (

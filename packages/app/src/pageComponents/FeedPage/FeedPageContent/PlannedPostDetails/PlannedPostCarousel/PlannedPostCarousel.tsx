@@ -8,19 +8,21 @@ import Image from 'next/image';
 
 import { IconButton } from '@/app/components';
 
+import { Carousel } from '../useCarousel';
+
 import getSizes from './getSizes';
-import useSlide from './useSlide';
 
 type Props = {
+  carousel: Carousel;
   fullSizeUrlByMediaItemId: Map<string, string>;
   plannedPost: PlannedPost;
 };
 
 const PlannedPostCarousel = ({
+  carousel,
   fullSizeUrlByMediaItemId,
   plannedPost,
 }: Props): React.ReactElement => {
-  const slide = useSlide(plannedPost);
   const firstMediaItem = getFirstMediaItem(plannedPost);
   const sizes = getSizes(firstMediaItem);
 
@@ -34,7 +36,7 @@ const PlannedPostCarousel = ({
       {getMediaItems(plannedPost).map((mediaItem, i) => {
         const downloadUrl = fullSizeUrlByMediaItemId.get(mediaItem.id);
         const left =
-          sizes.image.width * i - slide.currentIndex * sizes.image.width;
+          sizes.image.width * i - carousel.currentIndex * sizes.image.width;
 
         return (
           <div
@@ -58,21 +60,21 @@ const PlannedPostCarousel = ({
           </div>
         );
       })}
-      {slide.onPrevious && (
+      {carousel.previous && (
         <IconButton
           className="absolute left-2 top-1/2 -translate-y-1/2 text-white opacity-70 shadow-sm"
           icon={ArrowLeftCircleIcon}
           label="Previous"
-          onClick={slide.onPrevious}
+          onClick={carousel.previous}
           size="2xl"
         />
       )}
-      {slide.onNext && (
+      {carousel.next && (
         <IconButton
           className="absolute right-2 top-1/2 -translate-y-1/2 text-white opacity-70 shadow-sm"
           icon={ArrowRightCircleIcon}
           label="Previous"
-          onClick={slide.onNext}
+          onClick={carousel.next}
           size="2xl"
         />
       )}

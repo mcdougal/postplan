@@ -15,6 +15,7 @@ type Props = {
   dragOverIndex: number | null;
   mediaItem: MediaItem;
   mediaItemIndex: number;
+  onClick: () => void;
   onDelete: (() => void) | null;
   onDragEnd: () => void;
   onDragEnter: () => void;
@@ -28,6 +29,7 @@ const MediaItemPreview = ({
   dragOverIndex,
   mediaItem,
   mediaItemIndex,
+  onClick,
   onDelete,
   onDragEnd,
   onDragEnter,
@@ -53,7 +55,7 @@ const MediaItemPreview = ({
       <div
         key={mediaItem.id}
         className={twMerge(
-          `group absolute cursor-grab overflow-hidden rounded-md`,
+          `group absolute overflow-hidden rounded-md`,
           draggingIndex !== null && `transition-all`,
           isDragging && `opacity-0`
         )}
@@ -66,15 +68,17 @@ const MediaItemPreview = ({
           top: `${reorderedBounds.y}px`,
           width: `${reorderedBounds.width}px`,
         }}>
-        {thumbnailUrl && (
-          <Image
-            alt="Planned post thumbnail"
-            fill
-            src={thumbnailUrl}
-            style={{ objectFit: `cover`, objectPosition: `center` }}
-            unoptimized
-          />
-        )}
+        <button className="absolute inset-0" onClick={onClick}>
+          {thumbnailUrl && (
+            <Image
+              alt="Planned post thumbnail"
+              fill
+              src={thumbnailUrl}
+              style={{ objectFit: `cover`, objectPosition: `center` }}
+              unoptimized
+            />
+          )}
+        </button>
         {onDelete && (
           <div className="absolute right-1 top-1 flex items-center justify-center rounded-full bg-black bg-opacity-30 opacity-0 group-hover:opacity-100">
             <IconButton

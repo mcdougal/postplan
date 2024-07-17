@@ -8,6 +8,8 @@ import { Dispatch, SetStateAction, useState } from 'react';
 
 import { IconButton } from '@/app/components';
 
+import { Carousel } from '../useCarousel';
+
 import AddMediaItemsDialog from './AddMediaItemsDialog';
 import { getContainerSize, getItemBounds } from './mediaItemPositioning';
 import MediaItemPreview from './MediaItemPreview';
@@ -15,6 +17,7 @@ import useDeleteRequest from './useDeleteRequest';
 import useReorderRequest from './useReorderRequest';
 
 type Props = {
+  carousel: Carousel;
   currentUser: CurrentUser;
   plannedPost: PlannedPost;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
@@ -22,6 +25,7 @@ type Props = {
 };
 
 const MediaItemReorder = ({
+  carousel,
   currentUser,
   plannedPost,
   setOptimisticPlannedPosts,
@@ -64,6 +68,9 @@ const MediaItemReorder = ({
                 dragOverIndex={dragOverIndex}
                 mediaItem={mediaItem}
                 mediaItemIndex={i}
+                onClick={() => {
+                  carousel.jump(i);
+                }}
                 onDelete={
                   mediaItems.length > 1
                     ? (): void => {

@@ -6,7 +6,6 @@ import { PlannedPost } from '@/server/plannedPosts';
 import { useEffect, useState } from 'react';
 
 import FeedGrid from './FeedGrid';
-import MediaItemReorder from './MediaItemReorder';
 import PlannedPostDetails from './PlannedPostDetails';
 import usePlannedPostsSelector from './usePlannedPostsSelector';
 
@@ -54,20 +53,13 @@ const FeedPageContent = ({
           <div
             key={selectedPlannedPost.id}
             className="absolute inset-0 flex items-center p-12 pb-20">
-            <div className="flex flex-1 flex-col gap-2">
-              <div className="max-w-full flex-1 bg-white">
-                <PlannedPostDetails
-                  fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
-                  plannedPost={selectedPlannedPost}
-                />
-              </div>
-              <MediaItemReorder
-                currentUser={currentUser}
-                plannedPost={selectedPlannedPost}
-                setOptimisticPlannedPosts={setOptimisticPlannedPosts}
-                thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
-              />
-            </div>
+            <PlannedPostDetails
+              currentUser={currentUser}
+              fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
+              plannedPost={selectedPlannedPost}
+              setOptimisticPlannedPosts={setOptimisticPlannedPosts}
+              thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
+            />
           </div>
         )}
       </div>

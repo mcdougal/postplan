@@ -4,6 +4,8 @@ import { InstagramMediaItem } from '@/server/instagram';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import getTypeIcon from './getTypeIcon';
+
 type Props = {
   actualPost: InstagramMediaItem;
   bounds: { height: number; width: number; x: number; y: number };
@@ -16,6 +18,9 @@ const ActualFeedItem = ({ actualPost, bounds }: Props): React.ReactElement => {
   useEffect(() => {
     setShouldRenderImage(true);
   }, []);
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const TypeIcon = getTypeIcon(actualPost);
 
   return (
     <div
@@ -35,6 +40,7 @@ const ActualFeedItem = ({ actualPost, bounds }: Props): React.ReactElement => {
           style={{ objectFit: `cover`, objectPosition: `center` }}
         />
       )}
+      {TypeIcon && <TypeIcon className="absolute right-2 top-2 h-4 w-4" />}
     </div>
   );
 };

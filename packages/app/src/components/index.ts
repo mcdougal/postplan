@@ -1,6 +1,7 @@
 import Avatar from './Avatar';
 import BackButton from './BackButton';
 import Button, { ButtonColor, ButtonIcon, ButtonSize } from './Button';
+import CarouselIcon from './CarouselIcon';
 import Checkbox from './Checkbox';
 import Container, { ContainerSize } from './Container';
 import Dialog from './Dialog';
@@ -11,6 +12,7 @@ import Input from './Input';
 import Loading from './Loading';
 import NotProse from './NotProse';
 import Prose from './Prose';
+import ReelIcon from './ReelIcon';
 import SiteTopBar from './SiteTopBar';
 import Spinner, { SpinnerSize } from './Spinner';
 import Textarea from './Textarea';
@@ -37,6 +39,7 @@ export {
   Avatar,
   BackButton,
   Button,
+  CarouselIcon,
   Checkbox,
   Container,
   Dialog,
@@ -47,6 +50,7 @@ export {
   Loading,
   NotProse,
   Prose,
+  ReelIcon,
   SiteTopBar,
   Spinner,
   Textarea,

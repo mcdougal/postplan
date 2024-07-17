@@ -1,4 +1,5 @@
 import { InstagramMediaItem } from '@/server/instagram';
+import { useMemo } from 'react';
 
 import { getItemBounds } from '../gridPositioning';
 
@@ -13,21 +14,23 @@ const ActualFeedItems = ({
   actualPosts,
   startIndex,
 }: Props): React.ReactElement => {
-  return (
-    <>
-      {actualPosts.map((actualPost, i) => {
-        const bounds = getItemBounds({ index: startIndex + i });
+  return useMemo(() => {
+    return (
+      <>
+        {actualPosts.map((actualPost, i) => {
+          const bounds = getItemBounds({ index: startIndex + i });
 
-        return (
-          <ActualFeedItem
-            key={actualPost.id}
-            actualPost={actualPost}
-            bounds={bounds}
-          />
-        );
-      })}
-    </>
-  );
+          return (
+            <ActualFeedItem
+              key={actualPost.id}
+              actualPost={actualPost}
+              bounds={bounds}
+            />
+          );
+        })}
+      </>
+    );
+  }, [actualPosts, startIndex]);
 };
 
 export default ActualFeedItems;

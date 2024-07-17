@@ -20,12 +20,18 @@ const InstagramApiMediaResponseSchema = z.object({
   data: z.array(InstagramApiMediaItemSchema),
 });
 
-export default async (): Promise<Array<InstagramMediaItem>> => {
+export default async (options: {
+  limit: number;
+}): Promise<Array<InstagramMediaItem>> => {
   const instagramAccessToken = getRequiredEnvVar(`INSTAGRAM_ACCESS_TOKEN`);
+
+  const twelveMonthsAgo = new Date();
+  twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
 
   const mediaUrl = `https://graph.instagram.com/v14.0/${DEANNA_TROY_TRAVELS_USER_ID}/media?${[
     `access_token=${instagramAccessToken}`,
     `fields=caption,id,media_type,media_url,permalink,thumbnail_url,timestamp`,
+    `limit=${options.limit}`,
   ].join(`&`)}`;
 
   const mediaResponse = await axios.get<unknown>(mediaUrl);

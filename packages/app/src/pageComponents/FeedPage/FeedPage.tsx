@@ -26,7 +26,7 @@ const FeedPage: Page = async () => {
       auth: { currentUserId: currentUser.id },
       where: { userId: currentUser.id },
     }),
-    fetchInstagramMediaItems(),
+    fetchInstagramMediaItems({ limit: 42 }),
   ]);
 
   const thumbnailUrlByMediaItemId = await getDownloadUrlByMediaItemId({
@@ -47,7 +47,7 @@ const FeedPage: Page = async () => {
       <Container className="mt-10" size="xs">
         <div className="flex flex-col items-center">
           <FeedPageContent
-            actualPosts={actualPosts.slice(0, 24)}
+            actualPosts={actualPosts}
             currentUser={currentUser}
             fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
             plannedPosts={sortPlannedPosts(plannedPosts)}

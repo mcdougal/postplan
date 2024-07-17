@@ -1,13 +1,14 @@
 'use client';
 
-import { getFirstMediaItem, isCarousel } from '@/common/plannedPosts';
+import { getFirstMediaItem } from '@/common/plannedPosts';
 import { PlannedPost } from '@/server/plannedPosts';
-import { Square2StackIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 
 import { getItemBounds } from '../../gridPositioning';
 import calculateReorderedIndex from '../calculateReorderedIndex';
+
+import getTypeIcon from './getTypeIcon';
 
 type Props = {
   draggingIndex: number | null;
@@ -50,6 +51,9 @@ const PlannedFeedItem = ({
     draggingIndex !== null &&
     (plannedPostIndex !== draggingIndex || dragOverIndex !== null);
 
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const TypeIcon = getTypeIcon(plannedPost);
+
   return (
     <>
       <button
@@ -78,9 +82,7 @@ const PlannedFeedItem = ({
             unoptimized
           />
         )}
-        {isCarousel(plannedPost) && (
-          <Square2StackIcon className="absolute right-1 top-1 h-5 w-5 rotate-180 text-white opacity-80" />
-        )}
+        {TypeIcon && <TypeIcon className="absolute right-2 top-2 h-4 w-4" />}
       </button>
       {dropZoneActive && (
         <div

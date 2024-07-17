@@ -2,10 +2,13 @@
 
 ## Todo
 
-- Support re-ordering of posts on feed
-- Show controls when clicking a post on feed: remove, edit
-- Show reel icon on reels on feed
-- Support carousel in AddPlannedPostsDialog
+- Doesn't show when someone collaborates with you
+- Hashtags on planned post
+- Delete a planned post
+- Add "Reel" option to planned posts dialog
+- Show carousel and video icons on feed grid for actual posts
+- Click on actual posts to see images and description
+- Temporarily hide actual posts
 
 ## Getting Started
 

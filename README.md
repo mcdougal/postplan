@@ -4,7 +4,6 @@
 
 - Hashtags on planned post
 - Download planned post images
-- Temporarily hide actual posts
 - Doesn't show post when someone collaborates with you (<https://developers.facebook.com/community/threads/1011039596753699/>)
 
 ## Getting Started

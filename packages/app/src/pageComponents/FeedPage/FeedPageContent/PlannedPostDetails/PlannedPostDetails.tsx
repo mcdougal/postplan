@@ -1,3 +1,5 @@
+'use client';
+
 import { getFirstMediaItem } from '@/common/plannedPosts';
 import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';

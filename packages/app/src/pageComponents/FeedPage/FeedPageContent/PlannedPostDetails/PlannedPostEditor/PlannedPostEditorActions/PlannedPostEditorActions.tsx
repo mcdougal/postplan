@@ -1,3 +1,5 @@
+'use client';
+
 import { isReel } from '@/common/plannedPosts';
 import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
@@ -11,6 +13,7 @@ import DeletePlannedPostConfirmDialog from './DeletePlannedPostConfirmDialog';
 import getNumChars from './getNumChars';
 import getNumHashtags from './getNumHashtags';
 import getNumTags from './getNumTags';
+import HashtagManager from './HashtagManager';
 import useDeleteRequest from './useDeleteRequest';
 import useUpdateIsReelRequest from './useUpdateIsReelRequest';
 
@@ -27,6 +30,7 @@ const PlannedPostEditorActions = ({
   plannedPost,
   setOptimisticPlannedPosts,
 }: Props): React.ReactElement => {
+  const [isHashtagManagerOpen, setIsHashtagManagerOpen] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
   const { updateIsReel } = useUpdateIsReelRequest(
@@ -55,9 +59,13 @@ const PlannedPostEditorActions = ({
               />
             }>
             <DropdownItem
-              label={
-                isReel(plannedPost) ? `Remove Reel Status` : `Make Into Reel`
-              }
+              label="Edit Hashtags"
+              onClick={() => {
+                setIsHashtagManagerOpen(true);
+              }}
+            />
+            <DropdownItem
+              label={isReel(plannedPost) ? `Remove Reel Icon` : `Add Reel Icon`}
               onClick={() => {
                 updateIsReel(plannedPost.id, !isReel(plannedPost));
               }}
@@ -72,6 +80,13 @@ const PlannedPostEditorActions = ({
           </Dropdown>
         </div>
       </div>
+      <HashtagManager
+        onClose={() => {
+          setIsHashtagManagerOpen(false);
+        }}
+        open={isHashtagManagerOpen}
+        plannedPost={plannedPost}
+      />
       <DeletePlannedPostConfirmDialog
         onCancel={() => {
           setIsDeleteConfirmOpen(false);

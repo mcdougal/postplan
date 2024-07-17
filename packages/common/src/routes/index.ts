@@ -1,8 +1,8 @@
 import FeedRoute from './FeedRoute';
 import FileUploadUrlRoute, {
-  FileUploadUrlRouteResponseSchema,
   FileUploadUrlRouteParams,
   FileUploadUrlRouteResponse,
+  FileUploadUrlRouteResponseSchema,
 } from './FileUploadUrlRoute';
 import HomePageRoute from './HomePageRoute';
 import LogInRoute from './LogInRoute';

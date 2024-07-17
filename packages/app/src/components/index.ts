@@ -2,6 +2,7 @@ import Avatar from './Avatar';
 import Button, { ButtonColor, ButtonIcon, ButtonSize } from './Button';
 import CarouselIcon from './CarouselIcon';
 import Checkbox from './Checkbox';
+import CheckboxButton from './CheckboxButton';
 import Container, { ContainerSize } from './Container';
 import Dialog from './Dialog';
 import DialogActions from './DialogActions';
@@ -42,6 +43,7 @@ export {
   Button,
   CarouselIcon,
   Checkbox,
+  CheckboxButton,
   Container,
   Dialog,
   DialogActions,

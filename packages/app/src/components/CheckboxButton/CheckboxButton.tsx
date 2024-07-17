@@ -17,12 +17,20 @@ type Props = {
   size: CheckboxSize;
 };
 
-const Checkbox = forwardRef<Ref, Props>(
+const CheckboxButton = forwardRef<Ref, Props>(
   (
     { checked, disabled = false, label, name, onChange, size },
     ref
   ): React.ReactElement => {
     const inputId = useId();
+
+    const containerClassNamesBySize: { [key in CheckboxSize]: string } = {
+      xs: `rounded-md px-1`,
+      sm: `rounded-md pl-1 pr-2`,
+      md: `rounded-md pl-1 pr-2 h-7`,
+      lg: `rounded-md pl-1 pr-2 h-8`,
+      xl: `rounded-md pl-1 pr-2 h-9`,
+    };
 
     const inputContainerClassNamesBySize: { [key in CheckboxSize]: string } = {
       xs: `h-6`,
@@ -49,7 +57,13 @@ const Checkbox = forwardRef<Ref, Props>(
     };
 
     return (
-      <div ref={ref} className="relative flex items-start">
+      <label
+        ref={ref}
+        className={twMerge(
+          `relative flex items-center rounded-sm border border-gray-300`,
+          containerClassNamesBySize[size]
+        )}
+        htmlFor={inputId}>
         <div
           className={twMerge(
             `flex items-center`,
@@ -68,16 +82,16 @@ const Checkbox = forwardRef<Ref, Props>(
             type="checkbox"
           />
         </div>
-        <label
-          className={twMerge(`block`, labelClassNamesBySize[size])}
-          htmlFor={inputId}>
-          <Typography size={size}>{label}</Typography>
-        </label>
-      </div>
+        <Typography
+          className={twMerge(`text-nowrap`, labelClassNamesBySize[size])}
+          size={size}>
+          {label}
+        </Typography>
+      </label>
     );
   }
 );
 
-Checkbox.displayName = `Checkbox`;
+CheckboxButton.displayName = `CheckboxButton`;
 
-export default Checkbox;
+export default CheckboxButton;

@@ -52,7 +52,11 @@ const Spinner = forwardRef<Ref, Props>(
     return (
       <svg
         ref={ref}
-        className={twMerge(`animate-spin`, classNameBySize[size], className)}
+        className={twMerge(
+          `animate-spin text-blue-500`,
+          classNameBySize[size],
+          className
+        )}
         fill="none"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"

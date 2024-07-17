@@ -1,3 +1,5 @@
+'use client';
+
 import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';

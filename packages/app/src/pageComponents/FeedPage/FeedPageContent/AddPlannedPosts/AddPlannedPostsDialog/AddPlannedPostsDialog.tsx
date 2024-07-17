@@ -54,23 +54,25 @@ const AddPlannedPostsDialog = ({
 
   return (
     <Dialog maxWidth="2xl" onClose={onClose} open={open}>
-      <div className="mb-5 flex gap-4">
+      <div className="mb-5 flex items-center gap-4">
         <DialogTitle className="flex-1">Add Posts</DialogTitle>
         <Checkbox
           checked={isReel}
-          label={<Typography size="md">Reel</Typography>}
+          label="Reel"
           onChange={() => {
             setIsReel(!isReel);
             setIsCarousel(false);
           }}
+          size="md"
         />
         <Checkbox
           checked={isCarousel}
-          label={<Typography size="md">Carousel</Typography>}
+          label="Carousel"
           onChange={() => {
             setIsCarousel(!isCarousel);
             setIsReel(false);
           }}
+          size="md"
         />
       </div>
       <DragAndDrop onPostsChange={setPosts} posts={posts} />

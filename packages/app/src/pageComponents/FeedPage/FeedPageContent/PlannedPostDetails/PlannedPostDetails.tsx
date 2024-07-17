@@ -3,10 +3,10 @@ import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction } from 'react';
 
-import CaptionEditor from './CaptionEditor';
 import getCarouselSizes from './getCarouselSizes';
 import MediaItemReorder from './MediaItemReorder';
 import PlannedPostCarousel from './PlannedPostCarousel';
+import PlannedPostEditor from './PlannedPostEditor';
 import useCarousel from './useCarousel';
 
 type Props = {
@@ -38,7 +38,7 @@ const PlannedPostDetails = ({
             fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
             plannedPost={plannedPost}
           />
-          <CaptionEditor
+          <PlannedPostEditor
             carouselSizes={carouselSizes}
             currentUser={currentUser}
             plannedPost={plannedPost}

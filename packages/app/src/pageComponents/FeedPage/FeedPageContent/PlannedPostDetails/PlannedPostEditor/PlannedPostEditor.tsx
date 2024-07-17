@@ -19,7 +19,7 @@ type Props = {
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
 };
 
-const CaptionEditor = ({
+const PlannedPostEditor = ({
   carouselSizes,
   currentUser,
   plannedPost,
@@ -77,4 +77,4 @@ const CaptionEditor = ({
   );
 };
 
-export default CaptionEditor;
+export default PlannedPostEditor;

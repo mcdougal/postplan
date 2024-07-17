@@ -5,9 +5,10 @@ import { InstagramMediaItem } from '@/server/instagram';
 import { PlannedPost } from '@/server/plannedPosts';
 import { useEffect, useState } from 'react';
 
+import ActualPostDetails from './ActualPostDetails';
 import FeedGrid from './FeedGrid';
 import PlannedPostDetails from './PlannedPostDetails';
-import usePlannedPostsSelector from './usePlannedPostsSelector';
+import usePostSelector from './usePostSelector';
 
 type Props = {
   actualPosts: Array<InstagramMediaItem>;
@@ -31,8 +32,9 @@ const FeedPageContent = ({
     setOptimisticPlannedPosts(plannedPosts);
   }, [plannedPosts]);
 
-  const { onSelectPlannedPost, selectedPlannedPost } = usePlannedPostsSelector(
-    optimisticPlannedPosts
+  const { onSelectPost, selectedPost } = usePostSelector(
+    optimisticPlannedPosts,
+    actualPosts
   );
 
   return (
@@ -41,7 +43,7 @@ const FeedPageContent = ({
         <FeedGrid
           actualPosts={actualPosts}
           currentUser={currentUser}
-          onSelectPlannedPost={onSelectPlannedPost}
+          onSelectPost={onSelectPost}
           optimisticPlannedPosts={optimisticPlannedPosts}
           setOptimisticPlannedPosts={setOptimisticPlannedPosts}
           thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
@@ -49,19 +51,37 @@ const FeedPageContent = ({
       </div>
       <div className="absolute bottom-0 left-1/3 right-0 top-12 flex px-6">
         <div className="absolute inset-0 bg-black bg-opacity-70" />
-        {selectedPlannedPost && (
-          <div
-            key={selectedPlannedPost.id}
-            className="absolute inset-0 flex items-center p-12 pb-20">
-            <PlannedPostDetails
-              currentUser={currentUser}
-              fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
-              plannedPost={selectedPlannedPost}
-              setOptimisticPlannedPosts={setOptimisticPlannedPosts}
-              thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
-            />
-          </div>
-        )}
+        {((): React.ReactNode => {
+          if (!selectedPost) {
+            return null;
+          }
+          if (selectedPost?.type === `actual`) {
+            return (
+              <div
+                key={selectedPost.actualPost.id}
+                className="absolute inset-0 flex items-center p-12 pb-20">
+                <ActualPostDetails actualPost={selectedPost.actualPost} />
+              </div>
+            );
+          }
+          if (selectedPost?.type === `planned`) {
+            return (
+              <div
+                key={selectedPost.plannedPost.id}
+                className="absolute inset-0 flex items-center p-12 pb-20">
+                <PlannedPostDetails
+                  currentUser={currentUser}
+                  fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
+                  plannedPost={selectedPost.plannedPost}
+                  setOptimisticPlannedPosts={setOptimisticPlannedPosts}
+                  thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
+                />
+              </div>
+            );
+          }
+          const exhaustiveCheck: never = selectedPost;
+          return exhaustiveCheck;
+        })()}
       </div>
     </div>
   );

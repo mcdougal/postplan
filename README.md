@@ -4,9 +4,6 @@
 
 - Hashtags on planned post
 - Download planned post images
-- Delete a planned post
-- Add "Reel" option to planned posts dialog
-- Click on actual posts to see images and description
 - Temporarily hide actual posts
 - Doesn't show post when someone collaborates with you (<https://developers.facebook.com/community/threads/1011039596753699/>)
 

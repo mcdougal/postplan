@@ -9,9 +9,14 @@ import getTypeIcon from './getTypeIcon';
 type Props = {
   actualPost: InstagramMediaItem;
   bounds: { height: number; width: number; x: number; y: number };
+  onClick: () => void;
 };
 
-const ActualFeedItem = ({ actualPost, bounds }: Props): React.ReactElement => {
+const ActualFeedItem = ({
+  actualPost,
+  bounds,
+  onClick,
+}: Props): React.ReactElement => {
   // Fixes bug where image would not render on page load for some reason
   const [shouldRenderImage, setShouldRenderImage] = useState(false);
 
@@ -23,8 +28,9 @@ const ActualFeedItem = ({ actualPost, bounds }: Props): React.ReactElement => {
   const TypeIcon = getTypeIcon(actualPost);
 
   return (
-    <div
+    <button
       className="absolute"
+      onClick={onClick}
       style={{
         height: `${bounds.height}px`,
         left: `${bounds.x}px`,
@@ -41,7 +47,7 @@ const ActualFeedItem = ({ actualPost, bounds }: Props): React.ReactElement => {
         />
       )}
       {TypeIcon && <TypeIcon className="absolute right-2 top-2 h-4 w-4" />}
-    </div>
+    </button>
   );
 };
 

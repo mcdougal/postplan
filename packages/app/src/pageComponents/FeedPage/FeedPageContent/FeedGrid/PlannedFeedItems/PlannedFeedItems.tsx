@@ -4,12 +4,14 @@ import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction, useState } from 'react';
 
+import { SelectedPostId } from '../../usePostSelector';
+
 import PlannedFeedItem from './PlannedFeedItem';
 import useReorderRequest from './useReorderRequest';
 
 type Props = {
   currentUser: CurrentUser;
-  onSelectPlannedPost: (plannedPost: PlannedPost) => void;
+  onSelectPost: (selectedPostId: SelectedPostId) => void;
   optimisticPlannedPosts: Array<PlannedPost>;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
   thumbnailUrlByMediaItemId: Map<string, string>;
@@ -17,7 +19,7 @@ type Props = {
 
 const PlannedFeedItems = ({
   currentUser,
-  onSelectPlannedPost,
+  onSelectPost,
   optimisticPlannedPosts,
   setOptimisticPlannedPosts,
   thumbnailUrlByMediaItemId,
@@ -42,7 +44,7 @@ const PlannedFeedItems = ({
             draggingIndex={draggingIndex}
             dragOverIndex={dragOverIndex}
             onClick={() => {
-              onSelectPlannedPost(plannedPost);
+              onSelectPost({ type: `planned`, plannedPostId: plannedPost.id });
             }}
             onDragEnd={() => {
               setDraggingIndex(null);

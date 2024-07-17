@@ -4,6 +4,7 @@ import typography from '@tailwindcss/typography';
 import type { Config } from 'tailwindcss';
 import colors from 'tailwindcss/colors';
 import defaultTheme from 'tailwindcss/defaultTheme';
+import plugin from 'tailwindcss/plugin';
 
 const config: Config = {
   content: [`./src/**/*.{js,ts,jsx,tsx,mdx}`],
@@ -31,7 +32,17 @@ const config: Config = {
       },
     },
   },
-  plugins: [forms, typography],
+  plugins: [
+    forms,
+    typography,
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        '.break-anywhere': {
+          'overflow-wrap': `anywhere`,
+        },
+      });
+    }),
+  ],
 };
 
 export default config;

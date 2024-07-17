@@ -9,7 +9,7 @@ const DEANNA_TROY_TRAVELS_USER_ID = `17841402384050982`;
 const InstagramApiMediaItemSchema = z.object({
   caption: z.string().optional(),
   id: z.string(),
-  media_type: z.string(),
+  media_type: z.enum([`CAROUSEL_ALBUM`, `IMAGE`, `VIDEO`]),
   media_url: z.string(),
   permalink: z.string().optional(),
   thumbnail_url: z.string().optional(),

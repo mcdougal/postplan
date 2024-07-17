@@ -1,17 +1,20 @@
 import { InstagramMediaItem } from '@/server/instagram';
 import { useMemo } from 'react';
 
+import { SelectedPostId } from '../../usePostSelector';
 import { getItemBounds } from '../gridPositioning';
 
 import ActualFeedItem from './ActualFeedItem';
 
 type Props = {
   actualPosts: Array<InstagramMediaItem>;
+  onSelectPost: (selectedPostId: SelectedPostId) => void;
   startIndex: number;
 };
 
 const ActualFeedItems = ({
   actualPosts,
+  onSelectPost,
   startIndex,
 }: Props): React.ReactElement => {
   return useMemo(() => {
@@ -25,12 +28,15 @@ const ActualFeedItems = ({
               key={actualPost.id}
               actualPost={actualPost}
               bounds={bounds}
+              onClick={() => {
+                onSelectPost({ type: `actual`, actualPostId: actualPost.id });
+              }}
             />
           );
         })}
       </>
     );
-  }, [actualPosts, startIndex]);
+  }, [actualPosts, startIndex, onSelectPost]);
 };
 
 export default ActualFeedItems;

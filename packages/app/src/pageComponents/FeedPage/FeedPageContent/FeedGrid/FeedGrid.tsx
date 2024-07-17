@@ -6,6 +6,8 @@ import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction } from 'react';
 import { twMerge } from 'tailwind-merge';
 
+import { SelectedPostId } from '../usePostSelector';
+
 import ActualFeedItems from './ActualFeedItems';
 import styles from './FeedGrid.module.css';
 import { getGridSize } from './gridPositioning';
@@ -14,7 +16,7 @@ import PlannedFeedItems from './PlannedFeedItems';
 type Props = {
   actualPosts: Array<InstagramMediaItem>;
   currentUser: CurrentUser;
-  onSelectPlannedPost: (plannedPost: PlannedPost) => void;
+  onSelectPost: (selectedPostId: SelectedPostId) => void;
   optimisticPlannedPosts: Array<PlannedPost>;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
   thumbnailUrlByMediaItemId: Map<string, string>;
@@ -23,7 +25,7 @@ type Props = {
 const FeedGrid = ({
   actualPosts,
   currentUser,
-  onSelectPlannedPost,
+  onSelectPost,
   optimisticPlannedPosts,
   setOptimisticPlannedPosts,
   thumbnailUrlByMediaItemId,
@@ -41,13 +43,14 @@ const FeedGrid = ({
             style={{ height: gridSize.height, width: gridSize.width }}>
             <PlannedFeedItems
               currentUser={currentUser}
-              onSelectPlannedPost={onSelectPlannedPost}
+              onSelectPost={onSelectPost}
               optimisticPlannedPosts={optimisticPlannedPosts}
               setOptimisticPlannedPosts={setOptimisticPlannedPosts}
               thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
             />
             <ActualFeedItems
               actualPosts={actualPosts}
+              onSelectPost={onSelectPost}
               startIndex={optimisticPlannedPosts.length}
             />
           </div>

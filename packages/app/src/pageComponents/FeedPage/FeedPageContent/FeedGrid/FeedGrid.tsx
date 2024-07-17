@@ -3,6 +3,7 @@
 import { CurrentUser } from '@/common/users';
 import { InstagramMediaItem } from '@/server/instagram';
 import { PlannedPost } from '@/server/plannedPosts';
+import { Dispatch, SetStateAction } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import ActualFeedItems from './ActualFeedItems';
@@ -15,7 +16,7 @@ type Props = {
   currentUser: CurrentUser;
   onSelectPlannedPost: (plannedPost: PlannedPost) => void;
   optimisticPlannedPosts: Array<PlannedPost>;
-  setOptimisticPlannedPosts: (plannedPosts: Array<PlannedPost>) => void;
+  setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
   thumbnailUrlByMediaItemId: Map<string, string>;
 };
 

@@ -11,15 +11,14 @@ type Request = {
 
 export default (
   currentUser: CurrentUser,
-  optimisticPlannedPosts: Array<PlannedPost>,
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>
 ): Request => {
   const deletePlannedPost = async (id: string): Promise<void> => {
-    setOptimisticPlannedPosts(
-      optimisticPlannedPosts.filter((plannedPost) => {
+    setOptimisticPlannedPosts((prevPlannedPosts) => {
+      return prevPlannedPosts.filter((plannedPost) => {
         return plannedPost.id !== id;
-      })
-    );
+      });
+    });
 
     const response = await deletePlannedPostServerAction({
       auth: { currentUserId: currentUser.id },

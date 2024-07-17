@@ -2,7 +2,7 @@
 
 import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 
 import PlannedFeedItem from './PlannedFeedItem';
 import useDeleteRequest from './useDeleteRequest';
@@ -12,7 +12,7 @@ type Props = {
   currentUser: CurrentUser;
   onSelectPlannedPost: (plannedPost: PlannedPost) => void;
   optimisticPlannedPosts: Array<PlannedPost>;
-  setOptimisticPlannedPosts: (plannedPosts: Array<PlannedPost>) => void;
+  setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
   thumbnailUrlByMediaItemId: Map<string, string>;
 };
 
@@ -34,9 +34,8 @@ const PlannedFeedItems = ({
     dragOverIndex
   );
 
-  const { deletePlannedPosts } = useDeleteRequest(
+  const { deletePlannedPost } = useDeleteRequest(
     currentUser,
-    optimisticPlannedPosts,
     setOptimisticPlannedPosts
   );
 

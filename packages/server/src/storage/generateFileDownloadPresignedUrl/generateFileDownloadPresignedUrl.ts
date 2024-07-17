@@ -7,7 +7,7 @@ export default async (key: string): Promise<string> => {
 
   const { data, error } = await supabase.storage
     .from(getRequiredEnvVar(`SUPABASE_INSTAPLAN_BUCKET_NAME`))
-    .createSignedUrl(key, 60);
+    .createSignedUrl(key, 60 * 60 * 24 * 30);
 
   if (error) {
     throw error;

@@ -7,7 +7,7 @@ type Args = {
     currentUserId: string;
   };
   data: {
-    plannedPostIds: Array<string>;
+    id: string;
   };
 };
 
@@ -15,7 +15,7 @@ type Response = { status: `error`; message: string } | { status: `success` };
 
 export default async (args: Args): Promise<Response> => {
   const { currentUserId } = args.auth;
-  const { plannedPostIds } = args.data;
+  const { id } = args.data;
 
   try {
     await deletePlannedPosts({
@@ -23,7 +23,7 @@ export default async (args: Args): Promise<Response> => {
         currentUserId,
       },
       data: {
-        plannedPostIds,
+        plannedPostIds: [id],
       },
     });
 
@@ -35,7 +35,7 @@ export default async (args: Args): Promise<Response> => {
     console.error(err);
     return {
       status: `error`,
-      message: `Error deleting posts`,
+      message: `Error deleting post`,
     };
   }
 };

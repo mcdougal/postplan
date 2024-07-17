@@ -1,46 +1,37 @@
 import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
+import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
 
-import deletePlannedPostsServerAction from './deletePlannedPostsServerAction';
+import deletePlannedPostServerAction from './deletePlannedPostServerAction';
 
 type Request = {
-  deletePlannedPosts: (
-    plannedPostsToDelete: Array<PlannedPost>
-  ) => Promise<void>;
+  deletePlannedPost: (id: string) => Promise<void>;
 };
 
 export default (
   currentUser: CurrentUser,
   optimisticPlannedPosts: Array<PlannedPost>,
-  setOptimisticPlannedPosts: (plannedPosts: Array<PlannedPost>) => void
+  setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>
 ): Request => {
-  const deletePlannedPosts = async (
-    plannedPosts: Array<PlannedPost>
-  ): Promise<void> => {
-    const idsToDelete = new Set(
-      plannedPosts.map(({ id }) => {
-        return id;
-      })
-    );
-
+  const deletePlannedPost = async (id: string): Promise<void> => {
     setOptimisticPlannedPosts(
       optimisticPlannedPosts.filter((plannedPost) => {
-        return !idsToDelete.has(plannedPost.id);
+        return plannedPost.id !== id;
       })
     );
 
-    const response = await deletePlannedPostsServerAction({
+    const response = await deletePlannedPostServerAction({
       auth: { currentUserId: currentUser.id },
-      data: { plannedPostIds: Array.from(idsToDelete) },
+      data: { id },
     });
 
     if (response.status === `error`) {
-      toast.error(`Error deleting posts`);
+      toast.error(response.message);
     }
   };
 
   return {
-    deletePlannedPosts,
+    deletePlannedPost,
   };
 };

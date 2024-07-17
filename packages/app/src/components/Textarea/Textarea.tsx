@@ -29,8 +29,8 @@ const Textarea = forwardRef<Ref, Props>(
     const id = useId();
     const textareaHeightAffectingClassNames = [
       `p-0`,
-      `text-md`,
-      `leading-6`,
+      `text-sm`,
+      `leading-5`,
       `whitespace-pre-wrap`,
       `text-wrap`,
       `break-words`,

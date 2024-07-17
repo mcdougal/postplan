@@ -1,9 +1,10 @@
+import { getFirstMediaItem } from '@/common/plannedPosts';
 import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
-import { Textarea } from '@/app/components';
-
+import CaptionEditor from './CaptionEditor';
+import getCarouselSizes from './getCarouselSizes';
 import MediaItemReorder from './MediaItemReorder';
 import PlannedPostCarousel from './PlannedPostCarousel';
 import useCarousel from './useCarousel';
@@ -23,8 +24,9 @@ const PlannedPostDetails = ({
   setOptimisticPlannedPosts,
   thumbnailUrlByMediaItemId,
 }: Props): React.ReactElement => {
-  const [caption, setCaption] = useState(plannedPost.caption);
   const carousel = useCarousel(plannedPost);
+  const firstMediaItem = getFirstMediaItem(plannedPost);
+  const carouselSizes = getCarouselSizes(firstMediaItem);
 
   return (
     <div className="flex flex-1 flex-col gap-2">
@@ -32,19 +34,16 @@ const PlannedPostDetails = ({
         <div className="flex">
           <PlannedPostCarousel
             carousel={carousel}
+            carouselSizes={carouselSizes}
             fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
             plannedPost={plannedPost}
           />
-          <div className="px-6 py-4">
-            <Textarea
-              onChange={(event) => {
-                setCaption(event.target.value || null);
-              }}
-              placeholder="Write a caption..."
-              rows={10}
-              value={caption || ``}
-            />
-          </div>
+          <CaptionEditor
+            carouselSizes={carouselSizes}
+            currentUser={currentUser}
+            plannedPost={plannedPost}
+            setOptimisticPlannedPosts={setOptimisticPlannedPosts}
+          />
         </div>
       </div>
       <MediaItemReorder

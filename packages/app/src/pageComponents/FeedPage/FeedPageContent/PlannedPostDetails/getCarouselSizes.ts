@@ -1,11 +1,11 @@
-type Sizes = {
+export type CarouselSizes = {
   container: { height: number; width: number };
   image: { height: number; width: number };
 };
 
 export default (
   resolution: { height: number; width: number } | null
-): Sizes => {
+): CarouselSizes => {
   if (resolution === null) {
     return {
       container: { height: 620, width: 465 },

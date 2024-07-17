@@ -2,6 +2,7 @@
 /* eslint-disable arrow-body-style */
 import { relations, sql } from 'drizzle-orm';
 import {
+  boolean,
   integer,
   uniqueIndex,
   pgSchema,
@@ -37,6 +38,7 @@ export const plannedPost = schema.table(`planned_post`, {
   caption: text(`caption`),
   createdAt: timestamp(`created_at`).defaultNow().notNull(),
   id: text(`id`).primaryKey(),
+  isReel: boolean(`is_reel`),
   order: integer(`order`),
   updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
   userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),

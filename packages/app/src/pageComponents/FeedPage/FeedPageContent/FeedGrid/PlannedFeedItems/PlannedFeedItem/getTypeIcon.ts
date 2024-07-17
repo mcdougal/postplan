@@ -1,11 +1,15 @@
-import { isCarousel } from '@/common/plannedPosts';
+import { isCarousel, isReel } from '@/common/plannedPosts';
 import { PlannedPost } from '@/server/plannedPosts';
 
-import { CarouselIcon } from '@/app/components';
+import { CarouselIcon, ReelIcon } from '@/app/components';
 
 export default (
   plannedPost: PlannedPost
 ): ((props: { className?: string }) => React.ReactNode) | null => {
+  if (isReel(plannedPost)) {
+    return ReelIcon;
+  }
+
   if (isCarousel(plannedPost)) {
     return CarouselIcon;
   }

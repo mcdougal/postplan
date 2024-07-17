@@ -29,6 +29,7 @@ const AddPlannedPostsDialog = ({
 }: Props): React.ReactElement => {
   const [posts, setPosts] = useState<Array<Post>>([]);
   const [isCarousel, setIsCarousel] = useState(false);
+  const [isReel, setIsReel] = useState(false);
 
   const createPlannedPostsRequest = useCreatePlannedPostsRequest(
     currentUser,
@@ -38,6 +39,8 @@ const AddPlannedPostsDialog = ({
         onClose();
         setTimeout(() => {
           setPosts([]);
+          setIsCarousel(false);
+          setIsReel(false);
         }, 1000);
       },
     }
@@ -50,15 +53,24 @@ const AddPlannedPostsDialog = ({
 
   return (
     <Dialog maxWidth="2xl" onClose={onClose} open={open}>
-      <div className="mb-5 flex">
+      <div className="mb-5 flex gap-4">
         <Typography className="flex-1" size="xl" weight="bold">
           Add Posts
         </Typography>
+        <Checkbox
+          checked={isReel}
+          label={<Typography size="md">Reel</Typography>}
+          onChange={() => {
+            setIsReel(!isReel);
+            setIsCarousel(false);
+          }}
+        />
         <Checkbox
           checked={isCarousel}
           label={<Typography size="md">Carousel</Typography>}
           onChange={() => {
             setIsCarousel(!isCarousel);
+            setIsReel(false);
           }}
         />
       </div>
@@ -82,7 +94,10 @@ const AddPlannedPostsDialog = ({
             disabled={hasNonImageFile}
             loading={createPlannedPostsRequest.loading}
             onClick={() => {
-              createPlannedPostsRequest.createPlannedPosts({ isCarousel });
+              createPlannedPostsRequest.createPlannedPosts({
+                isCarousel,
+                isReel,
+              });
             }}
             size="xl">
             {isCarousel ? `Add` : `Add ${posts.length}`}

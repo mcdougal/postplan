@@ -8,6 +8,7 @@ type Args = {
     currentUserId: string;
   };
   data: {
+    isReel: boolean;
     plannedPosts: Array<{
       mediaItems: Array<{ fileName: string; height: number; width: number }>;
     }>;
@@ -19,7 +20,7 @@ type Response = { status: `error`; message: string } | { status: `success` };
 
 export default async (args: Args): Promise<Response> => {
   const { currentUserId } = args.auth;
-  const { plannedPosts, userId } = args.data;
+  const { isReel, plannedPosts, userId } = args.data;
 
   try {
     await Promise.all(
@@ -29,7 +30,8 @@ export default async (args: Args): Promise<Response> => {
             currentUserId,
           },
           data: {
-            plannedPostMediaItems: plannedPost.mediaItems,
+            isReel,
+            mediaItems: plannedPost.mediaItems,
             userId,
           },
         });

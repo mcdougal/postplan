@@ -19,7 +19,7 @@ const Checkbox = forwardRef<Ref, Props>(
     const inputId = useId();
 
     return (
-      <div ref={ref} className="relative flex items-start gap-2">
+      <div ref={ref} className="relative flex items-start">
         <div className="flex h-6 items-center">
           <input
             checked={checked}
@@ -31,7 +31,9 @@ const Checkbox = forwardRef<Ref, Props>(
             type="checkbox"
           />
         </div>
-        <label htmlFor={inputId}>{label}</label>
+        <label className="pl-2" htmlFor={inputId}>
+          {label}
+        </label>
       </div>
     );
   }

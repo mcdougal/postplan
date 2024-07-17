@@ -21,6 +21,7 @@ export type PlannedPost = QueryResult<
     caption: true;
     createdAt: true;
     id: true;
+    isReel: true;
     order: true;
     userId: true;
   },
@@ -52,6 +53,7 @@ export default async (args: Args): Promise<Array<PlannedPost>> => {
       caption: true,
       createdAt: true,
       id: true,
+      isReel: true,
       order: true,
       userId: true,
     },

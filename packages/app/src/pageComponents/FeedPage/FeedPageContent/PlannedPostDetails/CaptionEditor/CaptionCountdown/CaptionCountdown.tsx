@@ -10,7 +10,10 @@ const CaptionCountdown = ({ count, label, max }: Props): React.ReactElement => {
   const remaining = max - count;
 
   return (
-    <Typography color={remaining < 0 ? `red` : `gray`} size="xs">
+    <Typography
+      className="whitespace-nowrap"
+      color={remaining < 0 ? `red` : `gray`}
+      size="xs">
       {label} {remaining}/{max}
     </Typography>
   );

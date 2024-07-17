@@ -9,7 +9,8 @@ type Args = {
     currentUserId: string;
   };
   data: {
-    plannedPostMediaItems: Array<{
+    isReel: boolean;
+    mediaItems: Array<{
       fileName: string;
       height: number;
       width: number;
@@ -24,7 +25,7 @@ type Response = {
 
 export default async (args: Args): Promise<Response> => {
   const { currentUserId } = args.auth;
-  const { plannedPostMediaItems, userId } = args.data;
+  const { isReel, mediaItems, userId } = args.data;
 
   if (userId !== currentUserId) {
     throw new ForbiddenError();
@@ -36,6 +37,7 @@ export default async (args: Args): Promise<Response> => {
         .insert(plannedPost)
         .values({
           id: createId(),
+          isReel,
           userId,
         })
         .returning({
@@ -44,7 +46,7 @@ export default async (args: Args): Promise<Response> => {
     );
 
     await Promise.all(
-      plannedPostMediaItems.map(async ({ fileName, height, width }) => {
+      mediaItems.map(async ({ fileName, height, width }) => {
         firstOrThrow(
           await tx
             .insert(plannedPostMediaItem)

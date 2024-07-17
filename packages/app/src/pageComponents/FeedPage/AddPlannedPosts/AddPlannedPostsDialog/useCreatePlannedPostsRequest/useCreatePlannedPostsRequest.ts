@@ -11,8 +11,13 @@ type Callbacks = {
   onCompleted: () => void;
 };
 
+type CreatePlannedPosts = (options: {
+  isCarousel: boolean;
+  isReel: boolean;
+}) => Promise<void>;
+
 type CreatePlannedPostsRequest = {
-  createPlannedPosts: (options: { isCarousel: boolean }) => Promise<void>;
+  createPlannedPosts: CreatePlannedPosts;
   error: string | null;
   loading: boolean;
 };
@@ -25,11 +30,10 @@ export default (
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const createPlannedPosts = async (options: {
-    isCarousel: boolean;
+  const createPlannedPosts: CreatePlannedPosts = async ({
+    isCarousel,
+    isReel,
   }): Promise<void> => {
-    const { isCarousel } = options;
-
     setLoading(true);
     setError(null);
 
@@ -76,6 +80,7 @@ export default (
         currentUserId: currentUser.id,
       },
       data: {
+        isReel,
         plannedPosts: plannedPostsData,
         userId: currentUser.id,
       },

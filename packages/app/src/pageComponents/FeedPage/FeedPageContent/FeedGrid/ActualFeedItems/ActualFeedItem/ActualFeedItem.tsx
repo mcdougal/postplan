@@ -29,7 +29,7 @@ const ActualFeedItem = ({
 
   return (
     <button
-      className="absolute"
+      className="absolute transition-all"
       onClick={onClick}
       style={{
         height: `${bounds.height}px`,

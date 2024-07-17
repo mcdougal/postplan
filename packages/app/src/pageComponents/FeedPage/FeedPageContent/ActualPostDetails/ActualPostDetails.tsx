@@ -1,51 +1,40 @@
 import { InstagramMediaItem } from '@/server/instagram';
 
-import { Typography } from '@/app/components';
+import { ActualPostHider } from '../useActualPostHider';
 
 import ActualPostCarousel from './ActualPostCarousel';
+import ActualPostDetailsCaption from './ActualPostDetailsCaption';
 import getCarouselSizes from './getCarouselSizes';
 import useResolution from './useResolution';
 
 type Props = {
   actualPost: InstagramMediaItem;
+  actualPostHider: ActualPostHider;
 };
 
-const ActualPostDetails = ({ actualPost }: Props): React.ReactElement => {
+const ActualPostDetails = ({
+  actualPost,
+  actualPostHider,
+}: Props): React.ReactElement => {
   const resolution = useResolution(actualPost);
   const carouselSizes = getCarouselSizes(resolution);
 
   return (
-    <div className="max-w-full flex-1 bg-white">
+    <div className="relative max-w-full flex-1 bg-white">
       {resolution && (
-        <div className="flex">
-          <ActualPostCarousel
-            actualPost={actualPost}
-            carouselSizes={carouselSizes}
-          />
-          <div
-            className="relative flex-1"
-            style={{
-              height: `${carouselSizes.container.height}px`,
-            }}>
-            <div
-              className="overflow-auto px-6 py-4"
-              style={{
-                height: `${carouselSizes.container.height}px`,
-              }}>
-              {actualPost.caption ? (
-                <Typography
-                  className="break-anywhere whitespace-pre-wrap leading-5"
-                  size="sm">
-                  {actualPost.caption}
-                </Typography>
-              ) : (
-                <Typography color="gray" size="sm">
-                  No caption
-                </Typography>
-              )}
-            </div>
+        <>
+          <div className="flex">
+            <ActualPostCarousel
+              actualPost={actualPost}
+              carouselSizes={carouselSizes}
+            />
+            <ActualPostDetailsCaption
+              actualPost={actualPost}
+              actualPostHider={actualPostHider}
+              carouselSizes={carouselSizes}
+            />
           </div>
-        </div>
+        </>
       )}
     </div>
   );

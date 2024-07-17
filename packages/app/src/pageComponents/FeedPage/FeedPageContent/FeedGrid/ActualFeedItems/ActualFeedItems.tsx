@@ -1,26 +1,35 @@
 import { InstagramMediaItem } from '@/server/instagram';
 import { useMemo } from 'react';
 
+import { ActualPostHider } from '../../useActualPostHider';
 import { SelectedPostId } from '../../usePostSelector';
 import { getItemBounds } from '../gridPositioning';
 
 import ActualFeedItem from './ActualFeedItem';
 
 type Props = {
+  actualPostHider: ActualPostHider;
   actualPosts: Array<InstagramMediaItem>;
   onSelectPost: (selectedPostId: SelectedPostId) => void;
   startIndex: number;
 };
 
 const ActualFeedItems = ({
+  actualPostHider,
   actualPosts,
   onSelectPost,
   startIndex,
 }: Props): React.ReactElement => {
+  const { hiddenPostIds } = actualPostHider;
+
   return useMemo(() => {
+    const visiblePosts = actualPosts.filter((actualPost) => {
+      return !hiddenPostIds.has(actualPost.id);
+    });
+
     return (
       <>
-        {actualPosts.map((actualPost, i) => {
+        {visiblePosts.map((actualPost, i) => {
           const bounds = getItemBounds({ index: startIndex + i });
 
           return (
@@ -36,7 +45,7 @@ const ActualFeedItems = ({
         })}
       </>
     );
-  }, [actualPosts, startIndex, onSelectPost]);
+  }, [actualPosts, startIndex, hiddenPostIds, onSelectPost]);
 };
 
 export default ActualFeedItems;

@@ -8,10 +8,9 @@ import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
-import { Container, SiteTopBar } from '@/app/components';
+import { SiteTopBar } from '@/app/components';
 import { Page } from '@/app/pageUtils';
 
-import AddPlannedPosts from './AddPlannedPosts';
 import FeedPageContent from './FeedPageContent';
 import sortPlannedPosts from './sortPlannedPosts';
 
@@ -44,18 +43,13 @@ const FeedPage: Page = async () => {
   return (
     <>
       <SiteTopBar currentUser={currentUser} />
-      <Container className="mt-10" size="xs">
-        <div className="flex flex-col items-center">
-          <FeedPageContent
-            actualPosts={actualPosts}
-            currentUser={currentUser}
-            fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
-            plannedPosts={sortPlannedPosts(plannedPosts)}
-            thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
-          />
-        </div>
-      </Container>
-      <AddPlannedPosts currentUser={currentUser} />
+      <FeedPageContent
+        actualPosts={actualPosts}
+        currentUser={currentUser}
+        fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
+        plannedPosts={sortPlannedPosts(plannedPosts)}
+        thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
+      />
     </>
   );
 };

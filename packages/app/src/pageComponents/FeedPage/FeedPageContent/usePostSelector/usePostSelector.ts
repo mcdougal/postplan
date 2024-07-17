@@ -6,15 +6,15 @@ import findSelectedPost from './findSelectedPost';
 import { SelectedPost, SelectedPostId } from './types';
 import useFirstPostSelectedId from './useFirstPostSelectedId';
 
-type PlannedPostsSelector = {
-  onSelectPost: (selectedPostId: SelectedPostId) => void;
+type PostSelector = {
   selectedPost: SelectedPost | null;
+  selectPost: (selectedPostId: SelectedPostId) => void;
 };
 
 export default (
   optimisticPlannedPosts: Array<PlannedPost>,
   actualPosts: Array<InstagramMediaItem>
-): PlannedPostsSelector => {
+): PostSelector => {
   const firstPostSelectedId = useFirstPostSelectedId(
     optimisticPlannedPosts,
     actualPosts
@@ -30,12 +30,9 @@ export default (
     actualPosts
   );
 
-  const onSelectPost = useCallback(
-    (newSelectedPostId: SelectedPostId): void => {
-      setSelectedPostId(newSelectedPostId);
-    },
-    []
-  );
+  const selectPost = useCallback((newSelectedPostId: SelectedPostId): void => {
+    setSelectedPostId(newSelectedPostId);
+  }, []);
 
   useEffect(() => {
     if (!selectedPostId || selectedPostId.type === `actual`) {
@@ -59,7 +56,7 @@ export default (
   }, [optimisticPlannedPosts, selectedPostId, firstPostSelectedId]);
 
   return {
-    onSelectPost,
     selectedPost,
+    selectPost,
   };
 };

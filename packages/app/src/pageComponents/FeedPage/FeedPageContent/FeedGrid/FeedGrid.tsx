@@ -6,6 +6,7 @@ import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction } from 'react';
 import { twMerge } from 'tailwind-merge';
 
+import { ActualPostHider } from '../useActualPostHider';
 import { SelectedPostId } from '../usePostSelector';
 
 import ActualFeedItems from './ActualFeedItems';
@@ -14,6 +15,7 @@ import { getGridSize } from './gridPositioning';
 import PlannedFeedItems from './PlannedFeedItems';
 
 type Props = {
+  actualPostHider: ActualPostHider;
   actualPosts: Array<InstagramMediaItem>;
   currentUser: CurrentUser;
   onSelectPost: (selectedPostId: SelectedPostId) => void;
@@ -23,6 +25,7 @@ type Props = {
 };
 
 const FeedGrid = ({
+  actualPostHider,
   actualPosts,
   currentUser,
   onSelectPost,
@@ -49,6 +52,7 @@ const FeedGrid = ({
               thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
             />
             <ActualFeedItems
+              actualPostHider={actualPostHider}
               actualPosts={actualPosts}
               onSelectPost={onSelectPost}
               startIndex={optimisticPlannedPosts.length}

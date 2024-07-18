@@ -61,9 +61,21 @@ const HashtagPicker = ({
         })}
       </div>
       <div className="relative flex-1 overflow-auto">
-        <HashtagGroups isSelected={selectedTabName === `groups`} />
-        <MostUsedHashtags isSelected={selectedTabName === `mostUsed`} />
-        <RecentHashtags isSelected={selectedTabName === `recent`} />
+        <HashtagGroups
+          isSelected={selectedTabName === `groups`}
+          onUpdateHashtags={onUpdateHashtags}
+          selectedHashtags={selectedHashtags}
+        />
+        <MostUsedHashtags
+          isSelected={selectedTabName === `mostUsed`}
+          onUpdateHashtags={onUpdateHashtags}
+          selectedHashtags={selectedHashtags}
+        />
+        <RecentHashtags
+          isSelected={selectedTabName === `recent`}
+          onUpdateHashtags={onUpdateHashtags}
+          selectedHashtags={selectedHashtags}
+        />
         <SuggestedHashtags
           isSelected={selectedTabName === `suggested`}
           onUpdateHashtags={onUpdateHashtags}

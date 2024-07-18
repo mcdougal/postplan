@@ -35,26 +35,42 @@ export default (
       //   toast.error(response.message);
       // } else {
       //   setSuggestedHashtags(response.suggestedHashtags);
+      //   console.log(response.suggestedHashtags);
       // }
 
       await sleep(100);
       setLoading(false);
       setSuggestedHashtags([
-        `#seinerivercruise`,
-        `#parisadventures`,
-        `#parisexplorer`,
-        `#parisview`,
-        `#eiffeltowerviews`,
-        `#louvreexperience`,
-        `#notredamecathedral`,
-        `#museedorsay`,
-        `#paristour`,
-        `#parisinonehour`,
-        `#frenchriviera`,
-        `#discoverparis`,
-        `#travelwithme`,
-        `#europeanadventure`,
-        `#holidayinparis`,
+        `#TravelInspiration`,
+        `#DiscoverParis`,
+        `#SeineRiverCruise`,
+        `#EiffelTowerMagic`,
+        `#LouvreLovers`,
+        `#NotreDameDeParis`,
+        `#ConciergerieParis`,
+        `#MuséeDOrsay`,
+        `#StatueOfLibertyParis`,
+        `#PontDeGrenelle`,
+        `#ParisInOneHour`,
+        `#BoatTourParis`,
+        `#ParisAdventure`,
+        `#ExploreFrance`,
+        `#ParisOnTheSeine`,
+        `#ParisJourney`,
+        `#TravelVloggers`,
+        `#FrenchGetaway`,
+        `#ParisBoatTour`,
+        `#TravelEurope`,
+        `#ParisianViews`,
+        `#ParisTourist`,
+        `#HiddenParis`,
+        `#MustSeeParis`,
+        `#ParisHighlights`,
+        `#IconicParis`,
+        `#ParisExperience`,
+        `#ParisLifeStyle`,
+        `#ParisInSummer`,
+        `#LoveParis`,
       ]);
     };
     run();

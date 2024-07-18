@@ -1,6 +1,6 @@
 'use client';
 
-import { getFirstMediaItem } from '@/common/plannedPosts';
+import { getFirstMediaItem, isReel } from '@/common/plannedPosts';
 import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction } from 'react';
@@ -48,13 +48,15 @@ const PlannedPostDetails = ({
           />
         </div>
       </div>
-      <MediaItemReorder
-        carousel={carousel}
-        currentUser={currentUser}
-        plannedPost={plannedPost}
-        setOptimisticPlannedPosts={setOptimisticPlannedPosts}
-        thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
-      />
+      {!isReel(plannedPost) && (
+        <MediaItemReorder
+          carousel={carousel}
+          currentUser={currentUser}
+          plannedPost={plannedPost}
+          setOptimisticPlannedPosts={setOptimisticPlannedPosts}
+          thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
+        />
+      )}
     </div>
   );
 };

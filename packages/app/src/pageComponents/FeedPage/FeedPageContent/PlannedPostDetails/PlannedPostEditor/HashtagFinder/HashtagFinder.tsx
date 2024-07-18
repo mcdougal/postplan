@@ -36,6 +36,7 @@ const HashtagFinder = ({
         <IconButton
           edge="end"
           icon={XMarkIcon}
+          iconStyle="icon"
           label="Close"
           onClick={onClose}
           size="md"

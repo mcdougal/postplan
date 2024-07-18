@@ -14,6 +14,7 @@ type Ref = any;
 type CommonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   edge?: IconButtonEdge;
   icon: IconButtonIcon;
+  iconStyle: `circle` | `icon`;
   label: string;
   size: IconButtonSize;
 };
@@ -29,31 +30,52 @@ type Props = CommonProps & ConditionalProps;
 
 const IconButton = forwardRef<Ref, Props>(
   (
-    { className, edge, icon, label, size, ...otherProps },
+    { className, edge, icon, iconStyle, label, size, ...otherProps },
     ref
   ): React.ReactElement => {
     const Icon = icon;
 
     const classNameBySize: { [key in IconButtonSize]: string } = {
-      xs: `p-1`,
-      sm: `p-1`,
-      md: `p-1`,
-      lg: `p-1`,
-      xl: `p-1`,
-      '2xl': `p-1`,
-      '3xl': `p-1`,
+      xs: iconStyle === `circle` ? `p-0` : `p-1`,
+      sm: iconStyle === `circle` ? `p-0` : `p-1`,
+      md: iconStyle === `circle` ? `p-0` : `p-1`,
+      lg: iconStyle === `circle` ? `p-0` : `p-1`,
+      xl: iconStyle === `circle` ? `p-0` : `p-1`,
+      '2xl': iconStyle === `circle` ? `p-0` : `p-2`,
+      '3xl': iconStyle === `circle` ? `p-0` : `p-2`,
     };
 
     const classNameBySizeAndEdge: {
       [key in IconButtonSize]: { [key2 in IconButtonEdge]: string };
     } = {
-      xs: { start: `-ml-1`, end: `-mr-1` },
-      sm: { start: `-ml-1`, end: `-mr-1` },
-      md: { start: `-ml-1`, end: `-mr-1` },
-      lg: { start: `-ml-1`, end: `-mr-1` },
-      xl: { start: `-ml-1`, end: `-mr-1` },
-      '2xl': { start: `-ml-1`, end: `-mr-1` },
-      '3xl': { start: `-ml-1`, end: `-mr-1` },
+      xs:
+        iconStyle === `circle`
+          ? { start: ``, end: `` }
+          : { start: `-ml-1`, end: `-mr-1` },
+      sm:
+        iconStyle === `circle`
+          ? { start: ``, end: `` }
+          : { start: `-ml-1`, end: `-mr-1` },
+      md:
+        iconStyle === `circle`
+          ? { start: ``, end: `` }
+          : { start: `-ml-1`, end: `-mr-1` },
+      lg:
+        iconStyle === `circle`
+          ? { start: ``, end: `` }
+          : { start: `-ml-1`, end: `-mr-1` },
+      xl:
+        iconStyle === `circle`
+          ? { start: ``, end: `` }
+          : { start: `-ml-1`, end: `-mr-1` },
+      '2xl':
+        iconStyle === `circle`
+          ? { start: ``, end: `` }
+          : { start: `-ml-2`, end: `-mr-2` },
+      '3xl':
+        iconStyle === `circle`
+          ? { start: ``, end: `` }
+          : { start: `-ml-2`, end: `-mr-2` },
     };
 
     const iconClassNameBySize: { [key in IconButtonSize]: string } = {

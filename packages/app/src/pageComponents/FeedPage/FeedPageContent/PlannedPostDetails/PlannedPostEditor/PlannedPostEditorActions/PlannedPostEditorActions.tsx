@@ -54,6 +54,7 @@ const PlannedPostEditorActions = ({
               <IconButton
                 as="menuButton"
                 icon={EllipsisVerticalIcon}
+                iconStyle="icon"
                 label="Options"
                 size="md"
               />

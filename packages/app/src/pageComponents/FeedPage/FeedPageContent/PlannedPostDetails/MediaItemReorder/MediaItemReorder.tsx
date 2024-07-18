@@ -106,6 +106,7 @@ const MediaItemReorder = ({
             <IconButton
               className="text-white opacity-80"
               icon={PlusCircleIcon}
+              iconStyle="circle"
               label="Add To Carousel"
               onClick={() => {
                 setAddDialogOpen(true);

@@ -80,10 +80,12 @@ const MediaItemPreview = ({
           )}
         </button>
         {onDelete && (
-          <div className="absolute right-1 top-1 flex items-center justify-center rounded-full bg-black bg-opacity-30 opacity-0 group-hover:opacity-100">
+          <div className="absolute right-0 top-0 flex items-center justify-center opacity-0 group-hover:opacity-100">
+            <div className="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 bg-black opacity-50" />
             <IconButton
-              className="text-white"
+              className="z-10 text-white shadow-sm"
               icon={XCircleIcon}
+              iconStyle="circle"
               label="Remove"
               onClick={onDelete}
               size="lg"

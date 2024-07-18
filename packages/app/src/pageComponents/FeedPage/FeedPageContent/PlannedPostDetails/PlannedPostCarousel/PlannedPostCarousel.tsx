@@ -64,6 +64,7 @@ const PlannedPostCarousel = ({
         <IconButton
           className="absolute left-2 top-1/2 -translate-y-1/2 text-white opacity-70 shadow-sm"
           icon={ArrowLeftCircleIcon}
+          iconStyle="circle"
           label="Previous"
           onClick={carousel.previous}
           size="2xl"
@@ -73,6 +74,7 @@ const PlannedPostCarousel = ({
         <IconButton
           className="absolute right-2 top-1/2 -translate-y-1/2 text-white opacity-70 shadow-sm"
           icon={ArrowRightCircleIcon}
+          iconStyle="circle"
           label="Previous"
           onClick={carousel.next}
           size="2xl"

@@ -1,5 +1,9 @@
 import { InstagramMediaItem } from '@/server/instagram';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import {
+  ArrowTopRightOnSquareIcon,
+  EyeIcon,
+  EyeSlashIcon,
+} from '@heroicons/react/24/outline';
 
 import { Button, Typography } from '@/app/components';
 
@@ -21,7 +25,7 @@ const ActualPostDetailsCaption = ({
 
   return (
     <div
-      className="relative flex-1"
+      className="relative flex-1 bg-white"
       style={{
         height: `${carouselSizes.container.height}px`,
       }}>
@@ -44,14 +48,26 @@ const ActualPostDetailsCaption = ({
       </div>
       <div className="flex h-14 items-center gap-2 bg-white pl-6 pr-3">
         <Button
+          className="min-w-[128px]"
           color="secondary"
           onClick={() => {
             actualPostHider.hidePost(actualPost.id, !isHidden);
           }}
           size="sm"
           startIcon={isHidden ? EyeIcon : EyeSlashIcon}>
-          {isHidden ? `Show Post` : `Hide Post`}
+          {isHidden ? `Show In Feed` : `Hide In Feed`}
         </Button>
+        {actualPost.permalink && (
+          <Button
+            as="a"
+            color="secondary"
+            href={actualPost.permalink}
+            size="sm"
+            startIcon={ArrowTopRightOnSquareIcon}
+            target="_blank">
+            View on IG
+          </Button>
+        )}
       </div>
     </div>
   );

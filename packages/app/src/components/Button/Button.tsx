@@ -77,7 +77,7 @@ const Button = forwardRef<Ref, Props>(
 
     const containerProps = {
       className: twMerge(
-        `inline-flex items-center justify-center font-semibold shadow-sm`,
+        `inline-flex items-center justify-center font-semibold shadow-sm text-nowrap`,
         classNameBySize[size],
         classNameByColor[color],
         className,

@@ -15,9 +15,13 @@ import { TabName } from './types';
 
 type Props = {
   plannedPost: PlannedPost;
+  selectedHashtags: Array<string>;
 };
 
-const HashtagPicker = ({ plannedPost }: Props): React.ReactElement => {
+const HashtagPicker = ({
+  plannedPost,
+  selectedHashtags,
+}: Props): React.ReactElement => {
   const [selectedTabName, setSelectedTabName] = useState<TabName>(`groups`);
 
   const allTabNames: Array<TabName> = [

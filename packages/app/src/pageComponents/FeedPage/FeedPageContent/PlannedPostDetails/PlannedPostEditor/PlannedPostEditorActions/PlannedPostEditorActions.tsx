@@ -59,7 +59,7 @@ const PlannedPostEditorActions = ({
               />
             }>
             <DropdownItem
-              label="Edit Hashtags"
+              label="Find Hashtags"
               onClick={() => {
                 setIsHashtagManagerOpen(true);
               }}

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 'use client';
 
 import { PlannedPost } from '@/server/plannedPosts';
@@ -24,9 +25,9 @@ const HashtagManager = ({
   open,
   plannedPost,
 }: Props): React.ReactElement => {
-  const hashtags = parseHashtags(plannedPost.caption);
+  const selectedHashtags = parseHashtags(plannedPost.caption);
   const max = 30;
-  const remaining = max - hashtags.length;
+  const remaining = max - selectedHashtags.length;
 
   return (
     <Dialog maxWidth="3xl" onClose={onClose} open={open}>
@@ -37,10 +38,10 @@ const HashtagManager = ({
         </Typography>
       </div>
       <div className="mb-5 flex flex-wrap gap-1">
-        {hashtags.map((hashtag) => {
+        {selectedHashtags.map((hashtag, i) => {
           return (
             <div
-              key={hashtag}
+              key={`${hashtag}-${i}`}
               className="rounded-md border border-gray-300 px-1">
               <Typography className="leading-3" size="xs">
                 {hashtag}
@@ -49,7 +50,10 @@ const HashtagManager = ({
           );
         })}
       </div>
-      <HashtagPicker plannedPost={plannedPost} />
+      <HashtagPicker
+        plannedPost={plannedPost}
+        selectedHashtags={new Set(selectedHashtags)}
+      />
       <DialogActions className="mt-8">
         <Button color="secondary" onClick={onClose} size="lg">
           Done

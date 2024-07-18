@@ -53,7 +53,7 @@ const PlannedPostEditorActions = ({
                 size="md"
               />
             }>
-            <DropdownItem label="Find Hashtags" onClick={onOpenHashtagFinder} />
+            <DropdownItem label="Add Hashtags" onClick={onOpenHashtagFinder} />
             <DropdownItem label="Download Images" />
             <DropdownItem
               label="Delete"

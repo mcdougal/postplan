@@ -1,0 +1,1 @@
+ALTER TABLE "instaplan"."instagram_connection" ADD COLUMN "instagram_user_id" text NOT NULL;

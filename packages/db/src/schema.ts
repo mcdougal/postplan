@@ -34,6 +34,16 @@ export const user = schema.table(
 
 const userId = () => user.id;
 
+export const instagramConnection = schema.table(`instagram_connection`, {
+  accessToken: text(`access_token`).notNull(),
+  createdAt: timestamp(`created_at`).defaultNow().notNull(),
+  instagramUserId: text(`instagram_user_id`).notNull(),
+  id: text(`id`).primaryKey(),
+  permissions: text(`permissions`).array().notNull(),
+  updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
+  userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
+});
+
 export const plannedPost = schema.table(`planned_post`, {
   caption: text(`caption`),
   createdAt: timestamp(`created_at`).defaultNow().notNull(),
@@ -63,9 +73,20 @@ export const plannedPostMediaItem = schema.table(`planned_post_media_item`, {
 // Relations
 // -----------------------------------------------------------------------------
 
-export const userRelations = relations(user, ({ many }) => ({
+export const userRelations = relations(user, ({ many, one }) => ({
+  instagramConnection: one(instagramConnection),
   plannedPosts: many(plannedPost),
 }));
+
+export const instagramConnectionRelations = relations(
+  instagramConnection,
+  ({ one }) => ({
+    user: one(user, {
+      fields: [instagramConnection.userId],
+      references: [user.id],
+    }),
+  })
+);
 
 export const plannedPostRelations = relations(plannedPost, ({ many, one }) => ({
   mediaItems: many(plannedPostMediaItem),

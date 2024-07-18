@@ -8,6 +8,11 @@ const nextConfig = {
     // during the build
     ignoreDuringBuilds: true,
   },
+  experimental: {
+    serverActions: {
+      allowedOrigins: [`*.instaplan.cc`],
+    },
+  },
   images: {
     loader: `custom`,
     loaderFile: `./cloudinaryLoader.ts`,

@@ -25,7 +25,7 @@ const FeedPage: Page = async () => {
       auth: { currentUserId: currentUser.id },
       where: { userId: currentUser.id },
     }),
-    fetchInstagramMediaItems({ limit: 42 }),
+    fetchInstagramMediaItems({ limit: 90 }),
   ]);
 
   const thumbnailUrlByMediaItemId = await getDownloadUrlByMediaItemId({
@@ -44,7 +44,10 @@ const FeedPage: Page = async () => {
     <>
       <SiteTopBar currentUser={currentUser} />
       <FeedPageContent
-        actualPosts={actualPosts}
+        actualPosts={actualPosts.slice(
+          0,
+          -((plannedPosts.length + actualPosts.length) % 3)
+        )}
         currentUser={currentUser}
         fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
         plannedPosts={sortPlannedPosts(plannedPosts)}

@@ -32,7 +32,7 @@ const HashtagFinder = ({
   return (
     <div className="absolute -left-4 top-1/2 w-[520px] -translate-x-full -translate-y-1/2 rounded-lg bg-white p-4 shadow-2xl">
       <div className="mb-4 flex items-center justify-between gap-4">
-        <DialogTitle className="flex-1">Find Hashtags</DialogTitle>
+        <DialogTitle className="flex-1">Add Hashtags</DialogTitle>
         <IconButton
           edge="end"
           icon={XMarkIcon}

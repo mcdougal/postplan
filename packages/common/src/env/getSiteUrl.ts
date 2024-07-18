@@ -1,7 +1,5 @@
-import isProduction from './isProduction';
+import getRequiredEnvVar from './getRequiredEnvVar';
 
 export default (): string => {
-  return isProduction()
-    ? `https://instaplan.vercel.app`
-    : `http://localhost:3000`;
+  return getRequiredEnvVar(`SITE_URL`);
 };

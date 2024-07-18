@@ -1,5 +1,9 @@
 import { HomePageRoute } from '@/common/routes';
-import { exchangeCodeForToken, saveAccessToken } from '@/server/instagram';
+import {
+  exchangeCodeForToken,
+  generateLongLivedToken,
+  saveAccessToken,
+} from '@/server/instagram';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { withAuth } from '../utils';
@@ -12,14 +16,21 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
       return NextResponse.json({ message: `Bad Request` }, { status: 400 });
     }
 
-    const tokenResponse = await exchangeCodeForToken(code);
-
-    await saveAccessToken(
-      tokenResponse.accessToken,
-      tokenResponse.userId,
-      tokenResponse.permissions,
-      currentUser
+    const shortLivedTokenResponse = await exchangeCodeForToken(code);
+    const longLivedTokenResponse = await generateLongLivedToken(
+      shortLivedTokenResponse.accessToken
     );
+
+    await saveAccessToken({
+      auth: { currentUserId: currentUser.id },
+      data: {
+        accessToken: longLivedTokenResponse.accessToken,
+        accessTokenExpiresAt: longLivedTokenResponse.expiresAt,
+        instagramUserId: shortLivedTokenResponse.userId,
+        permissions: shortLivedTokenResponse.permissions,
+        userId: currentUser.id,
+      },
+    });
 
     return NextResponse.redirect(HomePageRoute.getAbsoluteUrl({}));
   });

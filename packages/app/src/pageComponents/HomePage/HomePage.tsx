@@ -15,7 +15,12 @@ const HomePage: Page = async () => {
     redirect(LogInRoute.getPath({}));
   }
 
-  if (!(await hasConnectedInstagram(currentUser.id))) {
+  const isInstagramConnected = await hasConnectedInstagram({
+    auth: { currentUserId: currentUser.id },
+    where: { userId: currentUser.id },
+  });
+
+  if (!isInstagramConnected) {
     return (
       <>
         <SiteTopBar currentUser={currentUser} />

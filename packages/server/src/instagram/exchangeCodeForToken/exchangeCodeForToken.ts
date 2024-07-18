@@ -12,7 +12,7 @@ const InstagramAccessTokenResponseSchema = z.object({
 type Response = {
   accessToken: string;
   permissions: Array<string>;
-  userId: number;
+  userId: string;
 };
 
 export default async (code: string): Promise<Response> => {
@@ -32,8 +32,6 @@ export default async (code: string): Promise<Response> => {
     }
   );
 
-  console.log(JSON.stringify(response.data, null, 2));
-
   const responseParsed = InstagramAccessTokenResponseSchema.parse(
     response.data
   );
@@ -41,6 +39,6 @@ export default async (code: string): Promise<Response> => {
   return {
     accessToken: responseParsed.access_token,
     permissions: responseParsed.permissions,
-    userId: responseParsed.user_id,
+    userId: `${responseParsed.user_id}`,
   };
 };

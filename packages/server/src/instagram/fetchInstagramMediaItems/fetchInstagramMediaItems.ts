@@ -1,10 +1,16 @@
-import { getRequiredEnvVar } from '@/common/env';
 import axios from 'axios';
 import { z } from 'zod';
 
+import { ForbiddenError } from '@/server/auth';
+
+import queryActiveInstagramConnection from '../queryActiveInstagramConnection';
 import { InstagramMediaItem } from '../types';
 
-const DEANNA_TROY_TRAVELS_USER_ID = `17841402384050982`;
+type Args = {
+  auth: { currentUserId: string };
+  where: { userId: string };
+  limit: number;
+};
 
 const InstagramApiMediaItemSchema = z.object({
   caption: z.string().optional(),
@@ -20,18 +26,27 @@ const InstagramApiMediaResponseSchema = z.object({
   data: z.array(InstagramApiMediaItemSchema),
 });
 
-export default async (options: {
-  limit: number;
-}): Promise<Array<InstagramMediaItem>> => {
-  const instagramAccessToken = getRequiredEnvVar(`INSTAGRAM_ACCESS_TOKEN`);
+export default async (args: Args): Promise<Array<InstagramMediaItem>> => {
+  const { currentUserId } = args.auth;
+  const { userId } = args.where;
+  const { limit } = args;
+
+  const connection = await queryActiveInstagramConnection({
+    auth: { currentUserId },
+    where: { userId },
+  });
+
+  if (!connection) {
+    throw new ForbiddenError();
+  }
 
   const twelveMonthsAgo = new Date();
   twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
 
-  const mediaUrl = `https://graph.instagram.com/v14.0/${DEANNA_TROY_TRAVELS_USER_ID}/media?${[
-    `access_token=${instagramAccessToken}`,
+  const mediaUrl = `https://graph.instagram.com/v14.0/${connection.instagramUserId}/media?${[
+    `access_token=${connection.accessToken}`,
     `fields=caption,id,media_type,media_url,permalink,thumbnail_url,timestamp`,
-    `limit=${options.limit}`,
+    `limit=${limit}`,
   ].join(`&`)}`;
 
   const mediaResponse = await axios.get<unknown>(mediaUrl);

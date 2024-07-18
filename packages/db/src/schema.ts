@@ -36,6 +36,7 @@ const userId = () => user.id;
 
 export const instagramConnection = schema.table(`instagram_connection`, {
   accessToken: text(`access_token`).notNull(),
+  accessTokenExpiresAt: timestamp(`access_token_expires_at`).notNull(),
   createdAt: timestamp(`created_at`).defaultNow().notNull(),
   instagramUserId: text(`instagram_user_id`).notNull(),
   id: text(`id`).primaryKey(),

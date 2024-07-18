@@ -1,11 +1,18 @@
-import { db, eq } from '@/db/connection';
-import { instagramConnection } from '@/db/schema';
+import queryActiveInstagramConnection from '../queryActiveInstagramConnection';
 
-export default async (userId: string): Promise<boolean> => {
-  const connection = await db.query.instagramConnection.findFirst({
-    where: eq(instagramConnection.userId, userId),
-    columns: { id: true },
+type Args = {
+  auth: { currentUserId: string };
+  where: { userId: string };
+};
+
+export default async (args: Args): Promise<boolean> => {
+  const { currentUserId } = args.auth;
+  const { userId } = args.where;
+
+  const instagramConnection = await queryActiveInstagramConnection({
+    auth: { currentUserId },
+    where: { userId },
   });
 
-  return Boolean(connection);
+  return Boolean(instagramConnection);
 };

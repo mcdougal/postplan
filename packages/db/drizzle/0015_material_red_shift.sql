@@ -1,0 +1,1 @@
+ALTER TABLE "instaplan"."instagram_connection" ADD COLUMN "access_token_expires_at" timestamp NOT NULL;

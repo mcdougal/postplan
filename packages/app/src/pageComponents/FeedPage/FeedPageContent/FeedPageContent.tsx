@@ -23,7 +23,7 @@ type Props = {
 };
 
 const FeedPageContent = ({
-  actualPosts,
+  actualPosts: allActualPosts,
   currentUser,
   fullSizeUrlByMediaItemId,
   plannedPosts,
@@ -35,6 +35,11 @@ const FeedPageContent = ({
   useEffect(() => {
     setOptimisticPlannedPosts(plannedPosts);
   }, [plannedPosts]);
+
+  const actualPosts = allActualPosts.slice(
+    0,
+    -((optimisticPlannedPosts.length + allActualPosts.length) % 3)
+  );
 
   const { selectedPost, selectPost } = usePostSelector(
     optimisticPlannedPosts,

@@ -1,6 +1,5 @@
 'use client';
 
-import { isReel } from '@/common/plannedPosts';
 import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
@@ -14,7 +13,6 @@ import getNumChars from './getNumChars';
 import getNumHashtags from './getNumHashtags';
 import getNumTags from './getNumTags';
 import useDeleteRequest from './useDeleteRequest';
-import useUpdateIsReelRequest from './useUpdateIsReelRequest';
 
 type Props = {
   caption: string | null;
@@ -33,10 +31,6 @@ const PlannedPostEditorActions = ({
 }: Props): React.ReactElement => {
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
-  const { updateIsReel } = useUpdateIsReelRequest(
-    currentUser,
-    setOptimisticPlannedPosts
-  );
   const { deletePlannedPost } = useDeleteRequest(
     currentUser,
     setOptimisticPlannedPosts
@@ -60,12 +54,6 @@ const PlannedPostEditorActions = ({
               />
             }>
             <DropdownItem label="Find Hashtags" onClick={onOpenHashtagFinder} />
-            <DropdownItem
-              label={isReel(plannedPost) ? `Remove Reel Icon` : `Add Reel Icon`}
-              onClick={() => {
-                updateIsReel(plannedPost.id, !isReel(plannedPost));
-              }}
-            />
             <DropdownItem label="Download Images" />
             <DropdownItem
               label="Delete"

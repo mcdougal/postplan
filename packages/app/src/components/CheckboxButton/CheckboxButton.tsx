@@ -60,8 +60,9 @@ const CheckboxButton = forwardRef<Ref, Props>(
       <label
         ref={ref}
         className={twMerge(
-          `relative flex items-center rounded-sm border border-gray-300`,
-          containerClassNamesBySize[size]
+          `relative flex items-center rounded-sm border border-gray-300 bg-white`,
+          containerClassNamesBySize[size],
+          disabled && `opacity-30`
         )}
         htmlFor={inputId}>
         <div
@@ -73,7 +74,8 @@ const CheckboxButton = forwardRef<Ref, Props>(
             checked={checked}
             className={twMerge(
               `rounded border-gray-300 text-indigo-600 focus:ring-indigo-600`,
-              inputClassNamesBySize[size]
+              inputClassNamesBySize[size],
+              disabled && `cursor-not-allowed text-gray-500`
             )}
             disabled={disabled}
             id={inputId}

@@ -2,12 +2,13 @@
 
 import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
 import { Textarea } from '@/app/components';
 
 import { CarouselSizes } from '../getCarouselSizes';
 
+import HashtagFinder from './HashtagFinder';
 import PlannedPostEditorActions from './PlannedPostEditorActions';
 import useUpdateCaptionRequest from './useUpdateCaptionRequest';
 
@@ -26,6 +27,13 @@ const PlannedPostEditor = ({
 }: Props): React.ReactElement => {
   const [caption, setCaption] = useState(plannedPost.caption);
   const [isChanging, setIsChanging] = useState(false);
+  const [isHashtagFinderOpen, setIsHashtagFinderOpen] = useState(false);
+  const captionContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setCaption(plannedPost.caption);
+  }, [plannedPost.caption]);
+
   const { updateCaption } = useUpdateCaptionRequest(
     currentUser,
     setOptimisticPlannedPosts
@@ -53,6 +61,7 @@ const PlannedPostEditor = ({
         height: `${carouselSizes.container.height}px`,
       }}>
       <div
+        ref={captionContainerRef}
         className="overflow-auto px-6 py-4"
         style={{
           height: `${carouselSizes.container.height - 48}px`,
@@ -70,8 +79,24 @@ const PlannedPostEditor = ({
       <PlannedPostEditorActions
         caption={caption}
         currentUser={currentUser}
+        onOpenHashtagFinder={() => {
+          setIsHashtagFinderOpen(true);
+        }}
         plannedPost={plannedPost}
         setOptimisticPlannedPosts={setOptimisticPlannedPosts}
+      />
+      <HashtagFinder
+        onClose={() => {
+          setIsHashtagFinderOpen(false);
+        }}
+        onUpdateCaption={async (plannedPostId, newCaption) => {
+          await updateCaption(plannedPostId, newCaption);
+          if (captionContainerRef.current) {
+            captionContainerRef.current.scrollTo(0, 99999999);
+          }
+        }}
+        open={isHashtagFinderOpen}
+        plannedPost={plannedPost}
       />
     </div>
   );

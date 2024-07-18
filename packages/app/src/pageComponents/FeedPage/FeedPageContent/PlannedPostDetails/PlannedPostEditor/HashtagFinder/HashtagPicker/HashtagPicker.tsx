@@ -13,12 +13,18 @@ import RecentHashtags from './RecentHashtags';
 import SuggestedHashtags from './SuggestedHashtags';
 import { TabName } from './types';
 
+type OnUpdateHashtags = (
+  updates: Array<{ hashtag: string; selected: boolean }>
+) => void;
+
 type Props = {
+  onUpdateHashtags: OnUpdateHashtags;
   plannedPost: PlannedPost;
-  selectedHashtags: Array<string>;
+  selectedHashtags: Set<string>;
 };
 
 const HashtagPicker = ({
+  onUpdateHashtags,
   plannedPost,
   selectedHashtags,
 }: Props): React.ReactElement => {
@@ -60,7 +66,9 @@ const HashtagPicker = ({
         <RecentHashtags isSelected={selectedTabName === `recent`} />
         <SuggestedHashtags
           isSelected={selectedTabName === `suggested`}
+          onUpdateHashtags={onUpdateHashtags}
           plannedPost={plannedPost}
+          selectedHashtags={selectedHashtags}
         />
       </div>
     </div>

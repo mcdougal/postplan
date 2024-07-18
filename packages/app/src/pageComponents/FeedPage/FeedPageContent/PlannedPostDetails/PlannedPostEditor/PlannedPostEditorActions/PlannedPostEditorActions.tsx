@@ -13,13 +13,13 @@ import DeletePlannedPostConfirmDialog from './DeletePlannedPostConfirmDialog';
 import getNumChars from './getNumChars';
 import getNumHashtags from './getNumHashtags';
 import getNumTags from './getNumTags';
-import HashtagManager from './HashtagManager';
 import useDeleteRequest from './useDeleteRequest';
 import useUpdateIsReelRequest from './useUpdateIsReelRequest';
 
 type Props = {
   caption: string | null;
   currentUser: CurrentUser;
+  onOpenHashtagFinder: () => void;
   plannedPost: PlannedPost;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
 };
@@ -27,10 +27,10 @@ type Props = {
 const PlannedPostEditorActions = ({
   caption,
   currentUser,
+  onOpenHashtagFinder,
   plannedPost,
   setOptimisticPlannedPosts,
 }: Props): React.ReactElement => {
-  const [isHashtagManagerOpen, setIsHashtagManagerOpen] = useState(false);
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
 
   const { updateIsReel } = useUpdateIsReelRequest(
@@ -58,12 +58,7 @@ const PlannedPostEditorActions = ({
                 size="md"
               />
             }>
-            <DropdownItem
-              label="Find Hashtags"
-              onClick={() => {
-                setIsHashtagManagerOpen(true);
-              }}
-            />
+            <DropdownItem label="Find Hashtags" onClick={onOpenHashtagFinder} />
             <DropdownItem
               label={isReel(plannedPost) ? `Remove Reel Icon` : `Add Reel Icon`}
               onClick={() => {
@@ -80,13 +75,6 @@ const PlannedPostEditorActions = ({
           </Dropdown>
         </div>
       </div>
-      <HashtagManager
-        onClose={() => {
-          setIsHashtagManagerOpen(false);
-        }}
-        open={isHashtagManagerOpen}
-        plannedPost={plannedPost}
-      />
       <DeletePlannedPostConfirmDialog
         onCancel={() => {
           setIsDeleteConfirmOpen(false);

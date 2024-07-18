@@ -59,7 +59,8 @@ const AddPlannedPostsDialog = ({
         <Checkbox
           checked={isReel}
           label="Reel"
-          onChange={() => {
+          onChange={(event) => {
+            event.currentTarget.blur();
             setIsReel(!isReel);
             setIsCarousel(false);
           }}
@@ -68,7 +69,8 @@ const AddPlannedPostsDialog = ({
         <Checkbox
           checked={isCarousel}
           label="Carousel"
-          onChange={() => {
+          onChange={(event) => {
+            event.currentTarget.blur();
             setIsCarousel(!isCarousel);
             setIsReel(false);
           }}

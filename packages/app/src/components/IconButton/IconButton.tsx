@@ -38,22 +38,22 @@ const IconButton = forwardRef<Ref, Props>(
       xs: `p-1`,
       sm: `p-1`,
       md: `p-1`,
-      lg: `p-0`,
-      xl: `p-0`,
-      '2xl': `p-0`,
-      '3xl': `p-0`,
+      lg: `p-1`,
+      xl: `p-1`,
+      '2xl': `p-1`,
+      '3xl': `p-1`,
     };
 
     const classNameBySizeAndEdge: {
       [key in IconButtonSize]: { [key2 in IconButtonEdge]: string };
     } = {
-      xs: { start: `-ml-2`, end: `-mr-2` },
-      sm: { start: `-ml-2`, end: `-mr-2` },
-      md: { start: `-ml-2`, end: `-mr-2` },
-      lg: { start: `-ml-2`, end: `-mr-2` },
-      xl: { start: `-ml-2`, end: `-mr-2` },
-      '2xl': { start: `-ml-2`, end: `-mr-2` },
-      '3xl': { start: `-ml-2`, end: `-mr-2` },
+      xs: { start: `-ml-1`, end: `-mr-1` },
+      sm: { start: `-ml-1`, end: `-mr-1` },
+      md: { start: `-ml-1`, end: `-mr-1` },
+      lg: { start: `-ml-1`, end: `-mr-1` },
+      xl: { start: `-ml-1`, end: `-mr-1` },
+      '2xl': { start: `-ml-1`, end: `-mr-1` },
+      '3xl': { start: `-ml-1`, end: `-mr-1` },
     };
 
     const iconClassNameBySize: { [key in IconButtonSize]: string } = {

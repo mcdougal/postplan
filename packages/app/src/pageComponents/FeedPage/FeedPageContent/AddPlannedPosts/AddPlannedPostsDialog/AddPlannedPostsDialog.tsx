@@ -13,7 +13,7 @@ import {
 } from '@/app/components';
 
 import DragAndDrop from './DragAndDrop';
-import postIsNotImage from './postIsNotImage';
+import getClientErrorMessage from './getClientErrorMessage';
 import { Post } from './types';
 import useCreatePlannedPostsRequest from './useCreatePlannedPostsRequest';
 
@@ -47,10 +47,8 @@ const AddPlannedPostsDialog = ({
     }
   );
 
-  const hasNonImageFile = posts.some(postIsNotImage);
-  const errorMessage = hasNonImageFile
-    ? `Only image files are allowed`
-    : createPlannedPostsRequest.error;
+  const clientErrorMessage = getClientErrorMessage(posts, isReel);
+  const serverErrorMessage = createPlannedPostsRequest.error;
 
   return (
     <Dialog maxWidth="2xl" onClose={onClose} open={open}>
@@ -79,9 +77,9 @@ const AddPlannedPostsDialog = ({
       </div>
       <DragAndDrop onPostsChange={setPosts} posts={posts} />
       <DialogActions className="mt-6">
-        {errorMessage && (
+        {(clientErrorMessage || serverErrorMessage) && (
           <Typography color="red" size="md">
-            {errorMessage}
+            {clientErrorMessage || serverErrorMessage}
           </Typography>
         )}
         <Button
@@ -94,7 +92,7 @@ const AddPlannedPostsDialog = ({
         </Button>
         {posts.length > 0 && (
           <Button
-            disabled={hasNonImageFile}
+            disabled={Boolean(clientErrorMessage)}
             loading={createPlannedPostsRequest.loading}
             onClick={() => {
               createPlannedPostsRequest.createPlannedPosts({

@@ -51,7 +51,9 @@ const SuggestedHashtags = ({
     <div>
       <div className="flex flex-wrap gap-1 p-2">
         {suggestedHashtags.map((suggestedHashtag) => {
-          const isChecked = selectedHashtags.has(suggestedHashtag);
+          const isChecked = selectedHashtags.has(
+            suggestedHashtag.toLowerCase()
+          );
 
           return (
             <CheckboxButton

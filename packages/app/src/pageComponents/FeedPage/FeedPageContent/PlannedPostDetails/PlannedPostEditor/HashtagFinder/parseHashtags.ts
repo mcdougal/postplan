@@ -5,5 +5,9 @@ export default (caption: string | null): Array<string> => {
     return [];
   }
 
-  return caption.match(getHashtagRegex()) || [];
+  const hashtags = caption.match(getHashtagRegex()) || [];
+
+  return hashtags.map((hashtag) => {
+    return hashtag.toLowerCase();
+  });
 };

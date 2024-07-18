@@ -47,7 +47,7 @@ const PlannedPostEditor = ({
     const timeout = setTimeout(() => {
       updateCaption(plannedPost.id, caption || ``);
       setIsChanging(false);
-    }, 1000);
+    }, 500);
 
     return (): void => {
       clearTimeout(timeout);

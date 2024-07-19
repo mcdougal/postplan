@@ -4,6 +4,7 @@ import fetchInstagramMediaItems from './fetchInstagramMediaItems';
 import fetchRefreshedAccessToken from './fetchRefreshedAccessToken';
 import generateLongLivedToken from './generateLongLivedToken';
 import getMostUsedHashtags from './getMostUsedHashtags';
+import getRecentHashtags from './getRecentHashtags';
 import hasConnectedInstagram from './hasConnectedInstagram';
 import instagramMediaItemToActualPost from './instagramMediaItemToActualPost';
 import isConnectionActive from './isConnectionActive';
@@ -25,6 +26,7 @@ export {
   fetchRefreshedAccessToken,
   generateLongLivedToken,
   getMostUsedHashtags,
+  getRecentHashtags,
   hasConnectedInstagram,
   instagramMediaItemToActualPost,
   isConnectionActive,

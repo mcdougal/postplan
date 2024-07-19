@@ -75,6 +75,7 @@ const HashtagPicker = ({
         <RecentHashtags
           isSelected={selectedTabName === `recent`}
           onUpdateHashtags={onUpdateHashtags}
+          plannedPost={plannedPost}
           selectedHashtags={selectedHashtags}
         />
         <SuggestedHashtags

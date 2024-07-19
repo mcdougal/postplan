@@ -1,4 +1,4 @@
-import queryActiveInstagramConnection from '../queryActiveInstagramConnection';
+import queryActiveConnection from '../queryActiveConnection';
 
 type Args = {
   auth: { currentUserId: string };
@@ -9,10 +9,10 @@ export default async (args: Args): Promise<boolean> => {
   const { currentUserId } = args.auth;
   const { userId } = args.where;
 
-  const instagramConnection = await queryActiveInstagramConnection({
+  const activeInstagramConnection = await queryActiveConnection({
     auth: { currentUserId },
     where: { userId },
   });
 
-  return Boolean(instagramConnection);
+  return Boolean(activeInstagramConnection);
 };

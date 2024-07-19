@@ -4,9 +4,9 @@
   "scripts": {
     "build": "next build",
     "check": "npx npm-check --skip-unused",
-    "cron": "npx --yes tsx bin/runCronJob.ts",
     "delta-lint:code": "eslint $(git diff --name-only --diff-filter=ACMRTUXB origin/main | grep -E 'packages/app/.*(.js$|.ts$|.tsx$)' | sed -e 's:packages/[^/]*/::g')",
     "dev": "next dev",
+    "job": "npx --yes tsx bin/runJob.ts",
     "lint:code": "eslint .",
     "start": "next start",
     "types": "tsc --noEmit"

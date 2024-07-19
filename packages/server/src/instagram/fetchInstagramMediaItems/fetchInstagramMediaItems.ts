@@ -3,7 +3,7 @@ import { z } from 'zod';
 
 import { ForbiddenError } from '@/server/auth';
 
-import queryActiveInstagramConnection from '../queryActiveInstagramConnection';
+import queryActiveConnection from '../queryActiveConnection';
 import { InstagramMediaItem } from '../types';
 
 type Args = {
@@ -31,7 +31,11 @@ export default async (args: Args): Promise<Array<InstagramMediaItem>> => {
   const { userId } = args.where;
   const { limit } = args;
 
-  const connection = await queryActiveInstagramConnection({
+  if (currentUserId !== userId) {
+    throw new ForbiddenError();
+  }
+
+  const connection = await queryActiveConnection({
     auth: { currentUserId },
     where: { userId },
   });

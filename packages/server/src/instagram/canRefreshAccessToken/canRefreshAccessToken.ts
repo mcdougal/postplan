@@ -6,9 +6,7 @@ const MIN_REFRESH_WINDOW_MS = ms(`1 day`);
 type InstagramConnection = QueryResult<
   'instagramConnection',
   {
-    accessToken: true;
     createdAt: true;
-    id: true;
     refreshedAt: true;
   }
 >;

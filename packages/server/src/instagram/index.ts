@@ -4,7 +4,10 @@ import fetchInstagramMediaItems from './fetchInstagramMediaItems';
 import fetchRefreshedAccessToken from './fetchRefreshedAccessToken';
 import generateLongLivedToken from './generateLongLivedToken';
 import hasConnectedInstagram from './hasConnectedInstagram';
-import refreshAllAccessTokens from './refreshAllAccessTokens';
+import isConnectionActive from './isConnectionActive';
+import queryActiveConnection from './queryActiveConnection';
+import refreshAccessToken from './refreshAccessToken';
+import syncDataFromInstagram from './syncDataFromInstagram';
 import { InstagramMediaItem } from './types';
 import upsertAccessToken from './upsertAccessToken';
 
@@ -17,6 +20,9 @@ export {
   fetchRefreshedAccessToken,
   generateLongLivedToken,
   hasConnectedInstagram,
-  refreshAllAccessTokens,
+  isConnectionActive,
+  queryActiveConnection,
+  refreshAccessToken,
+  syncDataFromInstagram,
   upsertAccessToken,
 };

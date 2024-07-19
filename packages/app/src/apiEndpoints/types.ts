@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+export type BadRequestResponseBody = {
+  message: 'Bad Request';
+};
+
 export type NotFoundResponseBody = {
   message: 'Not Found';
 };
@@ -18,8 +22,9 @@ export type GetHandlerJson<Params, ResponseBody> = (
 ) => Promise<
   NextResponse<
     | ResponseBody
-    | NotFoundResponseBody
+    | BadRequestResponseBody
     | ForbiddenResponseBody
+    | NotFoundResponseBody
     | UnauthorizedResponseBody
   >
 >;

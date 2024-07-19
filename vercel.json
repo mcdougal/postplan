@@ -1,11 +1,11 @@
 {
   "crons": [
     {
-      "path": "/cron/collectHashtags",
+      "path": "/job/refreshAllInstagramAccessTokens",
       "schedule": "0 0 * * *"
     },
     {
-      "path": "/cron/refreshInstagramAccessTokens",
+      "path": "/job/syncInstagramAllUsers",
       "schedule": "0 0 * * *"
     }
   ]

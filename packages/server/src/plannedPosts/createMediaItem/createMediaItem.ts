@@ -1,8 +1,10 @@
-import { db, firstOrThrow } from '@/db/connection';
-import { plannedPostMediaItem } from '@/db/schema';
+import { getThumbnailFileName } from '@/common/userFiles';
+import { db, eq, firstOrThrow } from '@/db/connection';
+import { plannedPost, plannedPostMediaItem } from '@/db/schema';
 import { createId } from '@paralleldrive/cuid2';
 
 import { ForbiddenError } from '@/server/auth';
+import { generateFileDownloadUrl } from '@/server/userFiles';
 
 import isAuthorized from './isAuthorized';
 
@@ -30,6 +32,29 @@ export default async (args: Args): Promise<Response> => {
     throw new ForbiddenError();
   }
 
+  const matchingPlannedPost = firstOrThrow(
+    await db.query.plannedPost.findMany({
+      where: eq(plannedPost.id, plannedPostId),
+      columns: { userId: true },
+    })
+  );
+
+  const mediaUrl = await generateFileDownloadUrl({
+    auth: { currentUserId },
+    where: {
+      fileName,
+      userId: matchingPlannedPost.userId,
+    },
+  });
+
+  const mediaThumbnailUrl = await generateFileDownloadUrl({
+    auth: { currentUserId },
+    where: {
+      fileName: getThumbnailFileName(fileName),
+      userId: matchingPlannedPost.userId,
+    },
+  });
+
   const insertedMediaItem = firstOrThrow(
     await db
       .insert(plannedPostMediaItem)
@@ -37,6 +62,8 @@ export default async (args: Args): Promise<Response> => {
         fileName,
         height,
         id: createId(),
+        mediaThumbnailUrl,
+        mediaUrl,
         plannedPostId,
         width,
       })

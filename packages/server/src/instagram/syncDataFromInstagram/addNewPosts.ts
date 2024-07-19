@@ -41,10 +41,15 @@ export default async (
 
     const actualPostData = instagramMediaItemToActualPost(instagramMediaItem);
 
-    await db.insert(actualPost).values({
-      ...actualPostData,
-      id: createId(),
-      userId,
-    });
+    await db
+      .insert(actualPost)
+      .values({
+        ...actualPostData,
+        id: createId(),
+        userId,
+      })
+      .returning({
+        id: actualPost.id,
+      });
   });
 };

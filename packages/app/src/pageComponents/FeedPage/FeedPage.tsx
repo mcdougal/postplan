@@ -1,9 +1,6 @@
 import { LogInRoute } from '@/common/routes';
 import { queryActualPosts } from '@/server/instagram';
-import {
-  getDownloadUrlByMediaItemId,
-  queryPlannedPosts,
-} from '@/server/plannedPosts';
+import { queryPlannedPosts } from '@/server/plannedPosts';
 import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -32,27 +29,13 @@ const FeedPage: Page = async () => {
     }),
   ]);
 
-  const thumbnailUrlByMediaItemId = await getDownloadUrlByMediaItemId({
-    auth: { currentUserId: currentUser.id },
-    where: { plannedPosts },
-    size: `thumbnail`,
-  });
-
-  const fullSizeUrlByMediaItemId = await getDownloadUrlByMediaItemId({
-    auth: { currentUserId: currentUser.id },
-    where: { plannedPosts },
-    size: `full`,
-  });
-
   return (
     <>
       <SiteTopBar currentUser={currentUser} />
       <FeedPageContent
         actualPosts={actualPosts}
         currentUser={currentUser}
-        fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
         plannedPosts={sortPlannedPosts(plannedPosts)}
-        thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
       />
     </>
   );

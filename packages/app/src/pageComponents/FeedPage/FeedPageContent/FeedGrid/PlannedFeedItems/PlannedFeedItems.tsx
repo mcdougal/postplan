@@ -12,14 +12,12 @@ type Props = {
   onSelectPost: (selectedPostId: SelectedPostId) => void;
   optimisticPlannedPosts: Array<PlannedPost>;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
-  thumbnailUrlByMediaItemId: Map<string, string>;
 };
 
 const PlannedFeedItems = ({
   onSelectPost,
   optimisticPlannedPosts,
   setOptimisticPlannedPosts,
-  thumbnailUrlByMediaItemId,
 }: Props): React.ReactElement => {
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
@@ -57,7 +55,6 @@ const PlannedFeedItems = ({
             }}
             plannedPost={plannedPost}
             plannedPostIndex={i}
-            thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
           />
         );
       })}

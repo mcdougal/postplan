@@ -18,17 +18,13 @@ import usePostSelector from './usePostSelector';
 type Props = {
   actualPosts: Array<ActualPost>;
   currentUser: CurrentUser;
-  fullSizeUrlByMediaItemId: Map<string, string>;
   plannedPosts: Array<PlannedPost>;
-  thumbnailUrlByMediaItemId: Map<string, string>;
 };
 
 const FeedPageContent = ({
   actualPosts: allActualPosts,
   currentUser,
-  fullSizeUrlByMediaItemId,
   plannedPosts,
-  thumbnailUrlByMediaItemId,
 }: Props): React.ReactElement => {
   const [optimisticPlannedPosts, setOptimisticPlannedPosts] =
     useState(plannedPosts);
@@ -55,7 +51,6 @@ const FeedPageContent = ({
           onSelectPost={selectPost}
           optimisticPlannedPosts={optimisticPlannedPosts}
           setOptimisticPlannedPosts={setOptimisticPlannedPosts}
-          thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
         />
         <div className="fixed bottom-8 left-8 flex items-center gap-3">
           <AddPlannedPosts currentUser={currentUser} />
@@ -94,10 +89,8 @@ const FeedPageContent = ({
                 className="absolute inset-0 flex items-center p-12 pb-20">
                 <PlannedPostDetails
                   currentUser={currentUser}
-                  fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
                   plannedPost={selectedPost.plannedPost}
                   setOptimisticPlannedPosts={setOptimisticPlannedPosts}
-                  thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
                 />
               </div>
             );

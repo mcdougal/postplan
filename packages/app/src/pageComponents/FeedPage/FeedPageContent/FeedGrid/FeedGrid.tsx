@@ -19,7 +19,6 @@ type Props = {
   onSelectPost: (selectedPostId: SelectedPostId) => void;
   optimisticPlannedPosts: Array<PlannedPost>;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
-  thumbnailUrlByMediaItemId: Map<string, string>;
 };
 
 const FeedGrid = ({
@@ -28,7 +27,6 @@ const FeedGrid = ({
   onSelectPost,
   optimisticPlannedPosts,
   setOptimisticPlannedPosts,
-  thumbnailUrlByMediaItemId,
 }: Props): React.ReactElement => {
   const gridSize = getGridSize({
     numItems: actualPosts.length + optimisticPlannedPosts.length,
@@ -45,7 +43,6 @@ const FeedGrid = ({
               onSelectPost={onSelectPost}
               optimisticPlannedPosts={optimisticPlannedPosts}
               setOptimisticPlannedPosts={setOptimisticPlannedPosts}
-              thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
             />
             <ActualFeedItems
               actualPostHider={actualPostHider}

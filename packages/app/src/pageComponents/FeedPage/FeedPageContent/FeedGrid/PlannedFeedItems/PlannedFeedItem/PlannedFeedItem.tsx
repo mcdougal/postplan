@@ -20,7 +20,6 @@ type Props = {
   onDrop: () => void;
   plannedPost: PlannedPost;
   plannedPostIndex: number;
-  thumbnailUrlByMediaItemId: Map<string, string>;
 };
 
 const PlannedFeedItem = ({
@@ -33,7 +32,6 @@ const PlannedFeedItem = ({
   onDrop,
   plannedPost,
   plannedPostIndex,
-  thumbnailUrlByMediaItemId,
 }: Props): React.ReactElement => {
   const bounds = getItemBounds({ index: plannedPostIndex });
   const reorderedIndex = calculateReorderedIndex(
@@ -44,9 +42,6 @@ const PlannedFeedItem = ({
   const reorderedBounds = getItemBounds({ index: reorderedIndex });
   const isDragging = draggingIndex === plannedPostIndex;
   const firstMediaItem = getFirstMediaItem(plannedPost);
-  const firstMediaItemThumbnailUrl = firstMediaItem
-    ? thumbnailUrlByMediaItemId.get(firstMediaItem.id)
-    : null;
   const dropZoneActive =
     draggingIndex !== null &&
     (plannedPostIndex !== draggingIndex || dragOverIndex !== null);
@@ -72,12 +67,12 @@ const PlannedFeedItem = ({
           top: `${reorderedBounds.y}px`,
           width: `${reorderedBounds.width}px`,
         }}>
-        {firstMediaItemThumbnailUrl && (
+        {firstMediaItem && (
           <Image
             alt={plannedPost.caption || `Planned post thumbnail`}
             fill
             priority
-            src={firstMediaItemThumbnailUrl}
+            src={firstMediaItem.mediaThumbnailUrl}
             style={{ objectFit: `cover`, objectPosition: `center` }}
             unoptimized
           />

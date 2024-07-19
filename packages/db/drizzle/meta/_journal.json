@@ -134,6 +134,20 @@
       "when": 1721405235741,
       "tag": "0018_bitter_satana",
       "breakpoints": true
+    },
+    {
+      "idx": 19,
+      "version": "7",
+      "when": 1721406979404,
+      "tag": "0019_aberrant_wiccan",
+      "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1721407045602,
+      "tag": "0020_nosy_warbound",
+      "breakpoints": true
     }
   ]
 }

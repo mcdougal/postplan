@@ -1,8 +1,10 @@
 import { db, firstOrThrow } from '@/db/connection';
-import { plannedPost, plannedPostMediaItem } from '@/db/schema';
+import { plannedPost } from '@/db/schema';
 import { createId } from '@paralleldrive/cuid2';
 
 import { ForbiddenError } from '@/server/auth';
+
+import createMediaItem from '../createMediaItem';
 
 type Args = {
   auth: {
@@ -31,43 +33,34 @@ export default async (args: Args): Promise<Response> => {
     throw new ForbiddenError();
   }
 
-  const plannedPostId = await db.transaction(async (tx) => {
-    const insertedPlannedPost = firstOrThrow(
-      await tx
-        .insert(plannedPost)
-        .values({
-          id: createId(),
-          isReel,
-          userId,
-        })
-        .returning({
-          id: plannedPost.id,
-        })
-    );
-
-    await Promise.all(
-      mediaItems.map(async ({ fileName, height, width }) => {
-        firstOrThrow(
-          await tx
-            .insert(plannedPostMediaItem)
-            .values({
-              fileName,
-              height,
-              id: createId(),
-              plannedPostId: insertedPlannedPost.id,
-              width,
-            })
-            .returning({
-              id: plannedPostMediaItem.id,
-            })
-        );
+  const insertedPlannedPost = firstOrThrow(
+    await db
+      .insert(plannedPost)
+      .values({
+        id: createId(),
+        isReel,
+        userId,
       })
-    );
+      .returning({
+        id: plannedPost.id,
+      })
+  );
 
-    return insertedPlannedPost.id;
-  });
+  await Promise.all(
+    mediaItems.map(async ({ fileName, height, width }) => {
+      await createMediaItem({
+        auth: { currentUserId },
+        data: {
+          fileName,
+          height,
+          plannedPostId: insertedPlannedPost.id,
+          width,
+        },
+      });
+    })
+  );
 
   return {
-    plannedPost: { id: plannedPostId },
+    plannedPost: { id: insertedPlannedPost.id },
   };
 };

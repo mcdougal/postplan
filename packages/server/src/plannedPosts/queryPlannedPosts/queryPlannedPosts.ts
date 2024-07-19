@@ -32,6 +32,8 @@ export type PlannedPost = QueryResult<
         fileName: true;
         height: true;
         id: true;
+        mediaThumbnailUrl: true;
+        mediaUrl: true;
         order: true;
         width: true;
       };
@@ -64,6 +66,8 @@ export default async (args: Args): Promise<Array<PlannedPost>> => {
           fileName: true,
           height: true,
           id: true,
+          mediaThumbnailUrl: true,
+          mediaUrl: true,
           order: true,
           width: true,
         },

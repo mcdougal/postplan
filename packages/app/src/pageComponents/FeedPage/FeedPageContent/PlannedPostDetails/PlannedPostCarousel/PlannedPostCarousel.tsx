@@ -14,14 +14,12 @@ import { Carousel } from '../useCarousel';
 type Props = {
   carousel: Carousel;
   carouselSizes: CarouselSizes;
-  fullSizeUrlByMediaItemId: Map<string, string>;
   plannedPost: PlannedPost;
 };
 
 const PlannedPostCarousel = ({
   carousel,
   carouselSizes,
-  fullSizeUrlByMediaItemId,
   plannedPost,
 }: Props): React.ReactElement => {
   return (
@@ -33,7 +31,6 @@ const PlannedPostCarousel = ({
         width: `${carouselSizes.container.width}px`,
       }}>
       {getMediaItems(plannedPost).map((mediaItem, i) => {
-        const downloadUrl = fullSizeUrlByMediaItemId.get(mediaItem.id);
         const left =
           carouselSizes.image.width * i -
           carousel.currentIndex * carouselSizes.image.width;
@@ -47,16 +44,14 @@ const PlannedPostCarousel = ({
               left: `${left}px`,
               width: `${carouselSizes.image.width}px`,
             }}>
-            {downloadUrl && (
-              <Image
-                alt={plannedPost.caption || `Planned post thumbnail`}
-                fill
-                priority
-                src={downloadUrl}
-                style={{ objectFit: `cover`, objectPosition: `center` }}
-                unoptimized
-              />
-            )}
+            <Image
+              alt={plannedPost.caption || `Planned post thumbnail`}
+              fill
+              priority
+              src={mediaItem.mediaUrl}
+              style={{ objectFit: `cover`, objectPosition: `center` }}
+              unoptimized
+            />
           </div>
         );
       })}

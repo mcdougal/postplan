@@ -13,18 +13,14 @@ import useCarousel from './useCarousel';
 
 type Props = {
   currentUser: CurrentUser;
-  fullSizeUrlByMediaItemId: Map<string, string>;
   plannedPost: PlannedPost;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
-  thumbnailUrlByMediaItemId: Map<string, string>;
 };
 
 const PlannedPostDetails = ({
   currentUser,
-  fullSizeUrlByMediaItemId,
   plannedPost,
   setOptimisticPlannedPosts,
-  thumbnailUrlByMediaItemId,
 }: Props): React.ReactElement => {
   const carousel = useCarousel(plannedPost);
   const firstMediaItem = getFirstMediaItem(plannedPost);
@@ -37,7 +33,6 @@ const PlannedPostDetails = ({
           <PlannedPostCarousel
             carousel={carousel}
             carouselSizes={carouselSizes}
-            fullSizeUrlByMediaItemId={fullSizeUrlByMediaItemId}
             plannedPost={plannedPost}
           />
           <PlannedPostEditor
@@ -53,7 +48,6 @@ const PlannedPostDetails = ({
           currentUser={currentUser}
           plannedPost={plannedPost}
           setOptimisticPlannedPosts={setOptimisticPlannedPosts}
-          thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
         />
       )}
     </div>

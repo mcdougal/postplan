@@ -45,9 +45,14 @@ export default async (args: Args): Promise<void> => {
       .set(update)
       .where(eq(instagramConnection.userId, userId));
   } else {
-    await db.insert(instagramConnection).values({
-      ...create,
-      id: createId(),
-    });
+    await db
+      .insert(instagramConnection)
+      .values({
+        ...create,
+        id: createId(),
+      })
+      .returning({
+        id: instagramConnection.id,
+      });
   }
 };

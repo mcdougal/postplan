@@ -21,7 +21,6 @@ type Props = {
   onDragEnter: () => void;
   onDragStart: () => void;
   onDrop: () => void;
-  thumbnailUrlByMediaItemId: Map<string, string>;
 };
 
 const MediaItemPreview = ({
@@ -35,9 +34,7 @@ const MediaItemPreview = ({
   onDragEnter,
   onDragStart,
   onDrop,
-  thumbnailUrlByMediaItemId,
 }: Props): React.ReactElement => {
-  const thumbnailUrl = thumbnailUrlByMediaItemId.get(mediaItem.id);
   const bounds = getItemBounds({ index: mediaItemIndex });
   const reorderedIndex = calculateReorderedIndex(
     mediaItemIndex,
@@ -69,15 +66,13 @@ const MediaItemPreview = ({
           width: `${reorderedBounds.width}px`,
         }}>
         <button className="absolute inset-0" onClick={onClick}>
-          {thumbnailUrl && (
-            <Image
-              alt="Planned post thumbnail"
-              fill
-              src={thumbnailUrl}
-              style={{ objectFit: `cover`, objectPosition: `center` }}
-              unoptimized
-            />
-          )}
+          <Image
+            alt="Planned post thumbnail"
+            fill
+            src={mediaItem.mediaThumbnailUrl}
+            style={{ objectFit: `cover`, objectPosition: `center` }}
+            unoptimized
+          />
         </button>
         {onDelete && (
           <div className="absolute right-0 top-0 flex items-center justify-center opacity-0 group-hover:opacity-100">

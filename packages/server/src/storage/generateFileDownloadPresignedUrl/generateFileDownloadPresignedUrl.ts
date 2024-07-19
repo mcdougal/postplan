@@ -1,4 +1,5 @@
 import { getRequiredEnvVar } from '@/common/env';
+import ms from 'ms';
 
 import { getSupabaseClient } from '../utils';
 
@@ -7,7 +8,7 @@ export default async (key: string): Promise<string> => {
 
   const { data, error } = await supabase.storage
     .from(getRequiredEnvVar(`SUPABASE_INSTAPLAN_BUCKET_NAME`))
-    .createSignedUrl(key, 60 * 60 * 24 * 30);
+    .createSignedUrl(key, Math.floor(ms(`7 days`) / 1000));
 
   if (error) {
     throw error;

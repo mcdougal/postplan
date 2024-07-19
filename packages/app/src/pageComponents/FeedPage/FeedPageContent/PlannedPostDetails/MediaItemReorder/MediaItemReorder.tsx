@@ -21,7 +21,6 @@ type Props = {
   currentUser: CurrentUser;
   plannedPost: PlannedPost;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
-  thumbnailUrlByMediaItemId: Map<string, string>;
 };
 
 const MediaItemReorder = ({
@@ -29,7 +28,6 @@ const MediaItemReorder = ({
   currentUser,
   plannedPost,
   setOptimisticPlannedPosts,
-  thumbnailUrlByMediaItemId,
 }: Props): React.ReactElement => {
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [draggingIndex, setDraggingIndex] = useState<number | null>(null);
@@ -89,7 +87,6 @@ const MediaItemReorder = ({
                 onDrop={() => {
                   reorderMediaItems();
                 }}
-                thumbnailUrlByMediaItemId={thumbnailUrlByMediaItemId}
               />
             );
           })}

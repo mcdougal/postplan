@@ -17,7 +17,6 @@ export type ActiveInstagramConnection = QueryResult<
   'instagramConnection',
   {
     accessToken: true;
-    instagramUserId: true;
   }
 >;
 
@@ -44,8 +43,5 @@ export default async (
     return null;
   }
 
-  return {
-    accessToken: connection.accessToken,
-    instagramUserId: connection.instagramUserId,
-  };
+  return connection;
 };

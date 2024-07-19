@@ -43,7 +43,7 @@ export default async (args: Args): Promise<Array<InstagramMediaItem>> => {
   const twelveMonthsAgo = new Date();
   twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
 
-  const mediaUrl = `https://graph.instagram.com/v14.0/${connection.instagramUserId}/media?${[
+  const mediaUrl = `https://graph.instagram.com/me/media?${[
     `access_token=${connection.accessToken}`,
     `fields=caption,id,media_type,media_url,permalink,thumbnail_url,timestamp`,
     `limit=${limit}`,

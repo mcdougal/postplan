@@ -64,6 +64,7 @@ const HashtagPicker = ({
         <HashtagGroups
           isSelected={selectedTabName === `groups`}
           onUpdateHashtags={onUpdateHashtags}
+          plannedPost={plannedPost}
           selectedHashtags={selectedHashtags}
         />
         <MostUsedHashtags

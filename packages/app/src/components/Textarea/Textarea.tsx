@@ -18,18 +18,30 @@ type Props = Omit<
   'id' | 'className'
 > & {
   button?: React.ReactNode;
+  size?: `sm` | `md`;
+  variant?: 'contained' | 'text';
 };
 
 const Textarea = forwardRef<Ref, Props>(
   (
-    { button, defaultValue, onChange, placeholder, value, ...textareaProps },
+    {
+      button,
+      defaultValue,
+      onChange,
+      placeholder,
+      size = `sm`,
+      value,
+      variant = `text`,
+      ...textareaProps
+    },
     ref
   ): React.ReactElement => {
     const textareaWrapperRef = useRef<HTMLDivElement>(null);
     const id = useId();
     const textareaHeightAffectingClassNames = [
-      `p-0`,
-      `text-sm`,
+      variant === `contained` ? `px-3` : `px-0`,
+      variant === `contained` ? `py-2` : `py-0`,
+      size === `sm` ? `text-sm` : `text-md`,
       `leading-5`,
       `whitespace-pre-wrap`,
       `text-wrap`,
@@ -52,17 +64,21 @@ const Textarea = forwardRef<Ref, Props>(
     }, [value]);
 
     return (
-      <div ref={ref} className="flex items-start bg-white">
+      <div
+        ref={ref}
+        className={twMerge(
+          `flex items-start bg-white`,
+          variant === `contained` && `rounded-md border border-gray-200`
+        )}>
         {placeholder && (
           <label className="sr-only" htmlFor={id}>
             {placeholder}
           </label>
         )}
-        <div className="flex-1 pt-2">
+        <div className="flex-1">
           <div
             ref={textareaWrapperRef}
             className={twMerge(
-              ...textareaHeightAffectingClassNames,
               ...textareaAfterClassNames,
               styles.textAreaWrapper
             )}>

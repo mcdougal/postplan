@@ -1,9 +1,9 @@
-import { getHashtagRegex } from '@/common/instagram';
+import { findHashtags } from '@/common/instagram';
 
 export default (caption: string | null): number => {
   if (!caption) {
     return 0;
   }
 
-  return (caption.match(getHashtagRegex()) || []).length;
+  return findHashtags(caption).length;
 };

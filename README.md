@@ -2,8 +2,8 @@
 
 ## Todo
 
+- Sort by postedAt
 - Trigger IG sync when user loads feed, and make sure new posts appear
-- Collect hashtags to determine most used and recent
 - Hashtags on planned post
 - Download planned post images
 

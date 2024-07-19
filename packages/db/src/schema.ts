@@ -47,6 +47,30 @@ export const user = schema.table(
 
 const userId = () => user.id;
 
+export const actualPost = schema.table(`actual_post`, {
+  caption: text(`caption`),
+  createdAt: timestamp(`created_at`).defaultNow().notNull(),
+  fileName: text(`file_name`).notNull(),
+  id: text(`id`).primaryKey(),
+  instagramId: text(`instagram_id`).notNull(),
+  mediaThumbnailUrl: text(`media_thumbnail_url`),
+  mediaType: actualPostMediaType(`media_type`).notNull(),
+  mediaUrl: text(`media_url`).notNull(),
+  permalink: text(`permalink`).notNull(),
+  postedAt: timestamp(`posted_at`).notNull(),
+  updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
+  userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
+});
+
+export const hashtagGroup = schema.table(`hashtag_group`, {
+  createdAt: timestamp(`created_at`).defaultNow().notNull(),
+  displayName: text(`display_name`).notNull(),
+  hashtags: text(`hashtags`).array().notNull(),
+  id: text(`id`).primaryKey(),
+  updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
+  userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
+});
+
 export const instagramConnection = schema.table(`instagram_connection`, {
   accessToken: encryptedText(`access_token`).notNull(),
   createdAt: timestamp(`created_at`).defaultNow().notNull(),
@@ -86,29 +110,29 @@ export const plannedPostMediaItem = schema.table(`planned_post_media_item`, {
   width: integer(`width`).notNull(),
 });
 
-export const actualPost = schema.table(`actual_post`, {
-  caption: text(`caption`),
-  createdAt: timestamp(`created_at`).defaultNow().notNull(),
-  fileName: text(`file_name`).notNull(),
-  id: text(`id`).primaryKey(),
-  instagramId: text(`instagram_id`).notNull(),
-  mediaThumbnailUrl: text(`media_thumbnail_url`),
-  mediaType: actualPostMediaType(`media_type`).notNull(),
-  mediaUrl: text(`media_url`).notNull(),
-  permalink: text(`permalink`).notNull(),
-  postedAt: timestamp(`posted_at`).notNull(),
-  updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
-  userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
-});
-
 // -----------------------------------------------------------------------------
 // Relations
 // -----------------------------------------------------------------------------
 
 export const userRelations = relations(user, ({ many, one }) => ({
+  actualPosts: many(actualPost),
+  hashtagGroups: many(hashtagGroup),
   instagramConnection: one(instagramConnection),
   plannedPosts: many(plannedPost),
-  actualPosts: many(actualPost),
+}));
+
+export const actualPostRelations = relations(actualPost, ({ one }) => ({
+  user: one(user, {
+    fields: [actualPost.userId],
+    references: [user.id],
+  }),
+}));
+
+export const hashtagGroupRelations = relations(hashtagGroup, ({ one }) => ({
+  user: one(user, {
+    fields: [hashtagGroup.userId],
+    references: [user.id],
+  }),
 }));
 
 export const instagramConnectionRelations = relations(
@@ -138,10 +162,3 @@ export const plannedPostMediaItemRelations = relations(
     }),
   })
 );
-
-export const actualPostRelations = relations(actualPost, ({ one }) => ({
-  user: one(user, {
-    fields: [actualPost.userId],
-    references: [user.id],
-  }),
-}));

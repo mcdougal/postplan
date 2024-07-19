@@ -15,14 +15,16 @@ export default (
 ): Request => {
   const [suggestedHashtags, setSuggestedHashtags] = useState<Array<string>>([]);
   const [loading, setLoading] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     const run = async (): Promise<void> => {
-      if (skip || !caption || suggestedHashtags.length > 0) {
+      if (skip || !caption || loaded) {
         return;
       }
 
       setLoading(true);
+      setLoaded(false);
 
       // todo
       // const response = await suggestHashtagsServerAction({
@@ -30,6 +32,7 @@ export default (
       // });
 
       // setLoading(false);
+      // setLoaded(true);
 
       // if (response.status === `error`) {
       //   toast.error(response.message);
@@ -40,6 +43,7 @@ export default (
 
       await sleep(100);
       setLoading(false);
+      setLoaded(true);
       setSuggestedHashtags([
         `#TravelInspiration`,
         `#DiscoverParis`,
@@ -74,7 +78,7 @@ export default (
       ]);
     };
     run();
-  }, [caption, skip, suggestedHashtags]);
+  }, [skip, loaded, caption]);
 
   return {
     loading,

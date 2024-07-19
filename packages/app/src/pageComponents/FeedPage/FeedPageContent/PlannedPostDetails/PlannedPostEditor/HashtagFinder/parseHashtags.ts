@@ -1,11 +1,11 @@
-import { getHashtagRegex } from '@/common/instagram';
+import { findHashtags } from '@/common/instagram';
 
 export default (caption: string | null): Array<string> => {
   if (!caption) {
     return [];
   }
 
-  const hashtags = caption.match(getHashtagRegex()) || [];
+  const hashtags = findHashtags(caption);
 
   return hashtags.map((hashtag) => {
     return hashtag.toLowerCase();

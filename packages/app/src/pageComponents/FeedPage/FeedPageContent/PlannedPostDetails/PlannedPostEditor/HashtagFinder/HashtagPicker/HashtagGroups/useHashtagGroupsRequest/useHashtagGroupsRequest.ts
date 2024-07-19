@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { toast } from 'react-hot-toast';
 
-import recentHashtagsServerAction from './recentHashtagsServerAction';
+import hashtagGroupsServerAction from './hashtagGroupsServerAction';
+import { HashtagGroup } from './types';
 
 type Request = {
+  hashtagGroups: Array<HashtagGroup>;
   loading: boolean;
-  recentHashtags: Array<string>;
+  setHashtagGroups: Dispatch<SetStateAction<Array<HashtagGroup>>>;
 };
 
 export default (userId: string, { skip }: { skip: boolean }): Request => {
-  const [recentHashtags, setRecentHashtags] = useState<Array<string>>([]);
+  const [hashtagGroups, setHashtagGroups] = useState<Array<HashtagGroup>>([]);
   const [loading, setLoading] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
@@ -22,7 +24,7 @@ export default (userId: string, { skip }: { skip: boolean }): Request => {
       setLoading(true);
       setLoaded(false);
 
-      const response = await recentHashtagsServerAction({
+      const response = await hashtagGroupsServerAction({
         data: { userId },
       });
 
@@ -32,14 +34,15 @@ export default (userId: string, { skip }: { skip: boolean }): Request => {
       if (response.status === `error`) {
         toast.error(response.message);
       } else {
-        setRecentHashtags(response.data.recentHashtags);
+        setHashtagGroups(response.data.hashtagGroups);
       }
     };
     run();
   }, [skip, loaded, userId]);
 
   return {
+    hashtagGroups,
     loading,
-    recentHashtags,
+    setHashtagGroups,
   };
 };

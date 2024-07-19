@@ -1,4 +1,4 @@
-import { getHashtagRegex } from '@/common/instagram';
+import { findHashtags } from '@/common/instagram';
 import { db, desc, eq } from '@/db/connection';
 import { actualPost } from '@/db/schema';
 
@@ -37,7 +37,7 @@ export default async (args: Args): Promise<Array<string>> => {
       return;
     }
 
-    const hashtags = caption.match(getHashtagRegex()) || [];
+    const hashtags = findHashtags(caption);
 
     hashtags.forEach((hashtag) => {
       const count = hashtagsCount.get(hashtag) || 0;

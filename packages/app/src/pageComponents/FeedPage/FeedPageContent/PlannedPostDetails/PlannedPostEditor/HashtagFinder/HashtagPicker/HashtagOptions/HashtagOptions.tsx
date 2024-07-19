@@ -14,6 +14,7 @@ type OnUpdateHashtags = (
 ) => void;
 
 type Props = {
+  extraAction?: React.ReactElement;
   hashtags: Array<string>;
   loading?: boolean;
   onUpdateHashtags: OnUpdateHashtags;
@@ -21,13 +22,14 @@ type Props = {
 };
 
 const HashtagOptions = ({
+  extraAction,
   hashtags,
   loading,
   onUpdateHashtags,
   selectedHashtags,
 }: Props): React.ReactElement => {
   return (
-    <div>
+    <div className="flex-1">
       {loading ? (
         <div className="flex h-[350px] items-center justify-center pb-10">
           <Spinner size={6} />
@@ -56,9 +58,10 @@ const HashtagOptions = ({
       )}
       <div
         className={twMerge(
-          `flex items-center justify-end gap-2 px-3 py-1`,
+          `flex items-center gap-2 px-3 py-1`,
           (loading || hashtags.length === 0) && `pointer-events-none invisible`
         )}>
+        <div className="flex flex-1 items-center">{extraAction}</div>
         <TextLink
           as="button"
           onClick={(): void => {

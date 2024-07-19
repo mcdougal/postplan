@@ -56,7 +56,7 @@ const PlannedPostEditor = ({
       }}>
       <div
         ref={captionContainerRef}
-        className="overflow-auto px-6 py-4"
+        className="overflow-auto px-6 pb-4 pt-5"
         style={{
           height: `${carouselSizes.container.height - 48}px`,
         }}>

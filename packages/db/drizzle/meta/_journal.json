@@ -169,6 +169,13 @@
       "when": 1721416566928,
       "tag": "0023_curious_the_captain",
       "breakpoints": true
+    },
+    {
+      "idx": 24,
+      "version": "7",
+      "when": 1721423753940,
+      "tag": "0024_glorious_silverclaw",
+      "breakpoints": true
     }
   ]
 }

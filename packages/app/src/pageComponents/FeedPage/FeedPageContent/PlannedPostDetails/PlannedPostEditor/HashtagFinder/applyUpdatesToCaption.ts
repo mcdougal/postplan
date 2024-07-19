@@ -16,10 +16,5 @@ export default (
     }
   });
 
-  console.log(`==== BEFORE`);
-  console.log(caption);
-  console.log(`==== AFTER`);
-  console.log(newCaption);
-
   return newCaption;
 };

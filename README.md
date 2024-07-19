@@ -2,7 +2,6 @@
 
 ## Todo
 
-- Sort by postedAt
 - Download planned post images
 
 - Trigger IG sync when user loads feed, and make sure new posts appear

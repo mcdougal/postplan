@@ -1,4 +1,4 @@
-import { db, eq } from '@/db/connection';
+import { db, desc, eq } from '@/db/connection';
 import { actualPost } from '@/db/schema';
 
 import { ForbiddenError } from '@/server/auth';
@@ -33,6 +33,7 @@ export default async (args: Args): Promise<Array<ActualPost>> => {
       permalink: true,
       postedAt: true,
     },
+    orderBy: desc(actualPost.postedAt),
     limit,
   });
 

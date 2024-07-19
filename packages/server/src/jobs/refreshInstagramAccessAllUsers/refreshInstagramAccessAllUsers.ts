@@ -20,7 +20,7 @@ export default async (): Promise<void> => {
 
   const jobs: Array<Job> = refreshableConnections.map((connection) => {
     return {
-      name: `refreshOneInstagramAccessToken`,
+      name: `refreshInstagramAccessOneUser`,
       data: {
         connectionId: connection.id,
       },

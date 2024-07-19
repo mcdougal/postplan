@@ -1,12 +1,12 @@
 import { z } from 'zod';
 
-export const RefreshAllInstagramAccessTokensJobSchema = z.object({
-  name: z.literal(`refreshAllInstagramAccessTokens`),
+export const RefreshInstagramAccessAllUsersJobSchema = z.object({
+  name: z.literal(`refreshInstagramAccessAllUsers`),
   data: z.object({}),
 });
 
-export const RefreshOneInstagramAccessTokenJobSchema = z.object({
-  name: z.literal(`refreshOneInstagramAccessToken`),
+export const RefreshInstagramAccessOneUserJobSchema = z.object({
+  name: z.literal(`refreshInstagramAccessOneUser`),
   data: z.object({
     connectionId: z.string(),
   }),
@@ -30,19 +30,19 @@ export const SyncInstagramOneUserJobSchema = z.object({
 });
 
 export const JobSchema = z.union([
-  RefreshAllInstagramAccessTokensJobSchema,
-  RefreshOneInstagramAccessTokenJobSchema,
+  RefreshInstagramAccessAllUsersJobSchema,
+  RefreshInstagramAccessOneUserJobSchema,
   RunNightlyTasksJobSchema,
   SyncInstagramAllUsersJobSchema,
   SyncInstagramOneUserJobSchema,
 ]);
 
 export type Job = z.infer<typeof JobSchema>;
-export type RefreshAllInstagramAccessTokensJob = z.infer<
-  typeof RefreshAllInstagramAccessTokensJobSchema
+export type RefreshInstagramAccessAllUsersJob = z.infer<
+  typeof RefreshInstagramAccessAllUsersJobSchema
 >;
-export type RefreshOneInstagramAccessTokenJob = z.infer<
-  typeof RefreshOneInstagramAccessTokenJobSchema
+export type RefreshInstagramAccessOneUserJob = z.infer<
+  typeof RefreshInstagramAccessOneUserJobSchema
 >;
 export type RunNightlyTasksJob = z.infer<typeof RunNightlyTasksJobSchema>;
 export type SyncInstagramAllUsersJob = z.infer<

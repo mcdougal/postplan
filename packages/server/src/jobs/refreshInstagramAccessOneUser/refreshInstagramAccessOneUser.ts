@@ -1,11 +1,11 @@
-import { RefreshOneInstagramAccessTokenJob } from '@/common/jobs';
+import { RefreshInstagramAccessOneUserJob } from '@/common/jobs';
 import { db, eq, firstOrThrow } from '@/db/connection';
 import { instagramConnection } from '@/db/schema';
 
 import { refreshAccessToken } from '@/server/instagram';
 
 export default async (
-  data: RefreshOneInstagramAccessTokenJob['data']
+  data: RefreshInstagramAccessOneUserJob['data']
 ): Promise<void> => {
   const { connectionId } = data;
 

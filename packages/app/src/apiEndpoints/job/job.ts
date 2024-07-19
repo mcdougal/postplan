@@ -2,8 +2,8 @@ import { getRequiredEnvVar } from '@/common/env';
 import { JobSchema } from '@/common/jobs';
 import { JobRoute, JobRouteParams, JobRouteResponse } from '@/common/routes';
 import {
-  refreshAllInstagramAccessTokens,
-  refreshOneInstagramAccessToken,
+  refreshInstagramAccessAllUsers,
+  refreshInstagramAccessOneUser,
   runNightlyTasks,
   syncInstagramAllUsers,
   syncInstagramOneUser,
@@ -35,10 +35,10 @@ export const GET: GetHandler = async (request, { params }) => {
 
   const job = jobParsed.data;
 
-  if (job.name === `refreshAllInstagramAccessTokens`) {
-    await refreshAllInstagramAccessTokens();
-  } else if (job.name === `refreshOneInstagramAccessToken`) {
-    await refreshOneInstagramAccessToken(job.data);
+  if (job.name === `refreshInstagramAccessAllUsers`) {
+    await refreshInstagramAccessAllUsers();
+  } else if (job.name === `refreshInstagramAccessOneUser`) {
+    await refreshInstagramAccessOneUser(job.data);
   } else if (job.name === `runNightlyTasks`) {
     await runNightlyTasks();
   } else if (job.name === `syncInstagramAllUsers`) {

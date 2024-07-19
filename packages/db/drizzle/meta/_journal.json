@@ -162,6 +162,13 @@
       "when": 1721416031877,
       "tag": "0022_luxuriant_micromax",
       "breakpoints": true
+    },
+    {
+      "idx": 23,
+      "version": "7",
+      "when": 1721416566928,
+      "tag": "0023_curious_the_captain",
+      "breakpoints": true
     }
   ]
 }

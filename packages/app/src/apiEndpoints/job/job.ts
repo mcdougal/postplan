@@ -9,6 +9,7 @@ import {
   runNightlyTasks,
   syncInstagramAllUsers,
   syncInstagramOneUser,
+  uploadActualPostThumbnail,
 } from '@/server/jobs';
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
@@ -51,6 +52,8 @@ export const GET: GetHandler = async (request, { params }) => {
     await syncInstagramAllUsers();
   } else if (job.name === `syncInstagramOneUser`) {
     await syncInstagramOneUser(job.data);
+  } else if (job.name === `uploadActualPostThumbnail`) {
+    await uploadActualPostThumbnail(job.data);
   } else {
     const exhaustiveCheck: never = job;
     return exhaustiveCheck;

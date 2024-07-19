@@ -35,6 +35,11 @@ export const SyncInstagramOneUserJobSchema = z.object({
   data: z.object({ connectionId: z.string() }),
 });
 
+export const UploadActualPostThumbnailJobSchema = z.object({
+  name: z.literal(`uploadActualPostThumbnail`),
+  data: z.object({ actualPostId: z.string() }),
+});
+
 export const JobSchema = z.union([
   RefreshInstagramAccessAllUsersJobSchema,
   RefreshInstagramAccessOneUserJobSchema,
@@ -43,6 +48,7 @@ export const JobSchema = z.union([
   RunNightlyTasksJobSchema,
   SyncInstagramAllUsersJobSchema,
   SyncInstagramOneUserJobSchema,
+  UploadActualPostThumbnailJobSchema,
 ]);
 
 export type Job = z.infer<typeof JobSchema>;
@@ -64,4 +70,7 @@ export type SyncInstagramAllUsersJob = z.infer<
 >;
 export type SyncInstagramOneUserJob = z.infer<
   typeof SyncInstagramOneUserJobSchema
+>;
+export type UploadActualPostThumbnailJob = z.infer<
+  typeof UploadActualPostThumbnailJobSchema
 >;

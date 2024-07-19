@@ -12,6 +12,7 @@ export default (instagramMediaItem: InstagramMediaItem): ActualPost => {
   return {
     caption: instagramMediaItem.caption || null,
     instagramId: instagramMediaItem.id,
+    mediaThumbnailUrl: null,
     mediaType: mediaTypeMap[instagramMediaItem.mediaType],
     mediaUrl: instagramMediaItem.thumbnailUrl || instagramMediaItem.mediaUrl,
     permalink: instagramMediaItem.permalink,

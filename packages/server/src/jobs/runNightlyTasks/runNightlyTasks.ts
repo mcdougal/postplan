@@ -1,4 +1,4 @@
-import startJobs from '../startJobs';
+import { startJobs } from '@/server/jobsRunner';
 
 export default async (): Promise<void> => {
   await startJobs([

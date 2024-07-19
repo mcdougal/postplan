@@ -3,9 +3,9 @@ import refreshInstagramAccessOneUser from './refreshInstagramAccessOneUser';
 import refreshPlannedPostMediaUrlsAllUsers from './refreshPlannedPostMediaUrlsAllUsers';
 import refreshPlannedPostMediaUrlsOneUser from './refreshPlannedPostMediaUrlsOneUser';
 import runNightlyTasks from './runNightlyTasks';
-import startJobs from './startJobs';
 import syncInstagramAllUsers from './syncInstagramAllUsers';
 import syncInstagramOneUser from './syncInstagramOneUser';
+import uploadActualPostThumbnail from './uploadActualPostThumbnail';
 
 export {
   refreshInstagramAccessAllUsers,
@@ -13,7 +13,7 @@ export {
   refreshPlannedPostMediaUrlsAllUsers,
   refreshPlannedPostMediaUrlsOneUser,
   runNightlyTasks,
-  startJobs,
   syncInstagramAllUsers,
   syncInstagramOneUser,
+  uploadActualPostThumbnail,
 };

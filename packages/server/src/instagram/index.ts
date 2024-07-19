@@ -11,6 +11,7 @@ import queryActualPosts from './queryActualPosts';
 import refreshAccessToken from './refreshAccessToken';
 import syncDataFromInstagram from './syncDataFromInstagram';
 import { ActualPost, InstagramMediaItem } from './types';
+import uploadActualPostThumbnail from './uploadActualPostThumbnail';
 import upsertAccessToken from './upsertAccessToken';
 
 export type { ActualPost, InstagramMediaItem };
@@ -28,5 +29,6 @@ export {
   queryActualPosts,
   refreshAccessToken,
   syncDataFromInstagram,
+  uploadActualPostThumbnail,
   upsertAccessToken,
 };

@@ -15,6 +15,7 @@ export type ActualPost = QueryResult<
   {
     caption: true;
     instagramId: true;
+    mediaThumbnailUrl: true;
     mediaType: true;
     mediaUrl: true;
     permalink: true;

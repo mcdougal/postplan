@@ -1,4 +1,7 @@
+import { Job } from '@/common/jobs';
+
 import { ForbiddenError } from '@/server/auth';
+import { startJobs } from '@/server/jobsRunner';
 
 import fetchInstagramMediaItems from '../fetchInstagramMediaItems';
 
@@ -32,5 +35,14 @@ export default async (args: Args): Promise<void> => {
   });
 
   await removeDeletedPosts(connection.userId, instagramMediaItems);
-  await addNewPosts(connection.userId, instagramMediaItems);
+  const newPosts = await addNewPosts(connection.userId, instagramMediaItems);
+
+  const jobs: Array<Job> = newPosts.map((post) => {
+    return {
+      name: `uploadActualPostThumbnail`,
+      data: { actualPostId: post.id },
+    };
+  });
+
+  await startJobs(jobs);
 };

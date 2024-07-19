@@ -27,6 +27,7 @@ export default async (args: Args): Promise<Array<ActualPost>> => {
     columns: {
       caption: true,
       instagramId: true,
+      mediaThumbnailUrl: true,
       mediaType: true,
       mediaUrl: true,
       permalink: true,

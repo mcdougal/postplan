@@ -1,13 +1,13 @@
 'use client';
 
-import { InstagramMediaItem } from '@/server/instagram';
+import { ActualPost } from '@/server/instagram';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
 import getTypeIcon from './getTypeIcon';
 
 type Props = {
-  actualPost: InstagramMediaItem;
+  actualPost: ActualPost;
   bounds: { height: number; width: number; x: number; y: number };
   onClick: () => void;
 };
@@ -41,7 +41,7 @@ const ActualFeedItem = ({
         <Image
           alt={actualPost.caption || `Instagram post thumbnail`}
           fill
-          src={actualPost.thumbnailUrl || actualPost.mediaUrl}
+          src={actualPost.mediaUrl}
           style={{ objectFit: `cover`, objectPosition: `center` }}
           unoptimized
         />

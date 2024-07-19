@@ -17,7 +17,7 @@ const InstagramApiMediaItemSchema = z.object({
   id: z.string(),
   media_type: z.enum([`CAROUSEL_ALBUM`, `IMAGE`, `VIDEO`]),
   media_url: z.string(),
-  permalink: z.string().optional(),
+  permalink: z.string(),
   thumbnail_url: z.string().optional(),
   timestamp: z.string(),
 });

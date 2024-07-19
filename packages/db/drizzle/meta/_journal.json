@@ -127,6 +127,13 @@
       "when": 1721381851151,
       "tag": "0017_thankful_mimic",
       "breakpoints": true
+    },
+    {
+      "idx": 18,
+      "version": "7",
+      "when": 1721405235741,
+      "tag": "0018_bitter_satana",
+      "breakpoints": true
     }
   ]
 }

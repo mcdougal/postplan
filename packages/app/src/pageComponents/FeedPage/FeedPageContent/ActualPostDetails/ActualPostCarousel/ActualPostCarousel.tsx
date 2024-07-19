@@ -1,10 +1,10 @@
-import { InstagramMediaItem } from '@/server/instagram';
+import { ActualPost } from '@/server/instagram';
 import Image from 'next/image';
 
 import { CarouselSizes } from '../getCarouselSizes';
 
 type Props = {
-  actualPost: InstagramMediaItem;
+  actualPost: ActualPost;
   carouselSizes: CarouselSizes;
 };
 
@@ -30,7 +30,7 @@ const ActualPostCarousel = ({
         <Image
           alt={actualPost.caption || `Instagram post thumbnail`}
           fill
-          src={actualPost.thumbnailUrl || actualPost.mediaUrl}
+          src={actualPost.mediaUrl}
           style={{ objectFit: `cover`, objectPosition: `center` }}
           unoptimized
         />

@@ -1,4 +1,4 @@
-import { InstagramMediaItem } from '@/server/instagram';
+import { ActualPost } from '@/server/instagram';
 import { useEffect, useState } from 'react';
 
 import { createImage } from '@/app/image';
@@ -8,11 +8,11 @@ export type Resolution = {
   width: number;
 };
 
-export default (actualPost: InstagramMediaItem): Resolution | null => {
+export default (actualPost: ActualPost): Resolution | null => {
   const [resolution, setResolution] = useState<Resolution | null>(null);
 
   useEffect(() => {
-    if (actualPost.mediaType === `VIDEO`) {
+    if (actualPost.mediaType === `Video`) {
       setResolution({ height: 620, width: 348 });
       return;
     }

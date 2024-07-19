@@ -1,4 +1,4 @@
-import { InstagramMediaItem } from '@/server/instagram';
+import { ActualPost } from '@/server/instagram';
 import { PlannedPost } from '@/server/plannedPosts';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -13,7 +13,7 @@ type PostSelector = {
 
 export default (
   optimisticPlannedPosts: Array<PlannedPost>,
-  actualPosts: Array<InstagramMediaItem>
+  actualPosts: Array<ActualPost>
 ): PostSelector => {
   const firstPostSelectedId = useFirstPostSelectedId(
     optimisticPlannedPosts,

@@ -1,6 +1,6 @@
 'use client';
 
-import { InstagramMediaItem } from '@/server/instagram';
+import { ActualPost } from '@/server/instagram';
 import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction } from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -15,7 +15,7 @@ import PlannedFeedItems from './PlannedFeedItems';
 
 type Props = {
   actualPostHider: ActualPostHider;
-  actualPosts: Array<InstagramMediaItem>;
+  actualPosts: Array<ActualPost>;
   onSelectPost: (selectedPostId: SelectedPostId) => void;
   optimisticPlannedPosts: Array<PlannedPost>;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;

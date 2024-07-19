@@ -1,4 +1,4 @@
-import { InstagramMediaItem } from '@/server/instagram';
+import { ActualPost } from '@/server/instagram';
 
 import { ActualPostHider } from '../useActualPostHider';
 
@@ -8,7 +8,7 @@ import getCarouselSizes from './getCarouselSizes';
 import useResolution from './useResolution';
 
 type Props = {
-  actualPost: InstagramMediaItem;
+  actualPost: ActualPost;
   actualPostHider: ActualPostHider;
 };
 

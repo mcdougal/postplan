@@ -1,4 +1,4 @@
-import { InstagramMediaItem } from '@/server/instagram';
+import { ActualPost } from '@/server/instagram';
 import { PlannedPost } from '@/server/plannedPosts';
 
 import { SelectedPost, SelectedPostId } from './types';
@@ -6,7 +6,7 @@ import { SelectedPost, SelectedPostId } from './types';
 export default (
   selectedPostId: SelectedPostId | null,
   optimisticPlannedPosts: Array<PlannedPost>,
-  actualPosts: Array<InstagramMediaItem>
+  actualPosts: Array<ActualPost>
 ): SelectedPost | null => {
   if (!selectedPostId) {
     return null;
@@ -14,7 +14,7 @@ export default (
 
   if (selectedPostId.type === `actual`) {
     const actualPost = actualPosts.find((post) => {
-      return post.id === selectedPostId.actualPostId;
+      return post.instagramId === selectedPostId.actualPostId;
     });
 
     return actualPost ? { type: `actual`, actualPost } : null;

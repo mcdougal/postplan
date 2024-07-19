@@ -1,7 +1,7 @@
 'use client';
 
 import { CurrentUser } from '@/common/users';
-import { InstagramMediaItem } from '@/server/instagram';
+import { ActualPost } from '@/server/instagram';
 import { PlannedPost } from '@/server/plannedPosts';
 import { useEffect, useState } from 'react';
 
@@ -16,7 +16,7 @@ import useActualPostHider from './useActualPostHider';
 import usePostSelector from './usePostSelector';
 
 type Props = {
-  actualPosts: Array<InstagramMediaItem>;
+  actualPosts: Array<ActualPost>;
   currentUser: CurrentUser;
   fullSizeUrlByMediaItemId: Map<string, string>;
   plannedPosts: Array<PlannedPost>;
@@ -78,7 +78,7 @@ const FeedPageContent = ({
           if (selectedPost?.type === `actual`) {
             return (
               <div
-                key={selectedPost.actualPost.id}
+                key={selectedPost.actualPost.instagramId}
                 className="absolute inset-0 flex items-center p-12 pb-20">
                 <ActualPostDetails
                   actualPost={selectedPost.actualPost}

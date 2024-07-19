@@ -1,15 +1,15 @@
-import { InstagramMediaItem } from '@/server/instagram';
+import { ActualPost } from '@/server/instagram';
 
 import { CarouselIcon, ReelIcon } from '@/app/components';
 
 export default (
-  actualPost: InstagramMediaItem
+  actualPost: ActualPost
 ): ((props: { className?: string }) => React.ReactNode) | null => {
-  if (actualPost.mediaType === `VIDEO`) {
+  if (actualPost.mediaType === `Video`) {
     return ReelIcon;
   }
 
-  if (actualPost.mediaType === `CAROUSEL_ALBUM`) {
+  if (actualPost.mediaType === `CarouselAlbum`) {
     return CarouselIcon;
   }
 

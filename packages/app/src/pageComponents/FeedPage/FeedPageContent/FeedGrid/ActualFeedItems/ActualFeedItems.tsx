@@ -1,4 +1,4 @@
-import { InstagramMediaItem } from '@/server/instagram';
+import { ActualPost } from '@/server/instagram';
 import { useMemo } from 'react';
 
 import { ActualPostHider } from '../../useActualPostHider';
@@ -9,7 +9,7 @@ import ActualFeedItem from './ActualFeedItem';
 
 type Props = {
   actualPostHider: ActualPostHider;
-  actualPosts: Array<InstagramMediaItem>;
+  actualPosts: Array<ActualPost>;
   onSelectPost: (selectedPostId: SelectedPostId) => void;
   startIndex: number;
 };
@@ -24,7 +24,7 @@ const ActualFeedItems = ({
 
   return useMemo(() => {
     const visiblePosts = actualPosts.filter((actualPost) => {
-      return !hiddenPostIds.has(actualPost.id);
+      return !hiddenPostIds.has(actualPost.instagramId);
     });
 
     return (
@@ -34,11 +34,14 @@ const ActualFeedItems = ({
 
           return (
             <ActualFeedItem
-              key={actualPost.id}
+              key={actualPost.instagramId}
               actualPost={actualPost}
               bounds={bounds}
               onClick={() => {
-                onSelectPost({ type: `actual`, actualPostId: actualPost.id });
+                onSelectPost({
+                  type: `actual`,
+                  actualPostId: actualPost.instagramId,
+                });
               }}
             />
           );

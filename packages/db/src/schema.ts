@@ -8,11 +8,22 @@ import {
   pgSchema,
   text,
   timestamp,
+  pgEnum,
 } from 'drizzle-orm/pg-core';
 
 import { encryptedText } from './customTypes';
 
 export const schema = pgSchema(`instaplan`);
+
+// -----------------------------------------------------------------------------
+// Tables
+// -----------------------------------------------------------------------------
+
+export const actualPostMediaType = pgEnum(`actual_post_media_type`, [
+  `CarouselAlbum`,
+  `Image`,
+  `Video`,
+]);
 
 // -----------------------------------------------------------------------------
 // Tables
@@ -73,6 +84,19 @@ export const plannedPostMediaItem = schema.table(`planned_post_media_item`, {
   width: integer(`width`).notNull(),
 });
 
+export const actualPost = schema.table(`actual_post`, {
+  caption: text(`caption`),
+  createdAt: timestamp(`created_at`).defaultNow().notNull(),
+  id: text(`id`).primaryKey(),
+  instagramId: text(`instagram_id`).notNull(),
+  mediaType: actualPostMediaType(`media_type`).notNull(),
+  mediaUrl: text(`media_url`).notNull(),
+  permalink: text(`permalink`).notNull(),
+  postedAt: timestamp(`posted_at`).notNull(),
+  updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
+  userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
+});
+
 // -----------------------------------------------------------------------------
 // Relations
 // -----------------------------------------------------------------------------
@@ -80,6 +104,7 @@ export const plannedPostMediaItem = schema.table(`planned_post_media_item`, {
 export const userRelations = relations(user, ({ many, one }) => ({
   instagramConnection: one(instagramConnection),
   plannedPosts: many(plannedPost),
+  actualPosts: many(actualPost),
 }));
 
 export const instagramConnectionRelations = relations(
@@ -109,3 +134,10 @@ export const plannedPostMediaItemRelations = relations(
     }),
   })
 );
+
+export const actualPostRelations = relations(actualPost, ({ one }) => ({
+  user: one(user, {
+    fields: [actualPost.userId],
+    references: [user.id],
+  }),
+}));

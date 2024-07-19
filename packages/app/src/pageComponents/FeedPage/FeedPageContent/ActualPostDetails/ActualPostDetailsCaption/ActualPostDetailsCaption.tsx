@@ -1,4 +1,4 @@
-import { InstagramMediaItem } from '@/server/instagram';
+import { ActualPost } from '@/server/instagram';
 import {
   ArrowTopRightOnSquareIcon,
   EyeIcon,
@@ -11,7 +11,7 @@ import { ActualPostHider } from '../../useActualPostHider';
 import { CarouselSizes } from '../getCarouselSizes';
 
 type Props = {
-  actualPost: InstagramMediaItem;
+  actualPost: ActualPost;
   actualPostHider: ActualPostHider;
   carouselSizes: CarouselSizes;
 };
@@ -21,7 +21,7 @@ const ActualPostDetailsCaption = ({
   actualPostHider,
   carouselSizes,
 }: Props): React.ReactElement => {
-  const isHidden = actualPostHider.hiddenPostIds.has(actualPost.id);
+  const isHidden = actualPostHider.hiddenPostIds.has(actualPost.instagramId);
 
   return (
     <div
@@ -51,7 +51,7 @@ const ActualPostDetailsCaption = ({
           className="min-w-[128px]"
           color="secondary"
           onClick={() => {
-            actualPostHider.hidePost(actualPost.id, !isHidden);
+            actualPostHider.hidePost(actualPost.instagramId, !isHidden);
           }}
           size="sm"
           startIcon={isHidden ? EyeIcon : EyeSlashIcon}>

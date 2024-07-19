@@ -1,5 +1,5 @@
 import { LogInRoute } from '@/common/routes';
-import { fetchInstagramMediaItems } from '@/server/instagram';
+import { queryActualPosts } from '@/server/instagram';
 import {
   getDownloadUrlByMediaItemId,
   queryPlannedPosts,
@@ -25,7 +25,7 @@ const FeedPage: Page = async () => {
       auth: { currentUserId: currentUser.id },
       where: { userId: currentUser.id },
     }),
-    fetchInstagramMediaItems({
+    queryActualPosts({
       auth: { currentUserId: currentUser.id },
       where: { userId: currentUser.id },
       limit: 40,

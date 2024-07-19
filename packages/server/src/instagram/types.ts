@@ -1,9 +1,23 @@
+import { QueryResult } from '@/db/types';
+
 export type InstagramMediaItem = {
-  id: string;
   caption?: string;
+  id: string;
   mediaType: `CAROUSEL_ALBUM` | `IMAGE` | `VIDEO`;
   mediaUrl: string;
-  permalink?: string;
+  permalink: string;
   thumbnailUrl?: string;
   timestamp: string;
 };
+
+export type ActualPost = QueryResult<
+  'actualPost',
+  {
+    caption: true;
+    instagramId: true;
+    mediaType: true;
+    mediaUrl: true;
+    permalink: true;
+    postedAt: true;
+  }
+>;

@@ -1,9 +1,8 @@
 import { db } from '@/db/connection';
-import { forEachSeries } from 'p-iteration';
 
 import { canRefreshAccessToken } from '@/server/instagram';
 
-import runJob from '../runJob';
+import startJob from '../startJob';
 
 export default async (): Promise<void> => {
   const allConnections = await db.query.instagramConnection.findMany({
@@ -14,12 +13,12 @@ export default async (): Promise<void> => {
     },
   });
 
-  await forEachSeries(allConnections, async (connection) => {
+  allConnections.forEach(async (connection) => {
     if (!canRefreshAccessToken(connection)) {
       return;
     }
 
-    await runJob({
+    startJob({
       name: `refreshOneInstagramAccessToken`,
       data: {
         connectionId: connection.id,

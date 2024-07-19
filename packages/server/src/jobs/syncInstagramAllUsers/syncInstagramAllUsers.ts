@@ -1,9 +1,8 @@
 import { db } from '@/db/connection';
-import { forEachSeries } from 'p-iteration';
 
 import { isConnectionActive } from '@/server/instagram';
 
-import runJob from '../runJob';
+import startJob from '../startJob';
 
 export default async (): Promise<void> => {
   const allConnections = await db.query.instagramConnection.findMany({
@@ -18,8 +17,8 @@ export default async (): Promise<void> => {
     return isConnectionActive(connection);
   });
 
-  await forEachSeries(activeConnections, async (connection) => {
-    await runJob({
+  activeConnections.forEach((connection) => {
+    startJob({
       name: `syncInstagramOneUser`,
       data: {
         connectionId: connection.id,

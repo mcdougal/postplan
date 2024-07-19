@@ -1,5 +1,15 @@
 import { z } from 'zod';
 
+export const RefreshActualPostMediaUrlsAllUsersJobSchema = z.object({
+  name: z.literal(`refreshActualPostMediaUrlsAllUsers`),
+  data: z.object({}),
+});
+
+export const RefreshActualPostMediaUrlsOneUserJobSchema = z.object({
+  name: z.literal(`refreshActualPostMediaUrlsOneUser`),
+  data: z.object({ userId: z.string() }),
+});
+
 export const RefreshInstagramAccessAllUsersJobSchema = z.object({
   name: z.literal(`refreshInstagramAccessAllUsers`),
   data: z.object({}),
@@ -41,6 +51,8 @@ export const UploadActualPostThumbnailJobSchema = z.object({
 });
 
 export const JobSchema = z.union([
+  RefreshActualPostMediaUrlsAllUsersJobSchema,
+  RefreshActualPostMediaUrlsOneUserJobSchema,
   RefreshInstagramAccessAllUsersJobSchema,
   RefreshInstagramAccessOneUserJobSchema,
   RefreshPlannedPostMediaUrlsAllUsersJobSchema,
@@ -52,6 +64,12 @@ export const JobSchema = z.union([
 ]);
 
 export type Job = z.infer<typeof JobSchema>;
+export type RefreshActualPostMediaUrlsAllUsersJob = z.infer<
+  typeof RefreshActualPostMediaUrlsAllUsersJobSchema
+>;
+export type RefreshActualPostMediaUrlsOneUserJob = z.infer<
+  typeof RefreshActualPostMediaUrlsOneUserJobSchema
+>;
 export type RefreshInstagramAccessAllUsersJob = z.infer<
   typeof RefreshInstagramAccessAllUsersJobSchema
 >;

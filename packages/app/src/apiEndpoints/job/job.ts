@@ -2,6 +2,8 @@ import { getRequiredEnvVar } from '@/common/env';
 import { JobSchema } from '@/common/jobs';
 import { JobRoute, JobRouteParams, JobRouteResponse } from '@/common/routes';
 import {
+  refreshActualPostMediaUrlsAllUsers,
+  refreshActualPostMediaUrlsOneUser,
   refreshInstagramAccessAllUsers,
   refreshInstagramAccessOneUser,
   refreshPlannedPostMediaUrlsAllUsers,
@@ -38,7 +40,11 @@ export const GET: GetHandler = async (request, { params }) => {
 
   const job = jobParsed.data;
 
-  if (job.name === `refreshInstagramAccessAllUsers`) {
+  if (job.name === `refreshActualPostMediaUrlsAllUsers`) {
+    await refreshActualPostMediaUrlsAllUsers();
+  } else if (job.name === `refreshActualPostMediaUrlsOneUser`) {
+    await refreshActualPostMediaUrlsOneUser(job.data);
+  } else if (job.name === `refreshInstagramAccessAllUsers`) {
     await refreshInstagramAccessAllUsers();
   } else if (job.name === `refreshInstagramAccessOneUser`) {
     await refreshInstagramAccessOneUser(job.data);

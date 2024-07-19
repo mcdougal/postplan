@@ -1,3 +1,5 @@
+import refreshActualPostMediaUrlsAllUsers from './refreshActualPostMediaUrlsAllUsers';
+import refreshActualPostMediaUrlsOneUser from './refreshActualPostMediaUrlsOneUser';
 import refreshInstagramAccessAllUsers from './refreshInstagramAccessAllUsers';
 import refreshInstagramAccessOneUser from './refreshInstagramAccessOneUser';
 import refreshPlannedPostMediaUrlsAllUsers from './refreshPlannedPostMediaUrlsAllUsers';
@@ -8,6 +10,8 @@ import syncInstagramOneUser from './syncInstagramOneUser';
 import uploadActualPostThumbnail from './uploadActualPostThumbnail';
 
 export {
+  refreshActualPostMediaUrlsAllUsers,
+  refreshActualPostMediaUrlsOneUser,
   refreshInstagramAccessAllUsers,
   refreshInstagramAccessOneUser,
   refreshPlannedPostMediaUrlsAllUsers,

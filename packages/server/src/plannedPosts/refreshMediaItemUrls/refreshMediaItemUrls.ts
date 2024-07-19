@@ -40,18 +40,12 @@ export default async (args: Args): Promise<void> => {
     await forEachSeries(mediaItems, async ({ fileName, id }) => {
       const mediaUrl = await generateFileDownloadUrl({
         auth: { currentUserId },
-        where: {
-          fileName,
-          userId,
-        },
+        where: { fileName, userId },
       });
 
       const mediaThumbnailUrl = await generateFileDownloadUrl({
         auth: { currentUserId },
-        where: {
-          fileName: getThumbnailFileName(fileName),
-          userId,
-        },
+        where: { fileName: getThumbnailFileName(fileName), userId },
       });
 
       await db

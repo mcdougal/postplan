@@ -89,9 +89,11 @@ export const plannedPostMediaItem = schema.table(`planned_post_media_item`, {
 export const actualPost = schema.table(`actual_post`, {
   caption: text(`caption`),
   createdAt: timestamp(`created_at`).defaultNow().notNull(),
+  fileName: text(`file_name`).notNull(),
   id: text(`id`).primaryKey(),
   instagramId: text(`instagram_id`).notNull(),
   mediaType: actualPostMediaType(`media_type`).notNull(),
+  mediaThumbnailUrl: text(`media_thumbnail_url`).notNull(),
   mediaUrl: text(`media_url`).notNull(),
   permalink: text(`permalink`).notNull(),
   postedAt: timestamp(`posted_at`).notNull(),

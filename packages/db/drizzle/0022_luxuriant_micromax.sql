@@ -1,0 +1,1 @@
+ALTER TABLE "instaplan"."actual_post" ADD COLUMN "media_thumbnail_url" text NOT NULL;

@@ -1,10 +1,16 @@
+import { getThumbnailFileName } from '@/common/userFiles';
 import { and, db, eq, inArray } from '@/db/connection';
 import { actualPost } from '@/db/schema';
 import { createId } from '@paralleldrive/cuid2';
 import { forEachSeries } from 'p-iteration';
+import { v4 as uuidv4 } from 'uuid';
 
-import instagramMediaItemToActualPost from '../instagramMediaItemToActualPost';
-import { InstagramMediaItem } from '../types';
+import { generateFileDownloadUrl } from '@/server/userFiles';
+
+import instagramMediaItemToActualPost from '../../instagramMediaItemToActualPost';
+import { InstagramMediaItem } from '../../types';
+
+import uploadThumbnail from './uploadThumbnail';
 
 export default async (
   userId: string,
@@ -39,13 +45,21 @@ export default async (
       return;
     }
 
-    const actualPostData = instagramMediaItemToActualPost(instagramMediaItem);
+    const fileName = `${uuidv4()}.jpg`;
+    const thumbnailFileName = getThumbnailFileName(fileName);
+    await uploadThumbnail(userId, thumbnailFileName, instagramMediaItem);
+    const mediaThumbnailUrl = await generateFileDownloadUrl({
+      auth: { currentUserId: userId },
+      where: { fileName: thumbnailFileName, userId },
+    });
 
     await db
       .insert(actualPost)
       .values({
-        ...actualPostData,
+        ...instagramMediaItemToActualPost(instagramMediaItem),
+        fileName,
         id: createId(),
+        mediaThumbnailUrl,
         userId,
       })
       .returning({

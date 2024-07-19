@@ -28,7 +28,6 @@
     "**/*.js",
     "**/*.ts",
     "**/*.tsx",
-    "cloudinaryLoader.js",
     "next-env.d.ts",
     "next.config.js",
     "postcss.config.js"

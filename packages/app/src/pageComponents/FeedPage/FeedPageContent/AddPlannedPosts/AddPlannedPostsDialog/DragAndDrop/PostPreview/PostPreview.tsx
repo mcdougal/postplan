@@ -25,6 +25,7 @@ const PostPreview = ({ onRemove, post }: Props): React.ReactElement => {
             fill
             src={previewSrc}
             style={{ objectFit: `cover`, objectPosition: `center` }}
+            unoptimized
           />
         )}
       </div>

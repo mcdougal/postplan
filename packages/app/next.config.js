@@ -13,10 +13,6 @@ const nextConfig = {
       allowedOrigins: [`*.instaplan.me`],
     },
   },
-  images: {
-    loader: `custom`,
-    loaderFile: `./cloudinaryLoader.ts`,
-  },
   // Exposing the framework used can make it easier for attackers to
   // discover vulnerabilities, so we hide the `x-powered-by` header
   poweredByHeader: false,

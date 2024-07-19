@@ -32,6 +32,8 @@ const FeedPage: Page = async () => {
     }),
   ]);
 
+  console.log(actualPosts);
+
   const thumbnailUrlByMediaItemId = await getDownloadUrlByMediaItemId({
     auth: { currentUserId: currentUser.id },
     where: { plannedPosts },

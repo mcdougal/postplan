@@ -30,9 +30,9 @@ const ActualPostCarousel = ({
         <Image
           alt={actualPost.caption || `Instagram post thumbnail`}
           fill
-          sizes="250px"
-          src={`/upload/deanna-troy-travels/instagram/${actualPost.id}`}
+          src={actualPost.thumbnailUrl || actualPost.mediaUrl}
           style={{ objectFit: `cover`, objectPosition: `center` }}
+          unoptimized
         />
       </div>
     </div>

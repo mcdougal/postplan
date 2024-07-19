@@ -41,9 +41,9 @@ const ActualFeedItem = ({
         <Image
           alt={actualPost.caption || `Instagram post thumbnail`}
           fill
-          sizes="250px"
-          src={`/upload/deanna-troy-travels/instagram/${actualPost.id}`}
+          src={actualPost.thumbnailUrl || actualPost.mediaUrl}
           style={{ objectFit: `cover`, objectPosition: `center` }}
+          unoptimized
         />
       )}
       {TypeIcon && <TypeIcon className="absolute right-2 top-2 h-4 w-4" />}

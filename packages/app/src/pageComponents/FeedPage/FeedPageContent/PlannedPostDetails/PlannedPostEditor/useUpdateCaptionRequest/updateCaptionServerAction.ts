@@ -2,10 +2,9 @@
 
 import { updatePlannedPost } from '@/server/plannedPosts';
 
+import { authenticatedServerAction } from '@/app/serverActions';
+
 type Args = {
-  auth: {
-    currentUserId: string;
-  };
   where: {
     id: string;
   };
@@ -14,29 +13,18 @@ type Args = {
   };
 };
 
-type Response = { status: `error`; message: string } | { status: `success` };
+export default authenticatedServerAction<Args>({
+  errorMessage: `Error updating caption`,
+  serverAction: async (args, currentUser) => {
+    const { id } = args.where;
+    const { caption } = args.data;
 
-export default async (args: Args): Promise<Response> => {
-  const { currentUserId } = args.auth;
-  const { id } = args.where;
-  const { caption } = args.data;
-
-  try {
     await updatePlannedPost({
-      auth: { currentUserId },
+      auth: { currentUserId: currentUser.id },
       where: { id },
       data: { caption },
     });
 
-    return {
-      status: `success`,
-    };
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(err);
-    return {
-      status: `error`,
-      message: `Error updating caption`,
-    };
-  }
-};
+    return { status: `success` };
+  },
+});

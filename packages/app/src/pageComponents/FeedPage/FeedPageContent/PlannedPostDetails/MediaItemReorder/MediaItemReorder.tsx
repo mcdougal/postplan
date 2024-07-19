@@ -40,7 +40,6 @@ const MediaItemReorder = ({
   const addButtonBounds = getItemBounds({ index: mediaItems.length });
 
   const { reorderMediaItems } = useReorderRequest(
-    currentUser,
     plannedPost.id,
     mediaItems,
     setOptimisticPlannedPosts,
@@ -49,7 +48,6 @@ const MediaItemReorder = ({
   );
 
   const { deleteMediaItem } = useDeleteRequest(
-    currentUser,
     plannedPost.id,
     setOptimisticPlannedPosts
   );

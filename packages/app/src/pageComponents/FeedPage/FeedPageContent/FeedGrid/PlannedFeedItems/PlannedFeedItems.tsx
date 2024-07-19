@@ -1,6 +1,5 @@
 'use client';
 
-import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction, useState } from 'react';
 
@@ -10,7 +9,6 @@ import PlannedFeedItem from './PlannedFeedItem';
 import useReorderRequest from './useReorderRequest';
 
 type Props = {
-  currentUser: CurrentUser;
   onSelectPost: (selectedPostId: SelectedPostId) => void;
   optimisticPlannedPosts: Array<PlannedPost>;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
@@ -18,7 +16,6 @@ type Props = {
 };
 
 const PlannedFeedItems = ({
-  currentUser,
   onSelectPost,
   optimisticPlannedPosts,
   setOptimisticPlannedPosts,
@@ -28,7 +25,6 @@ const PlannedFeedItems = ({
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   const { reorderPlannedPosts } = useReorderRequest(
-    currentUser,
     optimisticPlannedPosts,
     setOptimisticPlannedPosts,
     draggingIndex,

@@ -1,6 +1,5 @@
 'use client';
 
-import { CurrentUser } from '@/common/users';
 import { InstagramMediaItem } from '@/server/instagram';
 import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction } from 'react';
@@ -17,7 +16,6 @@ import PlannedFeedItems from './PlannedFeedItems';
 type Props = {
   actualPostHider: ActualPostHider;
   actualPosts: Array<InstagramMediaItem>;
-  currentUser: CurrentUser;
   onSelectPost: (selectedPostId: SelectedPostId) => void;
   optimisticPlannedPosts: Array<PlannedPost>;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
@@ -27,7 +25,6 @@ type Props = {
 const FeedGrid = ({
   actualPostHider,
   actualPosts,
-  currentUser,
   onSelectPost,
   optimisticPlannedPosts,
   setOptimisticPlannedPosts,
@@ -45,7 +42,6 @@ const FeedGrid = ({
             className="relative"
             style={{ height: gridSize.height, width: gridSize.width }}>
             <PlannedFeedItems
-              currentUser={currentUser}
               onSelectPost={onSelectPost}
               optimisticPlannedPosts={optimisticPlannedPosts}
               setOptimisticPlannedPosts={setOptimisticPlannedPosts}

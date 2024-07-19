@@ -11,6 +11,7 @@ import ActualPostDetails from './ActualPostDetails';
 import AddPlannedPosts from './AddPlannedPosts';
 import FeedGrid from './FeedGrid';
 import PlannedPostDetails from './PlannedPostDetails';
+import sliceActualPosts from './sliceActualPosts';
 import useActualPostHider from './useActualPostHider';
 import usePostSelector from './usePostSelector';
 
@@ -36,10 +37,7 @@ const FeedPageContent = ({
     setOptimisticPlannedPosts(plannedPosts);
   }, [plannedPosts]);
 
-  const actualPosts = allActualPosts.slice(
-    0,
-    -((optimisticPlannedPosts.length + allActualPosts.length) % 3)
-  );
+  const actualPosts = sliceActualPosts(allActualPosts, optimisticPlannedPosts);
 
   const { selectedPost, selectPost } = usePostSelector(
     optimisticPlannedPosts,
@@ -54,7 +52,6 @@ const FeedPageContent = ({
         <FeedGrid
           actualPostHider={actualPostHider}
           actualPosts={actualPosts}
-          currentUser={currentUser}
           onSelectPost={selectPost}
           optimisticPlannedPosts={optimisticPlannedPosts}
           setOptimisticPlannedPosts={setOptimisticPlannedPosts}

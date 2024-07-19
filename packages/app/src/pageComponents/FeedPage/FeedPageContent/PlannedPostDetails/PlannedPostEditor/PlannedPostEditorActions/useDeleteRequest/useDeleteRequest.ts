@@ -1,4 +1,3 @@
-import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
@@ -10,7 +9,6 @@ type Request = {
 };
 
 export default (
-  currentUser: CurrentUser,
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>
 ): Request => {
   const deletePlannedPost = async (id: string): Promise<void> => {
@@ -21,7 +19,6 @@ export default (
     });
 
     const response = await deletePlannedPostServerAction({
-      auth: { currentUserId: currentUser.id },
       data: { id },
     });
 

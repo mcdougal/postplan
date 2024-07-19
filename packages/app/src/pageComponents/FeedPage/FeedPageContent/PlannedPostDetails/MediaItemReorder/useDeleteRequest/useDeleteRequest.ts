@@ -1,4 +1,3 @@
-import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction } from 'react';
 import { toast } from 'react-hot-toast';
@@ -10,7 +9,6 @@ type Request = {
 };
 
 export default (
-  currentUser: CurrentUser,
   plannedPostId: string,
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>
 ): Request => {
@@ -31,7 +29,6 @@ export default (
     });
 
     const response = await deleteMediaItemServerAction({
-      auth: { currentUserId: currentUser.id },
       data: { id },
     });
 

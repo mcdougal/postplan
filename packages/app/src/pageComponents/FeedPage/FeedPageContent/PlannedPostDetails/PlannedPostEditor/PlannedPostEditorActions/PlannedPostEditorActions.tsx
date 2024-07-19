@@ -1,6 +1,5 @@
 'use client';
 
-import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -16,7 +15,6 @@ import useDeleteRequest from './useDeleteRequest';
 
 type Props = {
   caption: string | null;
-  currentUser: CurrentUser;
   onOpenHashtagFinder: () => void;
   plannedPost: PlannedPost;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
@@ -24,17 +22,12 @@ type Props = {
 
 const PlannedPostEditorActions = ({
   caption,
-  currentUser,
   onOpenHashtagFinder,
   plannedPost,
   setOptimisticPlannedPosts,
 }: Props): React.ReactElement => {
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
-
-  const { deletePlannedPost } = useDeleteRequest(
-    currentUser,
-    setOptimisticPlannedPosts
-  );
+  const { deletePlannedPost } = useDeleteRequest(setOptimisticPlannedPosts);
 
   return (
     <>

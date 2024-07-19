@@ -53,9 +53,6 @@ export default (
     });
 
     const response = await createMediaItemsServerAction({
-      auth: {
-        currentUserId: currentUser.id,
-      },
       data: {
         mediaItems: mediaItemsData,
         plannedPostId,

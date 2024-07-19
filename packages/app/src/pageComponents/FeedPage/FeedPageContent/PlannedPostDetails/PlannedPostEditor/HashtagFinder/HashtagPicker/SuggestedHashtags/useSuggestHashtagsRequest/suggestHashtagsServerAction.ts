@@ -2,32 +2,26 @@
 
 import { suggestHashtags } from '@/server/openai';
 
+import { authenticatedServerAction } from '@/app/serverActions';
+
 type Args = {
   data: {
     caption: string;
   };
 };
 
-type Response =
-  | { status: `error`; message: string }
-  | { status: `success`; suggestedHashtags: Array<string> };
+type ResponseData = { suggestedHashtags: Array<string> };
 
-export default async (args: Args): Promise<Response> => {
-  const { caption } = args.data;
+export default authenticatedServerAction<Args, ResponseData>({
+  errorMessage: `Error suggesting hashtags`,
+  serverAction: async (args, currentUser) => {
+    const { caption } = args.data;
 
-  try {
-    const suggestedHashtags = await suggestHashtags(caption);
+    const suggestedHashtags = await suggestHashtags({
+      auth: { currentUserId: currentUser.id },
+      where: { caption },
+    });
 
-    return {
-      status: `success`,
-      suggestedHashtags,
-    };
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(err);
-    return {
-      status: `error`,
-      message: `Error suggesting hashtags`,
-    };
-  }
-};
+    return { status: `success`, data: { suggestedHashtags } };
+  },
+});

@@ -2,36 +2,24 @@
 
 import { reorderMediaItems } from '@/server/plannedPosts';
 
+import { authenticatedServerAction } from '@/app/serverActions';
+
 type Args = {
-  auth: {
-    currentUserId: string;
-  };
   data: {
     mediaItems: Array<{ id: string }>;
   };
 };
 
-type Response = { status: `error`; message: string } | { status: `success` };
+export default authenticatedServerAction<Args>({
+  errorMessage: `Error updating carousel`,
+  serverAction: async (args, currentUser) => {
+    const { mediaItems } = args.data;
 
-export default async (args: Args): Promise<Response> => {
-  const { currentUserId } = args.auth;
-  const { mediaItems } = args.data;
-
-  try {
     await reorderMediaItems({
-      auth: { currentUserId },
+      auth: { currentUserId: currentUser.id },
       data: { mediaItems },
     });
 
-    return {
-      status: `success`,
-    };
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(err);
-    return {
-      status: `error`,
-      message: `Error updating carousel`,
-    };
-  }
-};
+    return { status: `success` };
+  },
+});

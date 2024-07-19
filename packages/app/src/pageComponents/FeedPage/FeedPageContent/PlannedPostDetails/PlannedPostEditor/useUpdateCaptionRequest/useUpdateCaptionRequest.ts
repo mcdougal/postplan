@@ -1,4 +1,3 @@
-import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction, useCallback } from 'react';
 import { toast } from 'react-hot-toast';
@@ -10,7 +9,6 @@ type Request = {
 };
 
 export default (
-  currentUser: CurrentUser,
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>
 ): Request => {
   const updateCaption = useCallback(
@@ -29,7 +27,6 @@ export default (
       });
 
       const response = await updateCaptionServerAction({
-        auth: { currentUserId: currentUser.id },
         where: { id: plannedPostId },
         data: { caption },
       });
@@ -38,7 +35,7 @@ export default (
         toast.error(response.message);
       }
     },
-    [currentUser, setOptimisticPlannedPosts]
+    [setOptimisticPlannedPosts]
   );
 
   return {

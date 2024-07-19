@@ -3,10 +3,9 @@
 import { createPlannedPost } from '@/server/plannedPosts';
 import { revalidatePath } from 'next/cache';
 
+import { authenticatedServerAction } from '@/app/serverActions';
+
 type Args = {
-  auth: {
-    currentUserId: string;
-  };
   data: {
     isReel: boolean;
     plannedPosts: Array<{
@@ -16,18 +15,16 @@ type Args = {
   };
 };
 
-type Response = { status: `error`; message: string } | { status: `success` };
+export default authenticatedServerAction<Args>({
+  errorMessage: `Error creating posts`,
+  serverAction: async (args, currentUser) => {
+    const { isReel, plannedPosts, userId } = args.data;
 
-export default async (args: Args): Promise<Response> => {
-  const { currentUserId } = args.auth;
-  const { isReel, plannedPosts, userId } = args.data;
-
-  try {
     await Promise.all(
       plannedPosts.map(async (plannedPost) => {
         await createPlannedPost({
           auth: {
-            currentUserId,
+            currentUserId: currentUser.id,
           },
           data: {
             isReel,
@@ -40,15 +37,6 @@ export default async (args: Args): Promise<Response> => {
 
     revalidatePath(`/`, `layout`);
 
-    return {
-      status: `success`,
-    };
-  } catch (err) {
-    // eslint-disable-next-line no-console
-    console.error(err);
-    return {
-      status: `error`,
-      message: `Error creating posts`,
-    };
-  }
-};
+    return { status: `success` };
+  },
+});

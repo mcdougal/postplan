@@ -76,9 +76,6 @@ export default (
         });
 
     const response = await createPlannedPostsServerAction({
-      auth: {
-        currentUserId: currentUser.id,
-      },
       data: {
         isReel,
         plannedPosts: plannedPostsData,

@@ -42,7 +42,6 @@ const PlannedPostDetails = ({
           />
           <PlannedPostEditor
             carouselSizes={carouselSizes}
-            currentUser={currentUser}
             plannedPost={plannedPost}
             setOptimisticPlannedPosts={setOptimisticPlannedPosts}
           />

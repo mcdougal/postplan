@@ -1,6 +1,5 @@
 'use client';
 
-import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
@@ -14,14 +13,12 @@ import useUpdateCaptionRequest from './useUpdateCaptionRequest';
 
 type Props = {
   carouselSizes: CarouselSizes;
-  currentUser: CurrentUser;
   plannedPost: PlannedPost;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
 };
 
 const PlannedPostEditor = ({
   carouselSizes,
-  currentUser,
   plannedPost,
   setOptimisticPlannedPosts,
 }: Props): React.ReactElement => {
@@ -34,10 +31,7 @@ const PlannedPostEditor = ({
     setCaption(plannedPost.caption);
   }, [plannedPost.caption]);
 
-  const { updateCaption } = useUpdateCaptionRequest(
-    currentUser,
-    setOptimisticPlannedPosts
-  );
+  const { updateCaption } = useUpdateCaptionRequest(setOptimisticPlannedPosts);
 
   useEffect(() => {
     if (!isChanging) {
@@ -78,7 +72,6 @@ const PlannedPostEditor = ({
       </div>
       <PlannedPostEditorActions
         caption={caption}
-        currentUser={currentUser}
         onOpenHashtagFinder={() => {
           setIsHashtagFinderOpen(true);
         }}

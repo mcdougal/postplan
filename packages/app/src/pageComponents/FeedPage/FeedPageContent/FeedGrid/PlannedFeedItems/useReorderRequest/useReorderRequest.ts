@@ -1,4 +1,3 @@
-import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { toast } from 'react-hot-toast';
 
@@ -10,7 +9,6 @@ type Request = {
 };
 
 export default (
-  currentUser: CurrentUser,
   optimisticPlannedPosts: Array<PlannedPost>,
   setOptimisticPlannedPosts: (plannedPosts: Array<PlannedPost>) => void,
   draggingIndex: number | null,
@@ -26,7 +24,6 @@ export default (
     setOptimisticPlannedPosts(reorderedPosts);
 
     const response = await reorderPlannedPostsServerAction({
-      auth: { currentUserId: currentUser.id },
       data: { plannedPosts: reorderedPosts },
     });
 

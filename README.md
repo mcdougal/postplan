@@ -3,7 +3,7 @@
 ## Todo
 
 - Automatically refresh IG access token
-- Fix authorization in server actions
+- Stop loading IG images from Cloudinary
 - Hashtags on planned post
 - Download planned post images
 - Doesn't show post when someone collaborates with you (<https://developers.facebook.com/community/threads/1011039596753699/>)

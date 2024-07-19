@@ -4,6 +4,8 @@ import { JobRoute, JobRouteParams, JobRouteResponse } from '@/common/routes';
 import {
   refreshInstagramAccessAllUsers,
   refreshInstagramAccessOneUser,
+  refreshPlannedPostMediaUrlsAllUsers,
+  refreshPlannedPostMediaUrlsOneUser,
   runNightlyTasks,
   syncInstagramAllUsers,
   syncInstagramOneUser,
@@ -39,6 +41,10 @@ export const GET: GetHandler = async (request, { params }) => {
     await refreshInstagramAccessAllUsers();
   } else if (job.name === `refreshInstagramAccessOneUser`) {
     await refreshInstagramAccessOneUser(job.data);
+  } else if (job.name === `refreshPlannedPostMediaUrlsAllUsers`) {
+    await refreshPlannedPostMediaUrlsAllUsers();
+  } else if (job.name === `refreshPlannedPostMediaUrlsOneUser`) {
+    await refreshPlannedPostMediaUrlsOneUser(job.data);
   } else if (job.name === `runNightlyTasks`) {
     await runNightlyTasks();
   } else if (job.name === `syncInstagramAllUsers`) {

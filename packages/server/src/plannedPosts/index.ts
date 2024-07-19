@@ -3,6 +3,7 @@ import createPlannedPost from './createPlannedPost';
 import deleteMediaItems from './deleteMediaItems';
 import deletePlannedPosts from './deletePlannedPosts';
 import queryPlannedPosts, { PlannedPost } from './queryPlannedPosts';
+import refreshMediaItemUrls from './refreshMediaItemUrls';
 import reorderMediaItems from './reorderMediaItems';
 import reorderPlannedPosts from './reorderPlannedPosts';
 import updatePlannedPost from './updatePlannedPost';
@@ -15,6 +16,7 @@ export {
   deleteMediaItems,
   deletePlannedPosts,
   queryPlannedPosts,
+  refreshMediaItemUrls,
   reorderMediaItems,
   reorderPlannedPosts,
   updatePlannedPost,

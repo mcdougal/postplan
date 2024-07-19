@@ -7,9 +7,17 @@ export const RefreshInstagramAccessAllUsersJobSchema = z.object({
 
 export const RefreshInstagramAccessOneUserJobSchema = z.object({
   name: z.literal(`refreshInstagramAccessOneUser`),
-  data: z.object({
-    connectionId: z.string(),
-  }),
+  data: z.object({ connectionId: z.string() }),
+});
+
+export const RefreshPlannedPostMediaUrlsAllUsersJobSchema = z.object({
+  name: z.literal(`refreshPlannedPostMediaUrlsAllUsers`),
+  data: z.object({}),
+});
+
+export const RefreshPlannedPostMediaUrlsOneUserJobSchema = z.object({
+  name: z.literal(`refreshPlannedPostMediaUrlsOneUser`),
+  data: z.object({ userId: z.string() }),
 });
 
 export const RunNightlyTasksJobSchema = z.object({
@@ -24,14 +32,14 @@ export const SyncInstagramAllUsersJobSchema = z.object({
 
 export const SyncInstagramOneUserJobSchema = z.object({
   name: z.literal(`syncInstagramOneUser`),
-  data: z.object({
-    connectionId: z.string(),
-  }),
+  data: z.object({ connectionId: z.string() }),
 });
 
 export const JobSchema = z.union([
   RefreshInstagramAccessAllUsersJobSchema,
   RefreshInstagramAccessOneUserJobSchema,
+  RefreshPlannedPostMediaUrlsAllUsersJobSchema,
+  RefreshPlannedPostMediaUrlsOneUserJobSchema,
   RunNightlyTasksJobSchema,
   SyncInstagramAllUsersJobSchema,
   SyncInstagramOneUserJobSchema,
@@ -43,6 +51,12 @@ export type RefreshInstagramAccessAllUsersJob = z.infer<
 >;
 export type RefreshInstagramAccessOneUserJob = z.infer<
   typeof RefreshInstagramAccessOneUserJobSchema
+>;
+export type RefreshPlannedPostMediaUrlsAllUsersJob = z.infer<
+  typeof RefreshPlannedPostMediaUrlsAllUsersJobSchema
+>;
+export type RefreshPlannedPostMediaUrlsOneUserJob = z.infer<
+  typeof RefreshPlannedPostMediaUrlsOneUserJobSchema
 >;
 export type RunNightlyTasksJob = z.infer<typeof RunNightlyTasksJobSchema>;
 export type SyncInstagramAllUsersJob = z.infer<

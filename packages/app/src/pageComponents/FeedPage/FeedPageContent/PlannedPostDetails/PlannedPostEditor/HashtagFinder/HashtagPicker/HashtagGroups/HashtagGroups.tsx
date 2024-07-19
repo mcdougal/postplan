@@ -4,13 +4,14 @@ import { PlannedPost } from '@/server/plannedPosts';
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 
-import { Button, Spinner, TextLink, Typography } from '@/app/components';
+import { Button, Spinner, Typography } from '@/app/components';
 
 import HashtagOptions from '../HashtagOptions';
 
 import AddOrEditHashtagGroupDialog, {
   AddOrEditDialogAction,
 } from './AddOrEditHashtagGroupDialog';
+import HashtagGroupActions from './HashtagGroupActions';
 import useHashtagGroupsRequest from './useHashtagGroupsRequest';
 
 type OnUpdateHashtags = (
@@ -39,19 +40,19 @@ const HashtagGroups = ({
     skip: !isSelected,
   });
 
-  if (!isSelected) {
-    return null;
-  }
-
   const selectedGroup = hashtagGroupsRequest.hashtagGroups.find((group) => {
     return group.id === selectedGroupId;
   });
+
+  if (!isSelected) {
+    return null;
+  }
 
   return (
     <>
       <div className="flex flex-1">
         <div className="border-r border-gray-200">
-          <div className="w-[140px]">
+          <div className="h-[382px] w-[140px] overflow-auto">
             {hashtagGroupsRequest.loading ? (
               <div className="flex justify-center pt-10">
                 <Spinner size={6} />
@@ -96,17 +97,24 @@ const HashtagGroups = ({
         <HashtagOptions
           extraAction={
             selectedGroup && (
-              <TextLink
-                as="button"
-                onClick={(): void => {
+              <HashtagGroupActions
+                hashtagGroup={selectedGroup}
+                onClickEdit={() => {
                   setIsAddOrEditDialogOpen(true);
                   setAddOrEditDialogAction({
                     status: `edit`,
                     group: selectedGroup,
                   });
-                }}>
-                <Typography size="xs">Edit Group</Typography>
-              </TextLink>
+                }}
+                onGroupDeleted={(deletedGroupId) => {
+                  hashtagGroupsRequest.setHashtagGroups((prevGroups) => {
+                    return prevGroups.filter((group) => {
+                      return group.id !== deletedGroupId;
+                    });
+                  });
+                  setSelectedGroupId(null);
+                }}
+              />
             )
           }
           hashtags={selectedGroup?.hashtags || []}

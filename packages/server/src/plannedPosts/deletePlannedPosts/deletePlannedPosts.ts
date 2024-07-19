@@ -9,14 +9,14 @@ type Args = {
   auth: {
     currentUserId: string;
   };
-  data: {
+  where: {
     plannedPostIds: Array<string>;
   };
 };
 
 export default async (args: Args): Promise<void> => {
   const { currentUserId } = args.auth;
-  const { plannedPostIds } = args.data;
+  const { plannedPostIds } = args.where;
 
   if (!(await isAuthorized(currentUserId, plannedPostIds))) {
     throw new ForbiddenError();

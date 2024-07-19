@@ -19,7 +19,7 @@ export default (
     });
 
     const response = await deletePlannedPostServerAction({
-      data: { id },
+      where: { id },
     });
 
     if (response.status === `error`) {

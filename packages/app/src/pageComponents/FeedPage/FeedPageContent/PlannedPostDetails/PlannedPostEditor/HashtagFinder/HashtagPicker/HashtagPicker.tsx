@@ -60,7 +60,7 @@ const HashtagPicker = ({
           );
         })}
       </div>
-      <div className="relative flex-1 overflow-auto">
+      <div className="relative flex-1">
         <HashtagGroups
           isSelected={selectedTabName === `groups`}
           onUpdateHashtags={onUpdateHashtags}

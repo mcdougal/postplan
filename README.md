@@ -3,10 +3,9 @@
 ## Todo
 
 - Sort by postedAt
-- Trigger IG sync when user loads feed, and make sure new posts appear
-- Hashtags on planned post
 - Download planned post images
 
+- Trigger IG sync when user loads feed, and make sure new posts appear
 - Test on regular sized laptop
 - Test Automatic refreshing of IG access token
 - Doesn't show post when someone collaborates with you (<https://developers.facebook.com/community/threads/1011039596753699/>)

@@ -1,3 +1,5 @@
+import { findHashtags } from '@/common/instagram';
+
 import { ForbiddenError } from '@/server/auth';
 
 import { sendOpenAiRequest } from '../utils';
@@ -20,12 +22,8 @@ export default async (args: Args): Promise<Array<string>> => {
   }
 
   const result = await sendOpenAiRequest(
-    `Suggest 30 hashtags for the following Instagram caption. Separate hashtags with commas. Do not repeat existing hashtags.\n\n${caption}`
+    `Suggest 30 hashtags for the following Instagram caption. Separate hashtags with spaces. Do not repeat existing hashtags.\n\n${caption}`
   );
 
-  return result
-    ? result.split(`,`).map((hashtag) => {
-        return hashtag.trim();
-      })
-    : [];
+  return result ? findHashtags(result) : [];
 };

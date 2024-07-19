@@ -28,6 +28,9 @@ const HashtagOptions = ({
   onUpdateHashtags,
   selectedHashtags,
 }: Props): React.ReactElement => {
+  const tagOptionsVisible = !loading && hashtags.length > 0;
+  const actionsRowVisible = tagOptionsVisible || extraAction;
+
   return (
     <div className="flex-1">
       {loading ? (
@@ -58,32 +61,36 @@ const HashtagOptions = ({
       )}
       <div
         className={twMerge(
-          `flex items-center gap-2 px-3 py-1`,
-          (loading || hashtags.length === 0) && `pointer-events-none invisible`
+          `flex h-8 items-center gap-2 px-3`,
+          !actionsRowVisible && `pointer-events-none invisible`
         )}>
         <div className="flex flex-1 items-center">{extraAction}</div>
-        <TextLink
-          as="button"
-          onClick={(): void => {
-            onUpdateHashtags(
-              hashtags.map((hashtag) => {
-                return { hashtag, selected: false };
-              })
-            );
-          }}>
-          <Typography size="xs">Remove All</Typography>
-        </TextLink>
-        <TextLink
-          as="button"
-          onClick={(): void => {
-            onUpdateHashtags(
-              hashtags.map((hashtag) => {
-                return { hashtag, selected: true };
-              })
-            );
-          }}>
-          <Typography size="xs">Add All</Typography>
-        </TextLink>
+        {tagOptionsVisible && (
+          <>
+            <TextLink
+              as="button"
+              onClick={(): void => {
+                onUpdateHashtags(
+                  hashtags.map((hashtag) => {
+                    return { hashtag, selected: false };
+                  })
+                );
+              }}>
+              <Typography size="xs">Remove All</Typography>
+            </TextLink>
+            <TextLink
+              as="button"
+              onClick={(): void => {
+                onUpdateHashtags(
+                  hashtags.map((hashtag) => {
+                    return { hashtag, selected: true };
+                  })
+                );
+              }}>
+              <Typography size="xs">Add All</Typography>
+            </TextLink>
+          </>
+        )}
       </div>
     </div>
   );

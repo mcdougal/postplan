@@ -10,6 +10,8 @@ import {
   timestamp,
 } from 'drizzle-orm/pg-core';
 
+import { encryptedText } from './customTypes';
+
 export const schema = pgSchema(`instaplan`);
 
 // -----------------------------------------------------------------------------
@@ -35,12 +37,13 @@ export const user = schema.table(
 const userId = () => user.id;
 
 export const instagramConnection = schema.table(`instagram_connection`, {
-  accessToken: text(`access_token`).notNull(),
-  accessTokenExpiresAt: timestamp(`access_token_expires_at`).notNull(),
+  accessToken: encryptedText(`access_token`).notNull(),
   createdAt: timestamp(`created_at`).defaultNow().notNull(),
-  instagramUserId: text(`instagram_user_id`).notNull(),
+  expiresAt: timestamp(`expires_at`).notNull(),
   id: text(`id`).primaryKey(),
+  instagramUserId: text(`instagram_user_id`).notNull(),
   permissions: text(`permissions`).array().notNull(),
+  refreshedAt: timestamp(`refreshed_at`),
   updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
   userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
 });

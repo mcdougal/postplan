@@ -10,7 +10,7 @@ const nextConfig = {
   },
   experimental: {
     serverActions: {
-      allowedOrigins: [`*.instaplan.cc`],
+      allowedOrigins: [`*.instaplan.me`],
     },
   },
   images: {

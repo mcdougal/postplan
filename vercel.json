@@ -1,0 +1,12 @@
+{
+  "crons": [
+    {
+      "path": "/cron/collectHashtags",
+      "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/cron/refreshInstagramAccessTokens",
+      "schedule": "0 0 * * *"
+    }
+  ]
+}

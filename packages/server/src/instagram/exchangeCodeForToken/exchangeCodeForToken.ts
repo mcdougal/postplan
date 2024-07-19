@@ -3,6 +3,10 @@ import { getInstagramOAuthRedirectUri } from '@/common/instagram';
 import axios from 'axios';
 import { z } from 'zod';
 
+type Args = {
+  data: { code: string };
+};
+
 const InstagramAccessTokenResponseSchema = z.object({
   access_token: z.string(),
   permissions: z.array(z.string()),
@@ -15,7 +19,9 @@ type Response = {
   userId: string;
 };
 
-export default async (code: string): Promise<Response> => {
+export default async (args: Args): Promise<Response> => {
+  const { code } = args.data;
+
   const response = await axios.post<unknown>(
     `https://api.instagram.com/oauth/access_token`,
     {

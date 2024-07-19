@@ -2,7 +2,7 @@ import { HomePageRoute } from '@/common/routes';
 import {
   exchangeCodeForToken,
   generateLongLivedToken,
-  saveAccessToken,
+  upsertAccessToken,
 } from '@/server/instagram';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -13,23 +13,28 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
     const code = request.nextUrl.searchParams.get(`code`);
 
     if (!code) {
-      return NextResponse.json({ message: `Bad Request` }, { status: 400 });
+      return NextResponse.redirect(HomePageRoute.getAbsoluteUrl({}));
     }
 
-    const shortLivedTokenResponse = await exchangeCodeForToken(code);
-    const longLivedTokenResponse = await generateLongLivedToken(
-      shortLivedTokenResponse.accessToken
-    );
+    const shortLivedTokenResponse = await exchangeCodeForToken({
+      data: { code },
+    });
+    const longLivedTokenResponse = await generateLongLivedToken({
+      data: { shortLivedAccessToken: shortLivedTokenResponse.accessToken },
+    });
 
-    await saveAccessToken({
+    const dataToSave = {
+      accessToken: longLivedTokenResponse.accessToken,
+      expiresAt: longLivedTokenResponse.expiresAt,
+      instagramUserId: shortLivedTokenResponse.userId,
+      permissions: shortLivedTokenResponse.permissions,
+    };
+
+    await upsertAccessToken({
       auth: { currentUserId: currentUser.id },
-      data: {
-        accessToken: longLivedTokenResponse.accessToken,
-        accessTokenExpiresAt: longLivedTokenResponse.expiresAt,
-        instagramUserId: shortLivedTokenResponse.userId,
-        permissions: shortLivedTokenResponse.permissions,
-        userId: currentUser.id,
-      },
+      where: { userId: currentUser.id },
+      create: { ...dataToSave, userId: currentUser.id },
+      update: dataToSave,
     });
 
     return NextResponse.redirect(HomePageRoute.getAbsoluteUrl({}));

@@ -1,12 +1,11 @@
-import { getRequiredEnvVar } from '@/common/env';
 import axios from 'axios';
 import { z } from 'zod';
 
 type Args = {
-  data: { shortLivedAccessToken: string };
+  data: { longLivedAccessToken: string };
 };
 
-const InstagramAccessTokenResponseSchema = z.object({
+const InstagramRefreshAccessTokenResponseSchema = z.object({
   access_token: z.string(),
   expires_in: z.number(),
   token_type: z.string(),
@@ -19,18 +18,17 @@ type Response = {
 };
 
 export default async (args: Args): Promise<Response> => {
-  const { shortLivedAccessToken } = args.data;
+  const { longLivedAccessToken } = args.data;
   const responseStart = new Date();
 
   const response = await axios.get<unknown>(
-    `https://graph.instagram.com/access_token?${[
-      `access_token=${shortLivedAccessToken}`,
-      `client_secret=${getRequiredEnvVar(`INSTAGRAM_APP_SECRET`)}`,
-      `grant_type=ig_exchange_token`,
+    `https://graph.instagram.com/refresh_access_token?${[
+      `access_token=${longLivedAccessToken}`,
+      `grant_type=ig_refresh_token`,
     ].join(`&`)}`
   );
 
-  const responseParsed = InstagramAccessTokenResponseSchema.parse(
+  const responseParsed = InstagramRefreshAccessTokenResponseSchema.parse(
     response.data
   );
 

@@ -8,35 +8,45 @@ type Args = {
   auth: {
     currentUserId: string;
   };
-  data: {
+  where: {
+    userId: string;
+  };
+  create: {
     accessToken: string;
-    accessTokenExpiresAt: Date;
+    expiresAt: Date;
     instagramUserId: string;
     permissions: Array<string>;
     userId: string;
+  };
+  update: {
+    accessToken: string;
+    expiresAt: Date;
+    instagramUserId: string;
+    permissions: Array<string>;
   };
 };
 
 export default async (args: Args): Promise<void> => {
   const { currentUserId } = args.auth;
-  const { data } = args;
+  const { userId } = args.where;
+  const { create, update } = args;
 
-  if (currentUserId !== data.userId) {
+  if (currentUserId !== userId) {
     throw new ForbiddenError();
   }
 
   const existingConnection = await db.query.instagramConnection.findFirst({
-    where: eq(instagramConnection.userId, currentUserId),
+    where: eq(instagramConnection.userId, userId),
   });
 
   if (existingConnection) {
     await db
       .update(instagramConnection)
-      .set(data)
-      .where(eq(instagramConnection.userId, currentUserId));
+      .set(update)
+      .where(eq(instagramConnection.userId, userId));
   } else {
     await db.insert(instagramConnection).values({
-      ...data,
+      ...create,
       id: createId(),
     });
   }

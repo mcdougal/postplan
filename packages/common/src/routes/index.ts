@@ -1,3 +1,4 @@
+import CronRoute, { CronRouteParams, CronRouteResponse } from './CronRoute';
 import FeedRoute from './FeedRoute';
 import FileUploadUrlRoute, {
   FileUploadUrlRouteParams,
@@ -12,9 +13,15 @@ import LogInRoute from './LogInRoute';
 import LogOutRoute from './LogOutRoute';
 import SignUpRoute from './SignUpRoute';
 
-export type { FileUploadUrlRouteParams, FileUploadUrlRouteResponse };
+export type {
+  CronRouteParams,
+  CronRouteResponse,
+  FileUploadUrlRouteParams,
+  FileUploadUrlRouteResponse,
+};
 
 export {
+  CronRoute,
   FeedRoute,
   FileUploadUrlRoute,
   FileUploadUrlRouteResponseSchema,

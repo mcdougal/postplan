@@ -35,12 +35,12 @@ export default async (
     where: eq(instagramConnection.userId, currentUserId),
     columns: {
       accessToken: true,
-      accessTokenExpiresAt: true,
+      expiresAt: true,
       instagramUserId: true,
     },
   });
 
-  if (!connection || connection.accessTokenExpiresAt <= new Date()) {
+  if (!connection || connection.expiresAt <= new Date()) {
     return null;
   }
 

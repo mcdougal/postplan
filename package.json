@@ -7,6 +7,7 @@
   "scripts": {
     "build": "npm run db:migrate && npm run build -w @instaplan/app",
     "check": "npx npm-check --skip-unused",
+    "cron": "npm run cron -w @instaplan/app",
     "db:generate": "npm run generate -w @instaplan/db",
     "db:migrate": "npm run migrate -w @instaplan/db",
     "db:start": "npx supabase start",

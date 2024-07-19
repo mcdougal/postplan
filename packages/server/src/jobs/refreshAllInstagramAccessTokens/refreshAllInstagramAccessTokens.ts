@@ -1,8 +1,9 @@
+import { Job } from '@/common/jobs';
 import { db } from '@/db/connection';
 
 import { canRefreshAccessToken } from '@/server/instagram';
 
-import startJob from '../startJob';
+import startJobs from '../startJobs';
 
 export default async (): Promise<void> => {
   const allConnections = await db.query.instagramConnection.findMany({
@@ -13,16 +14,18 @@ export default async (): Promise<void> => {
     },
   });
 
-  allConnections.forEach(async (connection) => {
-    if (!canRefreshAccessToken(connection)) {
-      return;
-    }
+  const refreshableConnections = allConnections.filter((connection) => {
+    return canRefreshAccessToken(connection);
+  });
 
-    startJob({
+  const jobs: Array<Job> = refreshableConnections.map((connection) => {
+    return {
       name: `refreshOneInstagramAccessToken`,
       data: {
         connectionId: connection.id,
       },
-    });
+    };
   });
+
+  await startJobs(jobs);
 };

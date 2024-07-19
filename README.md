@@ -2,7 +2,6 @@
 
 ## Todo
 
-- Single cron job to kick off all other recurring jobs
 - Hashtags on planned post
 - Download planned post images
 

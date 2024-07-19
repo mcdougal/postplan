@@ -1,8 +1,9 @@
+import { Job } from '@/common/jobs';
 import { db } from '@/db/connection';
 
 import { isConnectionActive } from '@/server/instagram';
 
-import startJob from '../startJob';
+import startJobs from '../startJobs';
 
 export default async (): Promise<void> => {
   const allConnections = await db.query.instagramConnection.findMany({
@@ -17,12 +18,14 @@ export default async (): Promise<void> => {
     return isConnectionActive(connection);
   });
 
-  activeConnections.forEach((connection) => {
-    startJob({
+  const jobs: Array<Job> = activeConnections.map((connection) => {
+    return {
       name: `syncInstagramOneUser`,
       data: {
         connectionId: connection.id,
       },
-    });
+    };
   });
+
+  await startJobs(jobs);
 };

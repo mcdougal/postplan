@@ -12,6 +12,11 @@ export const RefreshOneInstagramAccessTokenJobSchema = z.object({
   }),
 });
 
+export const RunNightlyTasksJobSchema = z.object({
+  name: z.literal(`runNightlyTasks`),
+  data: z.object({}),
+});
+
 export const SyncInstagramAllUsersJobSchema = z.object({
   name: z.literal(`syncInstagramAllUsers`),
   data: z.object({}),
@@ -27,6 +32,7 @@ export const SyncInstagramOneUserJobSchema = z.object({
 export const JobSchema = z.union([
   RefreshAllInstagramAccessTokensJobSchema,
   RefreshOneInstagramAccessTokenJobSchema,
+  RunNightlyTasksJobSchema,
   SyncInstagramAllUsersJobSchema,
   SyncInstagramOneUserJobSchema,
 ]);
@@ -38,6 +44,7 @@ export type RefreshAllInstagramAccessTokensJob = z.infer<
 export type RefreshOneInstagramAccessTokenJob = z.infer<
   typeof RefreshOneInstagramAccessTokenJobSchema
 >;
+export type RunNightlyTasksJob = z.infer<typeof RunNightlyTasksJobSchema>;
 export type SyncInstagramAllUsersJob = z.infer<
   typeof SyncInstagramAllUsersJobSchema
 >;

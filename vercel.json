@@ -1,11 +1,7 @@
 {
   "crons": [
     {
-      "path": "/job/refreshAllInstagramAccessTokens",
-      "schedule": "0 0 * * *"
-    },
-    {
-      "path": "/job/syncInstagramAllUsers",
+      "path": "/job/runNightlyTasks",
       "schedule": "0 0 * * *"
     }
   ]

@@ -28,7 +28,7 @@ const FeedPage: Page = async () => {
     fetchInstagramMediaItems({
       auth: { currentUserId: currentUser.id },
       where: { userId: currentUser.id },
-      limit: 90,
+      limit: 40,
     }),
   ]);
 

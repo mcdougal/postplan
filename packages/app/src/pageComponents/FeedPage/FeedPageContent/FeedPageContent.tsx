@@ -43,7 +43,7 @@ const FeedPageContent = ({
   const actualPostHider = useActualPostHider();
 
   return (
-    <div className="flex min-h-[calc(100vh-48px)]">
+    <div className="hidden min-h-[calc(100vh-48px)] lg:flex">
       <div className="tall:pb-[10vh] flex min-w-[480px] items-center justify-center px-6 pb-16">
         <FeedGrid
           actualPostHider={actualPostHider}

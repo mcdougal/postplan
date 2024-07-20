@@ -41,6 +41,7 @@ const PlannedPostDetails = ({
             sizeStyles={sizeStyles}
           />
           <PlannedPostEditor
+            carousel={carousel}
             plannedPost={plannedPost}
             setOptimisticPlannedPosts={setOptimisticPlannedPosts}
             sizeStyles={sizeStyles}

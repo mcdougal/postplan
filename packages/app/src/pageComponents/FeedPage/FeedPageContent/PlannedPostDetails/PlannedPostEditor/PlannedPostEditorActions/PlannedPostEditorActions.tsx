@@ -1,10 +1,13 @@
 'use client';
 
+import { getMediaItems } from '@/common/plannedPosts';
 import { PlannedPost } from '@/server/plannedPosts';
 import { EllipsisVerticalIcon } from '@heroicons/react/24/outline';
 import { Dispatch, SetStateAction, useState } from 'react';
 
 import { Dropdown, DropdownItem, IconButton } from '@/app/components';
+
+import { Carousel } from '../../useCarousel';
 
 import CaptionCountdown from './CaptionCountdown';
 import DeletePlannedPostConfirmDialog from './DeletePlannedPostConfirmDialog';
@@ -15,6 +18,7 @@ import useDeleteRequest from './useDeleteRequest';
 
 type Props = {
   caption: string | null;
+  carousel: Carousel;
   onOpenHashtagFinder: () => void;
   plannedPost: PlannedPost;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
@@ -22,6 +26,7 @@ type Props = {
 
 const PlannedPostEditorActions = ({
   caption,
+  carousel,
   onOpenHashtagFinder,
   plannedPost,
   setOptimisticPlannedPosts,
@@ -47,7 +52,16 @@ const PlannedPostEditorActions = ({
               />
             }>
             <DropdownItem label="Add Hashtags" onClick={onOpenHashtagFinder} />
-            <DropdownItem label="Download Images" />
+            <DropdownItem
+              label="Download Image"
+              onClick={() => {
+                const mediaItem =
+                  getMediaItems(plannedPost)[carousel.currentIndex];
+                if (mediaItem) {
+                  window.open(`${mediaItem.mediaUrl}&download=`);
+                }
+              }}
+            />
             <DropdownItem
               label="Delete"
               onClick={() => {

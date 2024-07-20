@@ -1,6 +1,7 @@
 import { LogInRoute } from '@/common/routes';
 import { queryActualPosts } from '@/server/instagram';
 import { queryPlannedPosts } from '@/server/plannedPosts';
+import { generateFileDownloadPresignedUrl } from '@/server/storage';
 import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -9,6 +10,7 @@ import { SiteTopBar } from '@/app/components';
 import { Page } from '@/app/pageUtils';
 
 import FeedPageContent from './FeedPageContent';
+import MobileFeed from './MobileFeed';
 import sortPlannedPosts from './sortPlannedPosts';
 
 const FeedPage: Page = async () => {
@@ -37,6 +39,7 @@ const FeedPage: Page = async () => {
         currentUser={currentUser}
         plannedPosts={sortPlannedPosts(plannedPosts)}
       />
+      <MobileFeed plannedPosts={sortPlannedPosts(plannedPosts)} />
     </>
   );
 };

@@ -6,18 +6,21 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Textarea } from '@/app/components';
 
 import { SizeStyles } from '../getSizeStyles';
+import { Carousel } from '../useCarousel';
 
 import HashtagFinder from './HashtagFinder';
 import PlannedPostEditorActions from './PlannedPostEditorActions';
 import useUpdateCaptionRequest from './useUpdateCaptionRequest';
 
 type Props = {
+  carousel: Carousel;
   plannedPost: PlannedPost;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
   sizeStyles: SizeStyles;
 };
 
 const PlannedPostEditor = ({
+  carousel,
   plannedPost,
   setOptimisticPlannedPosts,
   sizeStyles,
@@ -74,6 +77,7 @@ const PlannedPostEditor = ({
       </div>
       <PlannedPostEditorActions
         caption={caption}
+        carousel={carousel}
         onOpenHashtagFinder={() => {
           setIsHashtagFinderOpen(true);
         }}

@@ -4,9 +4,9 @@
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "instaplan.planned_post": {
+    "postplan.planned_post": {
       "name": "planned_post",
-      "schema": "instaplan",
+      "schema": "postplan",
       "columns": {
         "caption": {
           "name": "caption",
@@ -53,7 +53,7 @@
           "name": "planned_post_user_id_user_id_fk",
           "tableFrom": "planned_post",
           "tableTo": "user",
-          "schemaTo": "instaplan",
+          "schemaTo": "postplan",
           "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
@@ -63,9 +63,9 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "instaplan.planned_post_media_item": {
+    "postplan.planned_post_media_item": {
       "name": "planned_post_media_item",
-      "schema": "instaplan",
+      "schema": "postplan",
       "columns": {
         "created_at": {
           "name": "created_at",
@@ -106,7 +106,7 @@
           "name": "planned_post_media_item_planned_post_id_planned_post_id_fk",
           "tableFrom": "planned_post_media_item",
           "tableTo": "planned_post",
-          "schemaTo": "instaplan",
+          "schemaTo": "postplan",
           "columnsFrom": ["planned_post_id"],
           "columnsTo": ["id"],
           "onDelete": "cascade",
@@ -116,9 +116,9 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "instaplan.user": {
+    "postplan.user": {
       "name": "user",
-      "schema": "instaplan",
+      "schema": "postplan",
       "columns": {
         "auth_user_id": {
           "name": "auth_user_id",
@@ -177,7 +177,7 @@
   },
   "enums": {},
   "schemas": {
-    "instaplan": "instaplan"
+    "postplan": "postplan"
   },
   "_meta": {
     "columns": {},

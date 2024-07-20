@@ -1,1 +1,1 @@
-ALTER TABLE "instaplan"."instagram_connection" DROP COLUMN IF EXISTS "instagram_user_id";
+ALTER TABLE "postplan"."instagram_connection" DROP COLUMN IF EXISTS "instagram_user_id";

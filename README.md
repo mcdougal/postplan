@@ -1,4 +1,4 @@
-# instaplan
+# postplan
 
 ## Todo
 
@@ -20,5 +20,5 @@
 - `npm install`
 - `npm run db:start`
 - `npm run db:migrate`
-- Create `instaplan` bucket in Supabase
+- Create `postplan` bucket in Supabase
 - Create new `all_access` bucket policy

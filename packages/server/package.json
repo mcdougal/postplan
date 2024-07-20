@@ -1,5 +1,5 @@
 {
-  "name": "@instaplan/server",
+  "name": "@postplan/server",
   "version": "0.0.1",
   "scripts": {
     "check": "npx npm-check --skip-unused",
@@ -12,8 +12,8 @@
     "server-only": "^0.0.1"
   },
   "dependencies": {
-    "@instaplan/common": "file:../common",
-    "@instaplan/db": "file:../db",
+    "@postplan/common": "file:../common",
+    "@postplan/db": "file:../db",
     "@paralleldrive/cuid2": "^2.2.2",
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.42.5",

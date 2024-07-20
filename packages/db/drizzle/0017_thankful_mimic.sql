@@ -1,1 +1,1 @@
-ALTER TABLE "instaplan"."instagram_connection" RENAME COLUMN "access_token_expires_at" TO "expires_at";
+ALTER TABLE "postplan"."instagram_connection" RENAME COLUMN "access_token_expires_at" TO "expires_at";

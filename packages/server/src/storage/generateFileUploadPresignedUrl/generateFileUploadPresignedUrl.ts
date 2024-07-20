@@ -6,7 +6,7 @@ export default async (key: string): Promise<string> => {
   const supabase = getSupabaseClient();
 
   const removeResponse = await supabase.storage
-    .from(getRequiredEnvVar(`SUPABASE_INSTAPLAN_BUCKET_NAME`))
+    .from(getRequiredEnvVar(`SUPABASE_POSTPLAN_BUCKET_NAME`))
     .remove([key]);
 
   if (removeResponse.error) {
@@ -14,7 +14,7 @@ export default async (key: string): Promise<string> => {
   }
 
   const createSignedUploadUrlResponse = await supabase.storage
-    .from(getRequiredEnvVar(`SUPABASE_INSTAPLAN_BUCKET_NAME`))
+    .from(getRequiredEnvVar(`SUPABASE_POSTPLAN_BUCKET_NAME`))
     .createSignedUploadUrl(key, { upsert: true });
 
   if (createSignedUploadUrlResponse.error) {

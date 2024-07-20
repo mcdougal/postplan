@@ -1,1 +1,1 @@
-ALTER TABLE "instaplan"."post" ALTER COLUMN "caption" DROP NOT NULL;
+ALTER TABLE "postplan"."post" ALTER COLUMN "caption" DROP NOT NULL;

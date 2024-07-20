@@ -1,1 +1,1 @@
-ALTER TABLE "instaplan"."actual_post" ADD COLUMN "file_name" text NOT NULL;
+ALTER TABLE "postplan"."actual_post" ADD COLUMN "file_name" text NOT NULL;

@@ -1,1 +1,1 @@
-ALTER TABLE "instaplan"."planned_post_media_item" ADD COLUMN "media_thumbnail_url" text NOT NULL;
+ALTER TABLE "postplan"."planned_post_media_item" ADD COLUMN "media_thumbnail_url" text NOT NULL;

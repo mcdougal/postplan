@@ -32,7 +32,7 @@ const HomePage: Page = async () => {
               Connect Instagram
             </Button>
             <Typography className="text-center" size="md">
-              You must connect your Instagram account to use Instaplan.
+              You must connect your Instagram account to use Postplan.
             </Typography>
           </div>
         </div>

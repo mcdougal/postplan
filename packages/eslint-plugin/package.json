@@ -1,5 +1,5 @@
 {
-  "name": "@instaplan/eslint-plugin",
+  "name": "@postplan/eslint-plugin",
   "version": "0.0.1",
   "main": ".build/index.js",
   "scripts": {

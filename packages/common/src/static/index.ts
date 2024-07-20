@@ -1,2 +1,2 @@
-/* eslint-disable @instaplan/no-export-from */
+/* eslint-disable @postplan/no-export-from */
 export * from './static';

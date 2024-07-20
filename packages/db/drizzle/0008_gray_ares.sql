@@ -1,1 +1,1 @@
-ALTER TABLE "instaplan"."planned_post_media_item" ADD COLUMN "order" integer;
+ALTER TABLE "postplan"."planned_post_media_item" ADD COLUMN "order" integer;

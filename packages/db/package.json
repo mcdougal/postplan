@@ -1,5 +1,5 @@
 {
-  "name": "@instaplan/db",
+  "name": "@postplan/db",
   "version": "0.0.1",
   "scripts": {
     "check": "npx npm-check --skip-unused",
@@ -10,7 +10,7 @@
     "types": "tsc --noEmit"
   },
   "dependencies": {
-    "@instaplan/common": "file:../common",
+    "@postplan/common": "file:../common",
     "drizzle-orm": "^0.31.2",
     "postgres": "^3.4.4"
   },

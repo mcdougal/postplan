@@ -24,7 +24,7 @@ module.exports = {
       ],
       parser: `@typescript-eslint/parser`,
       plugins: [
-        `@instaplan/eslint-plugin`,
+        `@postplan/eslint-plugin`,
         `filenames`,
         `import`,
         `react-hooks`,
@@ -56,15 +56,15 @@ module.exports = {
         // exporting using an `export from`. The former is preferred because it
         // results in a clean list of everything exported from the module,
         // whereas the latter can be hard to read.
-        '@instaplan/no-export-from': `error`,
+        '@postplan/no-export-from': `error`,
 
         // Type assertions weaken the type safety of our system, increasing the
         // likelihood of runtime errors.
-        '@instaplan/no-type-assertion': `error`,
+        '@postplan/no-type-assertion': `error`,
 
         // Type assertions weaken the type safety of our system, increasing the
         // likelihood of runtime errors.
-        '@instaplan/order-unassigned-imports': [
+        '@postplan/order-unassigned-imports': [
           `error`,
           {
             top: [`client-only`, `server-only`],
@@ -73,7 +73,7 @@ module.exports = {
 
         // Help keep module implementation details private by preventing imports
         // from anywhere but the top-level exports of the module.
-        '@instaplan/package-imports': [
+        '@postplan/package-imports': [
           `error`,
           {
             disallowedPatterns: [`^@/.*/.*/.*$`],

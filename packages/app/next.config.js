@@ -10,7 +10,7 @@ const nextConfig = {
   },
   experimental: {
     serverActions: {
-      allowedOrigins: [`*.instaplan.me`],
+      allowedOrigins: [`*.postplan.app`],
     },
   },
   // Exposing the framework used can make it easier for attackers to

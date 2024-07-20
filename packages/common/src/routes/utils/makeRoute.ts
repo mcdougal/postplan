@@ -86,10 +86,10 @@ export default <P = Record<string, never>, S = Record<string, never>>(
   const route = {
     getAbsoluteUrl,
     getPath,
-    // eslint-disable-next-line @instaplan/no-type-assertion, @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @postplan/no-type-assertion, @typescript-eslint/no-explicit-any
     parse: (routeDefinition as any).parse,
   };
 
-  // eslint-disable-next-line @instaplan/no-type-assertion
+  // eslint-disable-next-line @postplan/no-type-assertion
   return route as Route<P, S>;
 };

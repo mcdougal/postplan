@@ -22,7 +22,7 @@ const SiteTopBar = forwardRef<any, Props>(
         )}
         {...divProps}>
         <Typography size="lg" weight="bold">
-          Instaplan
+          Postplan
         </Typography>
         <Typography size="sm">
           {currentUser ? (

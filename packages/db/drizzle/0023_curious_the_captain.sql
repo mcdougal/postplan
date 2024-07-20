@@ -1,1 +1,1 @@
-ALTER TABLE "instaplan"."actual_post" ALTER COLUMN "media_thumbnail_url" DROP NOT NULL;
+ALTER TABLE "postplan"."actual_post" ALTER COLUMN "media_thumbnail_url" DROP NOT NULL;

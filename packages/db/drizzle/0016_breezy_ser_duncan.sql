@@ -1,1 +1,1 @@
-ALTER TABLE "instaplan"."instagram_connection" ADD COLUMN "refreshed_at" timestamp;
+ALTER TABLE "postplan"."instagram_connection" ADD COLUMN "refreshed_at" timestamp;

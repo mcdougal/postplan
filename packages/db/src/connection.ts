@@ -60,7 +60,7 @@ export type DrizzleTransaction = PgTransaction<
 
 // There are too many utilities to manually export one-by-one, so we're
 // just re-exporting everything.
-// eslint-disable-next-line @instaplan/no-export-from
+// eslint-disable-next-line @postplan/no-export-from
 export * from 'drizzle-orm';
 
 export class NotFoundError extends Error {

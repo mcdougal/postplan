@@ -1,1 +1,1 @@
-ALTER TABLE "instaplan"."user" RENAME COLUMN "user_id" TO "auth_user_id";
+ALTER TABLE "postplan"."user" RENAME COLUMN "user_id" TO "auth_user_id";

@@ -13,7 +13,7 @@ import {
 
 import { encryptedText } from './customTypes';
 
-export const schema = pgSchema(`instaplan`);
+export const schema = pgSchema(`postplan`);
 
 // -----------------------------------------------------------------------------
 // Tables

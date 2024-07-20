@@ -1,7 +1,7 @@
 import { FeedRoute, LogInRoute } from '@/common/routes';
 import {
   getInstagramOAuthUrl,
-  hasConnectedInstagram,
+  hasActiveInstagramConnection,
 } from '@/server/instagram';
 import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
@@ -17,7 +17,7 @@ const HomePage: Page = async () => {
     redirect(LogInRoute.getPath({}));
   }
 
-  const isInstagramConnected = await hasConnectedInstagram({
+  const isInstagramConnected = await hasActiveInstagramConnection({
     auth: { currentUserId: currentUser.id },
     where: { userId: currentUser.id },
   });

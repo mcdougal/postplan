@@ -19,6 +19,7 @@ export type ActiveInstagramConnection = QueryResult<
   'instagramConnection',
   {
     accessToken: true;
+    id: true;
   }
 >;
 
@@ -37,6 +38,7 @@ export default async (
     columns: {
       accessToken: true,
       expiresAt: true,
+      id: true,
     },
   });
 

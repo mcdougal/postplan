@@ -1,5 +1,8 @@
-import { LogInRoute } from '@/common/routes';
-import { queryActualPosts } from '@/server/instagram';
+import { HomePageRoute, LogInRoute } from '@/common/routes';
+import {
+  hasActiveInstagramConnection,
+  queryActualPosts,
+} from '@/server/instagram';
 import { queryPlannedPosts } from '@/server/plannedPosts';
 import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
@@ -16,6 +19,15 @@ const FeedPage: Page = async () => {
   const currentUser = await getCurrentUser(cookies());
   if (!currentUser) {
     redirect(LogInRoute.getPath({}));
+  }
+
+  const isInstagramConnected = await hasActiveInstagramConnection({
+    auth: { currentUserId: currentUser.id },
+    where: { userId: currentUser.id },
+  });
+
+  if (!isInstagramConnected) {
+    redirect(HomePageRoute.getPath({}));
   }
 
   const [plannedPosts, actualPosts] = await Promise.all([

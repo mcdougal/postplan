@@ -1,4 +1,4 @@
-import { db, eq } from '@/db/connection';
+import { db, eq, firstOrThrow } from '@/db/connection';
 import { instagramConnection } from '@/db/schema';
 import { createId } from '@paralleldrive/cuid2';
 
@@ -26,7 +26,11 @@ type Args = {
   };
 };
 
-export default async (args: Args): Promise<void> => {
+type InstagramConnection = {
+  id: string;
+};
+
+export default async (args: Args): Promise<InstagramConnection> => {
   const { currentUserId } = args.auth;
   const { userId } = args.where;
   const { create, update } = args;
@@ -39,20 +43,28 @@ export default async (args: Args): Promise<void> => {
     where: eq(instagramConnection.userId, userId),
   });
 
+  let connectionId: string;
+
   if (existingConnection) {
     await db
       .update(instagramConnection)
       .set(update)
       .where(eq(instagramConnection.userId, userId));
+    connectionId = existingConnection.id;
   } else {
-    await db
-      .insert(instagramConnection)
-      .values({
-        ...create,
-        id: createId(),
-      })
-      .returning({
-        id: instagramConnection.id,
-      });
+    const insertedConnection = firstOrThrow(
+      await db
+        .insert(instagramConnection)
+        .values({
+          ...create,
+          id: createId(),
+        })
+        .returning({
+          id: instagramConnection.id,
+        })
+    );
+    connectionId = insertedConnection.id;
   }
+
+  return { id: connectionId };
 };

@@ -2,7 +2,7 @@
 
 import { PlannedPost } from '@/server/plannedPosts';
 
-import { Typography } from '@/app/components';
+import { Container, Typography } from '@/app/components';
 
 import MobilePlannedPost from './MobilePlannedPost';
 
@@ -12,7 +12,7 @@ type Props = {
 
 const MobileFeedContent = ({ plannedPosts }: Props): React.ReactElement => {
   return (
-    <>
+    <Container size="xs">
       <div className="p-4">
         <Typography size="md">
           Download images and captions for planned posts. To edit planned posts,
@@ -31,7 +31,7 @@ const MobileFeedContent = ({ plannedPosts }: Props): React.ReactElement => {
           <MobilePlannedPost key={plannedPost.id} plannedPost={plannedPost} />
         );
       })}
-    </>
+    </Container>
   );
 };
 

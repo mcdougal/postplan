@@ -4,7 +4,7 @@ import fetchInstagramMediaItems from './fetchInstagramMediaItems';
 import fetchRefreshedAccessToken from './fetchRefreshedAccessToken';
 import generateLongLivedToken from './generateLongLivedToken';
 import getInstagramOAuthUrl from './getInstagramOAuthUrl';
-import hasConnectedInstagram from './hasConnectedInstagram';
+import hasActiveInstagramConnection from './hasActiveInstagramConnection';
 import instagramMediaItemToActualPost from './instagramMediaItemToActualPost';
 import isConnectionActive from './isConnectionActive';
 import queryActiveConnection from './queryActiveConnection';
@@ -25,7 +25,7 @@ export {
   fetchRefreshedAccessToken,
   generateLongLivedToken,
   getInstagramOAuthUrl,
-  hasConnectedInstagram,
+  hasActiveInstagramConnection,
   instagramMediaItemToActualPost,
   isConnectionActive,
   queryActiveConnection,

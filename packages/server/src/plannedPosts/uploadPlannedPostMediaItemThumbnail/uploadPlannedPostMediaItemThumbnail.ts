@@ -1,13 +1,9 @@
 import { getThumbnailFileName } from '@/common/userFiles';
 import { db, eq, firstOrThrow } from '@/db/connection';
 import { plannedPostMediaItem } from '@/db/schema';
-import axios from 'axios';
 import sharp from 'sharp';
 
-import {
-  generateFileDownloadUrl,
-  generateFileUploadUrl,
-} from '@/server/userFiles';
+import { generateFileDownloadUrl, uploadUserFile } from '@/server/userFiles';
 
 export default async (plannedPostMediaItemId: string): Promise<void> => {
   const matchingMediaItem = firstOrThrow(
@@ -27,7 +23,6 @@ export default async (plannedPostMediaItemId: string): Promise<void> => {
     })
   );
 
-  const thumbnailFileName = getThumbnailFileName(matchingMediaItem.fileName);
   const { userId } = matchingMediaItem.plannedPost;
 
   const mediaResponse = await fetch(matchingMediaItem.mediaUrl);
@@ -42,15 +37,14 @@ export default async (plannedPostMediaItemId: string): Promise<void> => {
     .jpeg()
     .toBuffer();
 
-  const fileUploadUrl = await generateFileUploadUrl({
-    auth: { currentUserId: userId },
-    data: { fileName: thumbnailFileName, userId },
-  });
+  const thumbnailFileName = getThumbnailFileName(matchingMediaItem.fileName);
 
-  await axios.put(fileUploadUrl, resizedBuffer, {
-    headers: {
-      'Access-Control-Allow-Origin': `*`,
-      'Content-Type': `image/jpeg`,
+  await uploadUserFile({
+    auth: { currentUserId: userId },
+    data: {
+      file: resizedBuffer,
+      fileName: thumbnailFileName,
+      userId,
     },
   });
 

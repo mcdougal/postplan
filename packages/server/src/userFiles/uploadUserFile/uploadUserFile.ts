@@ -6,7 +6,7 @@ type Args = {
     currentUserId: string;
   };
   data: {
-    file: File;
+    file: Blob | Buffer | File;
     fileName: string;
     userId: string;
   };

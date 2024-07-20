@@ -2,7 +2,10 @@ import { getRequiredEnvVar } from '@/common/env';
 
 import { getSupabaseClient } from '../utils';
 
-export default async (key: string, file: File): Promise<void> => {
+export default async (
+  key: string,
+  file: Blob | Buffer | File
+): Promise<void> => {
   const supabase = getSupabaseClient();
 
   await supabase.storage

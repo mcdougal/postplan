@@ -5,7 +5,6 @@
 - Redirect to www not working?
 - Show more posts in feed
 - Enter a date?
-- Support syncing new reel cover photos
 - Switch to Cloudinary? Or start uploading images right away in dialog?
 - Test Automatic refreshing of IG access token
 - Doesn't show post when someone collaborates with you (<https://developers.facebook.com/community/threads/1011039596753699/>)

@@ -7,6 +7,7 @@ import refreshMediaItemUrls from './refreshMediaItemUrls';
 import reorderMediaItems from './reorderMediaItems';
 import reorderPlannedPosts from './reorderPlannedPosts';
 import updatePlannedPost from './updatePlannedPost';
+import uploadMediaItemFile from './uploadMediaItemFile';
 
 export type { PlannedPost };
 
@@ -20,4 +21,5 @@ export {
   reorderMediaItems,
   reorderPlannedPosts,
   updatePlannedPost,
+  uploadMediaItemFile,
 };

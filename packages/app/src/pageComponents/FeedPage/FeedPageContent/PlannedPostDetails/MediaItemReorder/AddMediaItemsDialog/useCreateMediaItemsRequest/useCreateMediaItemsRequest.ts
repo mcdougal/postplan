@@ -1,7 +1,6 @@
 import { CurrentUser } from '@/common/users';
+import { PlannedPost } from '@/server/plannedPosts';
 import { useState } from 'react';
-
-import { uploadPlannedPostImageFile } from '@/app/plannedPosts';
 
 import { Post } from '../types';
 
@@ -19,7 +18,7 @@ type CreateMediaItemsRequest = {
 
 export default (
   currentUser: CurrentUser,
-  plannedPostId: string,
+  plannedPost: PlannedPost,
   posts: Array<Post>,
   { onCompleted }: Callbacks
 ): CreateMediaItemsRequest => {
@@ -30,20 +29,6 @@ export default (
     setLoading(true);
     setError(null);
 
-    try {
-      await Promise.all(
-        posts.map(async (post) => {
-          await uploadPlannedPostImageFile(post.file, currentUser);
-        })
-      );
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-      setLoading(false);
-      setError(`Error uploading files`);
-      return;
-    }
-
     const mediaItemsData = posts.map((post) => {
       return {
         fileName: post.file.name,
@@ -52,11 +37,22 @@ export default (
       };
     });
 
-    const response = await createMediaItemsServerAction({
-      data: {
+    const formData = new FormData();
+    formData.append(
+      `data`,
+      JSON.stringify({
         mediaItems: mediaItemsData,
-        plannedPostId,
-      },
+        plannedPostId: plannedPost.id,
+        userId: plannedPost.userId,
+      })
+    );
+
+    posts.forEach((post) => {
+      formData.append(post.file.name, post.file);
+    });
+
+    const response = await createMediaItemsServerAction({
+      data: formData,
     });
 
     if (response.status === `error`) {

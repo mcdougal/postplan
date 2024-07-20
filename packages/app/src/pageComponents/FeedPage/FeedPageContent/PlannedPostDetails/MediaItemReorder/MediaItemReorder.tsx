@@ -117,7 +117,7 @@ const MediaItemReorder = ({
           setAddDialogOpen(false);
         }}
         open={addDialogOpen}
-        plannedPostId={plannedPost.id}
+        plannedPost={plannedPost}
       />
     </>
   );

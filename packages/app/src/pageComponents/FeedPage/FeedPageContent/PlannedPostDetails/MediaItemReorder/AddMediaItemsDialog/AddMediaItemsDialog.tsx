@@ -1,6 +1,7 @@
 'use client';
 
 import { CurrentUser } from '@/common/users';
+import { PlannedPost } from '@/server/plannedPosts';
 import { useState } from 'react';
 
 import {
@@ -20,20 +21,20 @@ type Props = {
   currentUser: CurrentUser;
   onClose: () => void;
   open: boolean;
-  plannedPostId: string;
+  plannedPost: PlannedPost;
 };
 
 const AddMediaItemsDialog = ({
   currentUser,
   onClose,
   open,
-  plannedPostId,
+  plannedPost,
 }: Props): React.ReactElement => {
   const [posts, setPosts] = useState<Array<Post>>([]);
 
   const createMediaItemsRequest = useCreateMediaItemsRequest(
     currentUser,
-    plannedPostId,
+    plannedPost,
     posts,
     {
       onCompleted: () => {

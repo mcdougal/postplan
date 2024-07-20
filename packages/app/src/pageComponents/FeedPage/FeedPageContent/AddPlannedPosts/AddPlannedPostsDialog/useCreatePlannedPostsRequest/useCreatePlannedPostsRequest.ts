@@ -1,8 +1,6 @@
 import { CurrentUser } from '@/common/users';
 import { useState } from 'react';
 
-import { uploadPlannedPostImageFile } from '@/app/plannedPosts';
-
 import { Post } from '../types';
 
 import createPlannedPostsServerAction from './createPlannedPostsServerAction';
@@ -37,24 +35,10 @@ export default (
     setLoading(true);
     setError(null);
 
-    try {
-      await Promise.all(
-        posts.map(async (post) => {
-          await uploadPlannedPostImageFile(post.file, currentUser);
-        })
-      );
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error(err);
-      setLoading(false);
-      setError(`Error uploading files`);
-      return;
-    }
-
     const plannedPostsData = isCarousel
       ? [
           {
-            mediaItems: posts.map((post) => {
+            files: posts.map((post) => {
               return {
                 fileName: post.file.name,
                 height: post.resolution.height,
@@ -65,7 +49,7 @@ export default (
         ]
       : posts.map((post) => {
           return {
-            mediaItems: [
+            files: [
               {
                 fileName: post.file.name,
                 height: post.resolution.height,
@@ -75,12 +59,22 @@ export default (
           };
         });
 
-    const response = await createPlannedPostsServerAction({
-      data: {
+    const formData = new FormData();
+    formData.append(
+      `data`,
+      JSON.stringify({
         isReel,
         plannedPosts: plannedPostsData,
         userId: currentUser.id,
-      },
+      })
+    );
+
+    posts.forEach((post) => {
+      formData.append(post.file.name, post.file);
+    });
+
+    const response = await createPlannedPostsServerAction({
+      data: formData,
     });
 
     if (response.status === `error`) {

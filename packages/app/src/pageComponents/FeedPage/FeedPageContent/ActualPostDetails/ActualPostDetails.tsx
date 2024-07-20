@@ -20,22 +20,24 @@ const ActualPostDetails = ({
   const carouselSizes = getCarouselSizes(resolution);
 
   return (
-    <div className="relative max-w-full flex-1 bg-white">
-      {resolution && (
-        <>
-          <div className="flex">
-            <ActualPostCarousel
-              actualPost={actualPost}
-              carouselSizes={carouselSizes}
-            />
-            <ActualPostDetailsCaption
-              actualPost={actualPost}
-              actualPostHider={actualPostHider}
-              carouselSizes={carouselSizes}
-            />
-          </div>
-        </>
-      )}
+    <div className="flex flex-1 justify-center">
+      <div className="relative w-full max-w-[900px] flex-1 bg-white shadow-2xl">
+        {resolution && (
+          <>
+            <div className="flex">
+              <ActualPostCarousel
+                actualPost={actualPost}
+                carouselSizes={carouselSizes}
+              />
+              <ActualPostDetailsCaption
+                actualPost={actualPost}
+                actualPostHider={actualPostHider}
+                carouselSizes={carouselSizes}
+              />
+            </div>
+          </>
+        )}
+      </div>
     </div>
   );
 };

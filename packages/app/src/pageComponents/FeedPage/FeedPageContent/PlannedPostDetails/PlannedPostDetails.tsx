@@ -27,35 +27,37 @@ const PlannedPostDetails = ({
   const sizeStyles = getSizeStyles(firstMediaItem);
 
   return (
-    <div className="relative flex flex-1 flex-col gap-2">
-      <div
-        className="max-w-full flex-1 bg-white"
-        style={{
-          height: sizeStyles.container.height,
-          maxHeight: sizeStyles.container.maxHeight,
-        }}>
-        <div className="flex">
-          <PlannedPostCarousel
+    <div className="flex flex-1 justify-center">
+      <div className="relative flex w-full max-w-[900px] flex-1 flex-col gap-2">
+        <div
+          className="w-full flex-1 bg-white shadow-2xl"
+          style={{
+            height: sizeStyles.container.height,
+            maxHeight: sizeStyles.container.maxHeight,
+          }}>
+          <div className="flex">
+            <PlannedPostCarousel
+              carousel={carousel}
+              plannedPost={plannedPost}
+              sizeStyles={sizeStyles}
+            />
+            <PlannedPostEditor
+              carousel={carousel}
+              plannedPost={plannedPost}
+              setOptimisticPlannedPosts={setOptimisticPlannedPosts}
+              sizeStyles={sizeStyles}
+            />
+          </div>
+        </div>
+        {!isReel(plannedPost) && (
+          <MediaItemReorder
             carousel={carousel}
-            plannedPost={plannedPost}
-            sizeStyles={sizeStyles}
-          />
-          <PlannedPostEditor
-            carousel={carousel}
+            currentUser={currentUser}
             plannedPost={plannedPost}
             setOptimisticPlannedPosts={setOptimisticPlannedPosts}
-            sizeStyles={sizeStyles}
           />
-        </div>
+        )}
       </div>
-      {!isReel(plannedPost) && (
-        <MediaItemReorder
-          carousel={carousel}
-          currentUser={currentUser}
-          plannedPost={plannedPost}
-          setOptimisticPlannedPosts={setOptimisticPlannedPosts}
-        />
-      )}
     </div>
   );
 };

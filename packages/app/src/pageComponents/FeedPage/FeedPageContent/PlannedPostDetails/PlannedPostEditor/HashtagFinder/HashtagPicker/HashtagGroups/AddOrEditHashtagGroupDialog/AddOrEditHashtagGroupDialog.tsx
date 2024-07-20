@@ -113,7 +113,7 @@ const AddOrEditHashtagGroupDialog = ({
 
   const submitByAction: { [key in AddOrEditDialogAction['status']]: string } = {
     add: `Add Group`,
-    edit: `Edit Group`,
+    edit: `Save`,
   };
 
   const remaining = MAX_HASHTAGS - hashtags.length;

@@ -1,6 +1,6 @@
 import { getMediaItems } from '@/common/plannedPosts';
 import { PlannedPost } from '@/server/plannedPosts';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export type Carousel = {
   currentIndex: number;
@@ -28,11 +28,9 @@ export default (plannedPost: PlannedPost): Carousel => {
   const previousIndex =
     currentMediaItemIndex === 0 ? null : currentMediaItemIndex - 1;
 
-  const jump = (index: number): void => {
-    if (index >= 0 && index < mediaItems.length) {
-      setCurrentMediaItemIndex(index);
-    }
-  };
+  const jump = useCallback((index: number): void => {
+    setCurrentMediaItemIndex(index);
+  }, []);
 
   const next =
     nextIndex !== null

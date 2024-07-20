@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
 
+// eslint-disable-next-line import/extensions
+import 'swiper/css';
 import './globals.css';
 
 // eslint-disable-next-line @typescript-eslint/quotes

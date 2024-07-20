@@ -1,5 +1,5 @@
 import { getRequiredEnvVar } from '@/common/env';
-import { getInstagramOAuthRedirectUri } from '@/common/instagram';
+import { InstagramOAuthRoute } from '@/common/routes';
 import axios from 'axios';
 import { z } from 'zod';
 
@@ -29,7 +29,7 @@ export default async (args: Args): Promise<Response> => {
       client_secret: getRequiredEnvVar(`INSTAGRAM_APP_SECRET`),
       code,
       grant_type: `authorization_code`,
-      redirect_uri: getInstagramOAuthRedirectUri(),
+      redirect_uri: InstagramOAuthRoute.getAbsoluteUrl({}),
     },
     {
       headers: {

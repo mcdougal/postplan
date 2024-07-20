@@ -1,6 +1,6 @@
 'use server';
 
-import { getMostUsedHashtags } from '@/server/instagram';
+import { getMostUsedHashtags } from '@/server/actualPosts';
 
 import { authenticatedServerAction } from '@/app/serverActions';
 

@@ -1,6 +1,8 @@
-import { getInstagramOAuthUrl } from '@/common/instagram';
 import { FeedRoute, LogInRoute } from '@/common/routes';
-import { hasConnectedInstagram } from '@/server/instagram';
+import {
+  getInstagramOAuthUrl,
+  hasConnectedInstagram,
+} from '@/server/instagram';
 import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';

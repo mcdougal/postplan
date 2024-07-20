@@ -3,8 +3,7 @@ import exchangeCodeForToken from './exchangeCodeForToken';
 import fetchInstagramMediaItems from './fetchInstagramMediaItems';
 import fetchRefreshedAccessToken from './fetchRefreshedAccessToken';
 import generateLongLivedToken from './generateLongLivedToken';
-import getMostUsedHashtags from './getMostUsedHashtags';
-import getRecentHashtags from './getRecentHashtags';
+import getInstagramOAuthUrl from './getInstagramOAuthUrl';
 import hasConnectedInstagram from './hasConnectedInstagram';
 import instagramMediaItemToActualPost from './instagramMediaItemToActualPost';
 import isConnectionActive from './isConnectionActive';
@@ -25,8 +24,7 @@ export {
   fetchInstagramMediaItems,
   fetchRefreshedAccessToken,
   generateLongLivedToken,
-  getMostUsedHashtags,
-  getRecentHashtags,
+  getInstagramOAuthUrl,
   hasConnectedInstagram,
   instagramMediaItemToActualPost,
   isConnectionActive,

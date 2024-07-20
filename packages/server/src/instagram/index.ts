@@ -13,7 +13,6 @@ import refreshAccessToken from './refreshAccessToken';
 import refreshMediaItemUrls from './refreshMediaItemUrls';
 import syncDataFromInstagram from './syncDataFromInstagram';
 import { ActualPost, InstagramMediaItem } from './types';
-import uploadActualPostThumbnail from './uploadActualPostThumbnail';
 import upsertAccessToken from './upsertAccessToken';
 
 export type { ActualPost, InstagramMediaItem };
@@ -33,6 +32,5 @@ export {
   refreshAccessToken,
   refreshMediaItemUrls,
   syncDataFromInstagram,
-  uploadActualPostThumbnail,
   upsertAccessToken,
 };

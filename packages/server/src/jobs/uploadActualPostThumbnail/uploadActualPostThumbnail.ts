@@ -1,6 +1,6 @@
 import { UploadActualPostThumbnailJob } from '@/common/jobs';
 
-import { uploadActualPostThumbnail } from '@/server/instagram';
+import { uploadActualPostThumbnail } from '@/server/actualPosts';
 
 export default async (
   data: UploadActualPostThumbnailJob['data']

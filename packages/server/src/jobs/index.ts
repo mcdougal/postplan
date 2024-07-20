@@ -8,6 +8,7 @@ import runNightlyTasks from './runNightlyTasks';
 import syncInstagramAllUsers from './syncInstagramAllUsers';
 import syncInstagramOneUser from './syncInstagramOneUser';
 import uploadActualPostThumbnail from './uploadActualPostThumbnail';
+import uploadPlannedPostMediaItemThumbnail from './uploadPlannedPostMediaItemThumbnail';
 
 export {
   refreshActualPostMediaUrlsAllUsers,
@@ -20,4 +21,5 @@ export {
   syncInstagramAllUsers,
   syncInstagramOneUser,
   uploadActualPostThumbnail,
+  uploadPlannedPostMediaItemThumbnail,
 };

@@ -176,6 +176,13 @@
       "when": 1721423753940,
       "tag": "0024_glorious_silverclaw",
       "breakpoints": true
+    },
+    {
+      "idx": 25,
+      "version": "7",
+      "when": 1721513487141,
+      "tag": "0025_sloppy_swordsman",
+      "breakpoints": true
     }
   ]
 }

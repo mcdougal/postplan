@@ -100,7 +100,7 @@ export const plannedPostMediaItem = schema.table(`planned_post_media_item`, {
   fileName: text(`file_name`).notNull(),
   height: integer(`height`).notNull(),
   id: text(`id`).primaryKey(),
-  mediaThumbnailUrl: text(`media_thumbnail_url`).notNull(),
+  mediaThumbnailUrl: text(`media_thumbnail_url`),
   mediaUrl: text(`media_url`).notNull(),
   order: integer(`order`),
   plannedPostId: text(`planned_post_id`)

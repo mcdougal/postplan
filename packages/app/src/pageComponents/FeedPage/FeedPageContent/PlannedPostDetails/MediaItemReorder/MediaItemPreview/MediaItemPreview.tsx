@@ -68,7 +68,7 @@ const MediaItemPreview = ({
           <Image
             alt="Planned post thumbnail"
             fill
-            src={mediaItem.mediaThumbnailUrl}
+            src={mediaItem.mediaThumbnailUrl || mediaItem.mediaUrl}
             style={{ objectFit: `cover`, objectPosition: `center` }}
             unoptimized
           />

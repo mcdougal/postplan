@@ -1,9 +1,9 @@
-import { getThumbnailFileName } from '@/common/userFiles';
 import { db, eq, firstOrThrow } from '@/db/connection';
 import { plannedPost, plannedPostMediaItem } from '@/db/schema';
 import { createId } from '@paralleldrive/cuid2';
 
 import { ForbiddenError } from '@/server/auth';
+import { runJobs } from '@/server/jobsRunner';
 import { generateFileDownloadUrl } from '@/server/userFiles';
 
 import isAuthorized from './isAuthorized';
@@ -47,14 +47,6 @@ export default async (args: Args): Promise<Response> => {
     },
   });
 
-  const mediaThumbnailUrl = await generateFileDownloadUrl({
-    auth: { currentUserId },
-    where: {
-      fileName: getThumbnailFileName(fileName),
-      userId: matchingPlannedPost.userId,
-    },
-  });
-
   const insertedMediaItem = firstOrThrow(
     await db
       .insert(plannedPostMediaItem)
@@ -62,7 +54,6 @@ export default async (args: Args): Promise<Response> => {
         fileName,
         height,
         id: createId(),
-        mediaThumbnailUrl,
         mediaUrl,
         plannedPostId,
         width,
@@ -71,6 +62,13 @@ export default async (args: Args): Promise<Response> => {
         id: plannedPostMediaItem.id,
       })
   );
+
+  await runJobs([
+    {
+      name: `uploadPlannedPostMediaItemThumbnail`,
+      data: { plannedPostMediaItemId: insertedMediaItem.id },
+    },
+  ]);
 
   return {
     mediaItem: { id: insertedMediaItem.id },

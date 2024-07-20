@@ -71,7 +71,7 @@ const PlannedFeedItem = ({
             alt={plannedPost.caption || `Planned post thumbnail`}
             fill
             priority
-            src={firstMediaItem.mediaThumbnailUrl}
+            src={firstMediaItem.mediaThumbnailUrl || firstMediaItem.mediaUrl}
             style={{ objectFit: `cover`, objectPosition: `center` }}
             unoptimized
           />

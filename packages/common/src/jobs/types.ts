@@ -50,6 +50,11 @@ export const UploadActualPostThumbnailJobSchema = z.object({
   data: z.object({ actualPostId: z.string() }),
 });
 
+export const UploadPlannedPostMediaItemThumbnailJobSchema = z.object({
+  name: z.literal(`uploadPlannedPostMediaItemThumbnail`),
+  data: z.object({ plannedPostMediaItemId: z.string() }),
+});
+
 export const JobSchema = z.union([
   RefreshActualPostMediaUrlsAllUsersJobSchema,
   RefreshActualPostMediaUrlsOneUserJobSchema,
@@ -61,6 +66,7 @@ export const JobSchema = z.union([
   SyncInstagramAllUsersJobSchema,
   SyncInstagramOneUserJobSchema,
   UploadActualPostThumbnailJobSchema,
+  UploadPlannedPostMediaItemThumbnailJobSchema,
 ]);
 
 export type Job = z.infer<typeof JobSchema>;
@@ -91,4 +97,7 @@ export type SyncInstagramOneUserJob = z.infer<
 >;
 export type UploadActualPostThumbnailJob = z.infer<
   typeof UploadActualPostThumbnailJobSchema
+>;
+export type UploadPlannedPostMediaItemThumbnailJob = z.infer<
+  typeof UploadPlannedPostMediaItemThumbnailJobSchema
 >;

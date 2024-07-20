@@ -25,7 +25,7 @@ export default <A, D = null>({
         return { status: `error`, message: `Not logged in` };
       }
 
-      return serverAction(args, currentUser);
+      return await serverAction(args, currentUser);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error(err);

@@ -1,0 +1,1 @@
+ALTER TABLE "postplan"."planned_post_media_item" ALTER COLUMN "media_thumbnail_url" DROP NOT NULL;

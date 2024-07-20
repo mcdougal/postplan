@@ -77,13 +77,13 @@ export default (
       data: formData,
     });
 
+    setLoading(false);
+
     if (response.status === `error`) {
-      setLoading(false);
       setError(response.message);
       return;
     }
 
-    setLoading(false);
     onCompleted();
   };
 

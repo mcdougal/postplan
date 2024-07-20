@@ -1,3 +1,5 @@
+const HEIGHT_BASIS = 600;
+
 export type CarouselSizes = {
   container: { height: number; width: number };
   image: { height: number; width: number };
@@ -8,12 +10,12 @@ export default (
 ): CarouselSizes => {
   if (resolution === null) {
     return {
-      container: { height: 620, width: 465 },
-      image: { height: 620, width: 465 },
+      container: { height: HEIGHT_BASIS, width: HEIGHT_BASIS * 0.75 },
+      image: { height: HEIGHT_BASIS, width: HEIGHT_BASIS * 0.75 },
     };
   }
 
-  const containerHeight = 620;
+  const containerHeight = HEIGHT_BASIS;
   const aspectRatio = resolution.width / resolution.height;
 
   if (resolution.height < resolution.width) {

@@ -1,26 +1,31 @@
 'use client';
 
 import { PlannedPost } from '@/server/plannedPosts';
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
+import {
+  CSSProperties,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { Textarea } from '@/app/components';
-
-import { CarouselSizes } from '../getCarouselSizes';
 
 import HashtagFinder from './HashtagFinder';
 import PlannedPostEditorActions from './PlannedPostEditorActions';
 import useUpdateCaptionRequest from './useUpdateCaptionRequest';
 
 type Props = {
-  carouselSizes: CarouselSizes;
   plannedPost: PlannedPost;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
+  sizeStyles: CSSProperties;
 };
 
 const PlannedPostEditor = ({
-  carouselSizes,
   plannedPost,
   setOptimisticPlannedPosts,
+  sizeStyles,
 }: Props): React.ReactElement => {
   const [caption, setCaption] = useState(plannedPost.caption);
   const [isChanging, setIsChanging] = useState(false);
@@ -52,13 +57,15 @@ const PlannedPostEditor = ({
     <div
       className="relative flex-1"
       style={{
-        height: `${carouselSizes.container.height}px`,
+        height: sizeStyles.height,
+        maxHeight: sizeStyles.maxHeight,
       }}>
       <div
         ref={captionContainerRef}
         className="overflow-auto px-6 pb-4 pt-5"
         style={{
-          height: `${carouselSizes.container.height - 48}px`,
+          height: `calc(${sizeStyles.height} - 48px)`,
+          maxHeight: `calc(${sizeStyles.maxHeight} - 48px)`,
         }}>
         <Textarea
           onChange={(event) => {

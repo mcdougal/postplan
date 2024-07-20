@@ -30,6 +30,9 @@ const config: Config = {
       fontFamily: {
         sans: [`Inter var`, ...defaultTheme.fontFamily.sans],
       },
+      screens: {
+        tall: { raw: `(min-height: 900px)` },
+      },
     },
   },
   plugins: [

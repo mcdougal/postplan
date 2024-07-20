@@ -5,7 +5,7 @@ import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction } from 'react';
 
-import getCarouselSizes from './getCarouselSizes';
+import getSizeStyles from './getSizeStyles';
 import MediaItemReorder from './MediaItemReorder';
 import PlannedPostCarousel from './PlannedPostCarousel';
 import PlannedPostEditor from './PlannedPostEditor';
@@ -24,21 +24,23 @@ const PlannedPostDetails = ({
 }: Props): React.ReactElement => {
   const carousel = useCarousel(plannedPost);
   const firstMediaItem = getFirstMediaItem(plannedPost);
-  const carouselSizes = getCarouselSizes(firstMediaItem);
+  const sizeStyles = getSizeStyles(firstMediaItem);
 
   return (
-    <div className="flex flex-1 flex-col gap-2">
-      <div className="max-w-full flex-1 bg-white">
+    <div className="relative flex flex-1 flex-col gap-2">
+      <div
+        className="max-w-full flex-1 bg-white"
+        style={{ height: sizeStyles.height, maxHeight: sizeStyles.maxHeight }}>
         <div className="flex">
           <PlannedPostCarousel
             carousel={carousel}
-            carouselSizes={carouselSizes}
             plannedPost={plannedPost}
+            sizeStyles={sizeStyles}
           />
           <PlannedPostEditor
-            carouselSizes={carouselSizes}
             plannedPost={plannedPost}
             setOptimisticPlannedPosts={setOptimisticPlannedPosts}
+            sizeStyles={sizeStyles}
           />
         </div>
       </div>

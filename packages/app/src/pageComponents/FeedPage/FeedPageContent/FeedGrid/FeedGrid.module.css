@@ -10,7 +10,8 @@
 .phoneScreen {
   border-bottom-left-radius: 42px;
   border-bottom-right-radius: 42px;
-  height: 620px;
+  height: calc(100vh - 200px);
+  max-height: 620px;
   overflow: auto;
   overscroll-behavior: contain;
   scrollbar-width: none;

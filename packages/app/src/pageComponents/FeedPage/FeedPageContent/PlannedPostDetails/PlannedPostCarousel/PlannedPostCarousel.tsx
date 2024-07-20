@@ -5,44 +5,43 @@ import {
   ArrowRightCircleIcon,
 } from '@heroicons/react/24/solid';
 import Image from 'next/image';
+import { CSSProperties } from 'react';
 
 import { IconButton } from '@/app/components';
 
-import { CarouselSizes } from '../getCarouselSizes';
 import { Carousel } from '../useCarousel';
 
 type Props = {
   carousel: Carousel;
-  carouselSizes: CarouselSizes;
   plannedPost: PlannedPost;
+  sizeStyles: CSSProperties;
 };
 
 const PlannedPostCarousel = ({
   carousel,
-  carouselSizes,
   plannedPost,
+  sizeStyles,
 }: Props): React.ReactElement => {
   return (
     <div
-      className="relative flex h-[620px] items-center overflow-hidden bg-black"
+      className="relative flex items-center overflow-hidden bg-black"
       style={{
-        height: `${carouselSizes.container.height}px`,
-        flex: `0 0 ${carouselSizes.container.width}px`,
-        width: `${carouselSizes.container.width}px`,
+        height: sizeStyles.height,
+        maxHeight: sizeStyles.maxHeight,
+        aspectRatio: sizeStyles.aspectRatio,
       }}>
       {getMediaItems(plannedPost).map((mediaItem, i) => {
-        const left =
-          carouselSizes.image.width * i -
-          carousel.currentIndex * carouselSizes.image.width;
+        const relativeIndex = i - carousel.currentIndex;
 
         return (
           <div
             key={mediaItem.id}
             className="absolute transition-all"
             style={{
-              height: `${carouselSizes.image.height}px`,
-              left: `${left}px`,
-              width: `${carouselSizes.image.width}px`,
+              height: sizeStyles.height,
+              maxHeight: sizeStyles.maxHeight,
+              aspectRatio: sizeStyles.aspectRatio,
+              transform: `translateX(${relativeIndex * 100}%)`,
             }}>
             <Image
               alt={plannedPost.caption || `Planned post thumbnail`}

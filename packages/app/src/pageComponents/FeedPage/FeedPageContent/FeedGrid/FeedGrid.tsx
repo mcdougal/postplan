@@ -33,24 +33,22 @@ const FeedGrid = ({
   });
 
   return (
-    <div>
-      <div className={twMerge(styles.phone, `relative px-2 pb-2 pt-12`)}>
-        <div className={styles.phoneScreen}>
-          <div
-            className="relative"
-            style={{ height: gridSize.height, width: gridSize.width }}>
-            <PlannedFeedItems
-              onSelectPost={onSelectPost}
-              optimisticPlannedPosts={optimisticPlannedPosts}
-              setOptimisticPlannedPosts={setOptimisticPlannedPosts}
-            />
-            <ActualFeedItems
-              actualPostHider={actualPostHider}
-              actualPosts={actualPosts}
-              onSelectPost={onSelectPost}
-              startIndex={optimisticPlannedPosts.length}
-            />
-          </div>
+    <div className={twMerge(styles.phone, `relative px-2 pb-2 pt-12`)}>
+      <div className={styles.phoneScreen}>
+        <div
+          className="relative"
+          style={{ height: gridSize.height, width: gridSize.width }}>
+          <PlannedFeedItems
+            onSelectPost={onSelectPost}
+            optimisticPlannedPosts={optimisticPlannedPosts}
+            setOptimisticPlannedPosts={setOptimisticPlannedPosts}
+          />
+          <ActualFeedItems
+            actualPostHider={actualPostHider}
+            actualPosts={actualPosts}
+            onSelectPost={onSelectPost}
+            startIndex={optimisticPlannedPosts.length}
+          />
         </div>
       </div>
     </div>

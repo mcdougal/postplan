@@ -17,11 +17,12 @@ const AddPlannedPosts = ({ currentUser }: Props): React.ReactElement => {
   return (
     <>
       <Button
+        className="shadow-lg"
         onClick={() => {
           setDialogOpen(true);
         }}
         size="xl">
-        + Add Posts
+        + Plan Posts
       </Button>
       <AddPlannedPostsDialog
         currentUser={currentUser}

@@ -43,8 +43,8 @@ const FeedPageContent = ({
   const actualPostHider = useActualPostHider();
 
   return (
-    <div>
-      <div className="absolute bottom-0 left-0 right-2/3 top-12 flex items-center justify-center px-6 pb-16">
+    <div className="flex min-h-[calc(100vh-48px)]">
+      <div className="tall:pb-[10vh] flex min-w-[480px] items-center justify-center px-6 pb-16">
         <FeedGrid
           actualPostHider={actualPostHider}
           actualPosts={actualPosts}
@@ -52,7 +52,7 @@ const FeedPageContent = ({
           optimisticPlannedPosts={optimisticPlannedPosts}
           setOptimisticPlannedPosts={setOptimisticPlannedPosts}
         />
-        <div className="fixed bottom-8 left-8 flex items-center gap-3">
+        <div className="tall:bottom-8 tall:left-8 fixed bottom-4 left-4 flex items-center gap-3">
           <AddPlannedPosts currentUser={currentUser} />
           {actualPostHider.hiddenPostIds.size > 0 && (
             <Button
@@ -64,7 +64,7 @@ const FeedPageContent = ({
           )}
         </div>
       </div>
-      <div className="absolute bottom-0 left-1/3 right-0 top-12 flex px-6">
+      <div className="tall:pb-[7vh] relative flex flex-1 items-center justify-center px-12">
         <div className="absolute inset-0 bg-black bg-opacity-70" />
         {((): React.ReactNode => {
           if (!selectedPost) {
@@ -72,27 +72,21 @@ const FeedPageContent = ({
           }
           if (selectedPost?.type === `actual`) {
             return (
-              <div
+              <ActualPostDetails
                 key={selectedPost.actualPost.instagramId}
-                className="absolute inset-0 flex items-center p-12 pb-20">
-                <ActualPostDetails
-                  actualPost={selectedPost.actualPost}
-                  actualPostHider={actualPostHider}
-                />
-              </div>
+                actualPost={selectedPost.actualPost}
+                actualPostHider={actualPostHider}
+              />
             );
           }
           if (selectedPost?.type === `planned`) {
             return (
-              <div
+              <PlannedPostDetails
                 key={selectedPost.plannedPost.id}
-                className="absolute inset-0 flex items-center p-12 pb-20">
-                <PlannedPostDetails
-                  currentUser={currentUser}
-                  plannedPost={selectedPost.plannedPost}
-                  setOptimisticPlannedPosts={setOptimisticPlannedPosts}
-                />
-              </div>
+                currentUser={currentUser}
+                plannedPost={selectedPost.plannedPost}
+                setOptimisticPlannedPosts={setOptimisticPlannedPosts}
+              />
             );
           }
           const exhaustiveCheck: never = selectedPost;

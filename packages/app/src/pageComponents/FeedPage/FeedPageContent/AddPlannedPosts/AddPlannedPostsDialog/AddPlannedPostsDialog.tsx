@@ -53,7 +53,7 @@ const AddPlannedPostsDialog = ({
   return (
     <Dialog maxWidth="2xl" onClose={onClose} open={open}>
       <div className="mb-5 flex items-center gap-4">
-        <DialogTitle className="flex-1">Add Posts</DialogTitle>
+        <DialogTitle className="flex-1">Plan Posts</DialogTitle>
         <Checkbox
           checked={isReel}
           label="Reel"

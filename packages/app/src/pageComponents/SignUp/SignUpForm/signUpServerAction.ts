@@ -37,7 +37,10 @@ export default async (formData: FormData): Promise<Response> => {
 
   const { email, password } = parsed.data;
 
-  if (email !== `deanna.troy.henry@gmail.com`) {
+  if (
+    email !== `deanna.troy.henry@gmail.com` &&
+    email !== `mcdougal.ce@gmail.com`
+  ) {
     return {
       status: `error`,
       message: `Sorry, this is a personal project and signups are disabled.`,

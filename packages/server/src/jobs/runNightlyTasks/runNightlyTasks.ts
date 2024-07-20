@@ -1,7 +1,7 @@
-import { startJobs } from '@/server/jobsRunner';
+import { runJobs } from '@/server/jobsRunner';
 
 export default async (): Promise<void> => {
-  await startJobs([
+  await runJobs([
     { name: `refreshActualPostMediaUrlsAllUsers`, data: {} },
     { name: `refreshInstagramAccessAllUsers`, data: {} },
     { name: `refreshPlannedPostMediaUrlsAllUsers`, data: {} },

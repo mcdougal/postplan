@@ -14,6 +14,7 @@ import PlannedPostDetails from './PlannedPostDetails';
 import sliceActualPosts from './sliceActualPosts';
 import useActualPostHider from './useActualPostHider';
 import usePostSelector from './usePostSelector';
+import useSyncNewActualPosts from './useSyncNewActualPosts';
 
 type Props = {
   actualPosts: Array<ActualPost>;
@@ -26,6 +27,8 @@ const FeedPageContent = ({
   currentUser,
   plannedPosts,
 }: Props): React.ReactElement => {
+  useSyncNewActualPosts(currentUser);
+
   const [optimisticPlannedPosts, setOptimisticPlannedPosts] =
     useState(plannedPosts);
 

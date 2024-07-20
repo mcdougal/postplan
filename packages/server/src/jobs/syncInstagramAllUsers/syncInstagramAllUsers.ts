@@ -2,7 +2,7 @@ import { Job } from '@/common/jobs';
 import { db } from '@/db/connection';
 
 import { isConnectionActive } from '@/server/instagram';
-import { startJobs } from '@/server/jobsRunner';
+import { runJobs } from '@/server/jobsRunner';
 
 export default async (): Promise<void> => {
   const allConnections = await db.query.instagramConnection.findMany({
@@ -26,5 +26,5 @@ export default async (): Promise<void> => {
     };
   });
 
-  await startJobs(jobs);
+  await runJobs(jobs);
 };

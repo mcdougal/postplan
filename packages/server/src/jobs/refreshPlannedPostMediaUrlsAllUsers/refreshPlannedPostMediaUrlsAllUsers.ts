@@ -1,7 +1,7 @@
 import { Job } from '@/common/jobs';
 import { db } from '@/db/connection';
 
-import { startJobs } from '@/server/jobsRunner';
+import { runJobs } from '@/server/jobsRunner';
 
 export default async (): Promise<void> => {
   const allUsers = await db.query.user.findMany({
@@ -19,5 +19,5 @@ export default async (): Promise<void> => {
     };
   });
 
-  await startJobs(jobs);
+  await runJobs(jobs);
 };

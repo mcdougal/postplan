@@ -1,7 +1,7 @@
 import { Job } from '@/common/jobs';
 
 import { ForbiddenError } from '@/server/auth';
-import { startJobs } from '@/server/jobsRunner';
+import { runJobs } from '@/server/jobsRunner';
 
 import fetchInstagramMediaItems from '../fetchInstagramMediaItems';
 
@@ -44,5 +44,5 @@ export default async (args: Args): Promise<void> => {
     };
   });
 
-  await startJobs(jobs);
+  await runJobs(jobs);
 };

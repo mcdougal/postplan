@@ -1,3 +1,3 @@
 import runJobs from './runJobs';
 
-export { runJobs };
+export default runJobs;

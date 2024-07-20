@@ -30,7 +30,10 @@ const PlannedPostDetails = ({
     <div className="relative flex flex-1 flex-col gap-2">
       <div
         className="max-w-full flex-1 bg-white"
-        style={{ height: sizeStyles.height, maxHeight: sizeStyles.maxHeight }}>
+        style={{
+          height: sizeStyles.container.height,
+          maxHeight: sizeStyles.container.maxHeight,
+        }}>
         <div className="flex">
           <PlannedPostCarousel
             carousel={carousel}

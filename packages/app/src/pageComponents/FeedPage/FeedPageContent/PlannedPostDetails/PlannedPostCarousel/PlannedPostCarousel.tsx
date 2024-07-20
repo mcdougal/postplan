@@ -5,16 +5,16 @@ import {
   ArrowRightCircleIcon,
 } from '@heroicons/react/24/solid';
 import Image from 'next/image';
-import { CSSProperties } from 'react';
 
 import { IconButton } from '@/app/components';
 
+import { SizeStyles } from '../getSizeStyles';
 import { Carousel } from '../useCarousel';
 
 type Props = {
   carousel: Carousel;
   plannedPost: PlannedPost;
-  sizeStyles: CSSProperties;
+  sizeStyles: SizeStyles;
 };
 
 const PlannedPostCarousel = ({
@@ -26,9 +26,9 @@ const PlannedPostCarousel = ({
     <div
       className="relative flex items-center overflow-hidden bg-black"
       style={{
-        height: sizeStyles.height,
-        maxHeight: sizeStyles.maxHeight,
-        aspectRatio: sizeStyles.aspectRatio,
+        aspectRatio: sizeStyles.container.aspectRatio,
+        height: sizeStyles.container.height,
+        maxHeight: sizeStyles.container.maxHeight,
       }}>
       {getMediaItems(plannedPost).map((mediaItem, i) => {
         const relativeIndex = i - carousel.currentIndex;
@@ -38,9 +38,9 @@ const PlannedPostCarousel = ({
             key={mediaItem.id}
             className="absolute transition-all"
             style={{
-              height: sizeStyles.height,
-              maxHeight: sizeStyles.maxHeight,
-              aspectRatio: sizeStyles.aspectRatio,
+              aspectRatio: sizeStyles.image.aspectRatio,
+              height: sizeStyles.image.height,
+              maxHeight: sizeStyles.image.maxHeight,
               transform: `translateX(${relativeIndex * 100}%)`,
             }}>
             <Image

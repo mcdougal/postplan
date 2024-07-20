@@ -1,16 +1,11 @@
 'use client';
 
 import { PlannedPost } from '@/server/plannedPosts';
-import {
-  CSSProperties,
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 
 import { Textarea } from '@/app/components';
+
+import { SizeStyles } from '../getSizeStyles';
 
 import HashtagFinder from './HashtagFinder';
 import PlannedPostEditorActions from './PlannedPostEditorActions';
@@ -19,7 +14,7 @@ import useUpdateCaptionRequest from './useUpdateCaptionRequest';
 type Props = {
   plannedPost: PlannedPost;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
-  sizeStyles: CSSProperties;
+  sizeStyles: SizeStyles;
 };
 
 const PlannedPostEditor = ({
@@ -57,15 +52,15 @@ const PlannedPostEditor = ({
     <div
       className="relative flex-1"
       style={{
-        height: sizeStyles.height,
-        maxHeight: sizeStyles.maxHeight,
+        height: sizeStyles.container.height,
+        maxHeight: sizeStyles.container.maxHeight,
       }}>
       <div
         ref={captionContainerRef}
         className="overflow-auto px-6 pb-4 pt-5"
         style={{
-          height: `calc(${sizeStyles.height} - 48px)`,
-          maxHeight: `calc(${sizeStyles.maxHeight} - 48px)`,
+          height: `calc(${sizeStyles.container.height} - 48px)`,
+          maxHeight: `calc(${sizeStyles.container.maxHeight} - 48px)`,
         }}>
         <Textarea
           onChange={(event) => {

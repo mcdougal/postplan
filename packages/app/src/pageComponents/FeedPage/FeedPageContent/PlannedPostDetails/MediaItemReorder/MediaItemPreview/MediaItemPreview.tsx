@@ -61,8 +61,7 @@ const MediaItemPreview = ({
         onDragStart={onDragStart}
         style={{
           height: `${reorderedBounds.height}px`,
-          left: `${reorderedBounds.x}px`,
-          top: `${reorderedBounds.y}px`,
+          transform: `translate(${reorderedBounds.x}px, ${reorderedBounds.y}px)`,
           width: `${reorderedBounds.width}px`,
         }}>
         <button className="absolute inset-0" onClick={onClick}>

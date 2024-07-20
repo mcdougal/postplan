@@ -63,8 +63,7 @@ const PlannedFeedItem = ({
         onDragStart={onDragStart}
         style={{
           height: `${reorderedBounds.height}px`,
-          left: `${reorderedBounds.x}px`,
-          top: `${reorderedBounds.y}px`,
+          transform: `translate(${reorderedBounds.x}px, ${reorderedBounds.y}px)`,
           width: `${reorderedBounds.width}px`,
         }}>
         {firstMediaItem && (

@@ -25,8 +25,7 @@ const ActualFeedItem = ({
       onClick={onClick}
       style={{
         height: `${bounds.height}px`,
-        left: `${bounds.x}px`,
-        top: `${bounds.y}px`,
+        transform: `translate(${bounds.x}px, ${bounds.y}px)`,
         width: `${bounds.width}px`,
       }}>
       <Image

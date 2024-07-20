@@ -3,6 +3,8 @@
 import { getMediaItems } from '@/common/plannedPosts';
 import { PlannedPost } from '@/server/plannedPosts';
 import { ArrowDownTrayIcon, ClipboardIcon } from '@heroicons/react/24/outline';
+import { useRef } from 'react';
+import { toast } from 'react-hot-toast';
 
 import { Button, Typography } from '@/app/components';
 
@@ -14,6 +16,7 @@ type Props = {
 };
 
 const MobilePlannedPost = ({ plannedPost }: Props): React.ReactElement => {
+  const captionRef = useRef<HTMLDivElement>(null);
   const carousel = useCarousel(plannedPost);
 
   return (
@@ -36,12 +39,21 @@ const MobilePlannedPost = ({ plannedPost }: Props): React.ReactElement => {
           Download Image
         </Button>
         {plannedPost.caption && (
-          <Button color="secondary" size="md" startIcon={ClipboardIcon}>
+          <Button
+            color="secondary"
+            onClick={() => {
+              if (captionRef.current) {
+                navigator.clipboard.writeText(captionRef.current.innerText);
+                toast.success(`Caption copied!`);
+              }
+            }}
+            size="md"
+            startIcon={ClipboardIcon}>
             Copy Caption
           </Button>
         )}
       </div>
-      <div className="px-4">
+      <div ref={captionRef} className="px-4">
         {plannedPost.caption ? (
           <Typography
             className="break-anywhere mt-2 whitespace-pre-wrap"

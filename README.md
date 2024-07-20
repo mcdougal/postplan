@@ -4,7 +4,6 @@
 
 - Redirect to www not working?
 - Show more posts in feed
-- Download planned post images
 - Run IG sync job when user signs up
 - Enter a date
 - Use transform instead of top/left for feed grid and media item reorder

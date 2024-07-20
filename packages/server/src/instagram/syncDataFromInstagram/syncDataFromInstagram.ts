@@ -5,9 +5,9 @@ import { runJobs } from '@/server/jobsRunner';
 
 import fetchInstagramMediaItems from '../fetchInstagramMediaItems';
 
-import addNewPosts from './addNewPosts';
 import queryConnection from './queryConnection';
 import removeDeletedPosts from './removeDeletedPosts';
+import upsertPosts from './upsertPosts';
 
 type Args = {
   auth: {
@@ -35,12 +35,16 @@ export default async (args: Args): Promise<void> => {
   });
 
   await removeDeletedPosts(connection.userId, instagramMediaItems);
-  const newPosts = await addNewPosts(connection.userId, instagramMediaItems);
 
-  const jobs: Array<Job> = newPosts.map((post) => {
+  const { newThumbnailPostIds } = await upsertPosts(
+    connection.userId,
+    instagramMediaItems
+  );
+
+  const jobs: Array<Job> = newThumbnailPostIds.map((postId) => {
     return {
       name: `uploadActualPostThumbnail`,
-      data: { actualPostId: post.id },
+      data: { actualPostId: postId },
     };
   });
 

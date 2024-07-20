@@ -1,5 +1,5 @@
 import { ForbiddenError } from '@/server/auth';
-import { uploadUserFile } from '@/server/userFiles';
+import { uploadFile } from '@/server/storage';
 
 type Args = {
   auth: {
@@ -16,12 +16,9 @@ export default async (args: Args): Promise<void> => {
   const { currentUserId } = args.auth;
   const { file, fileName, userId } = args.data;
 
-  if (currentUserId !== userId) {
+  if (userId !== currentUserId) {
     throw new ForbiddenError();
   }
 
-  await uploadUserFile({
-    auth: { currentUserId },
-    data: { file, fileName, userId },
-  });
+  await uploadFile(`users/${userId}/${fileName}`, file);
 };

@@ -1,7 +1,6 @@
 import { getRequiredEnvVar } from '@/common/env';
 import { Job } from '@/common/jobs';
 import { JobRoute } from '@/common/routes';
-import { sleep } from '@/common/sleep';
 
 type Options = {
   wait?: boolean;
@@ -47,8 +46,5 @@ export default async <J extends Job>(
         },
       });
     });
-
-    // Prevent fetch events from getting canceled
-    await sleep(1000);
   }
 };

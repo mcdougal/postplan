@@ -1,0 +1,1 @@
+ALTER TABLE "postplan"."user" ADD COLUMN "name" text;

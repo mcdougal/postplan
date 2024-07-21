@@ -4,6 +4,8 @@ import { createId } from '@paralleldrive/cuid2';
 
 type AuthUser = {
   id: string;
+  email: string | null;
+  name: string | null;
 };
 
 export default async (authUser: AuthUser): Promise<void> => {
@@ -20,6 +22,8 @@ export default async (authUser: AuthUser): Promise<void> => {
 
   await db.insert(user).values({
     authUserId: authUser.id,
+    email: authUser.email,
     id: createId(),
+    name: authUser.name,
   });
 };

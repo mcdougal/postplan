@@ -3,6 +3,8 @@ import { createServerClient } from '../utils';
 
 type AuthUser = {
   id: string;
+  email: string | null;
+  name: string | null;
 };
 
 export default async (
@@ -19,5 +21,7 @@ export default async (
 
   return {
     id: data.user.id,
+    email: data.user.email || null,
+    name: data.user.user_metadata.full_name || null,
   };
 };

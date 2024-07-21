@@ -1,5 +1,6 @@
+import createUserFromOAuth from './createUserFromOAuth';
 import { UserExistsError } from './errors';
 import getCurrentUser from './getCurrentUser';
 import signUpUser from './signUpUser';
 
-export { getCurrentUser, signUpUser, UserExistsError };
+export { createUserFromOAuth, getCurrentUser, signUpUser, UserExistsError };

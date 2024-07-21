@@ -1,12 +1,11 @@
-import { LogInRoute } from '@/common/routes';
-import { createUserFromOAuth, exchangeCodeForSession } from '@/server/auth';
+import { HomePageRoute, LogInRoute } from '@/common/routes';
+import { exchangeCodeForSession } from '@/server/auth';
+import { createUserFromOAuth } from '@/server/users';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
-  const { origin, searchParams } = request.nextUrl;
-  const code = searchParams.get(`code`);
-  const next = searchParams.get(`next`) ?? `/`;
+  const code = request.nextUrl.searchParams.get(`code`);
 
   if (!code) {
     return NextResponse.redirect(LogInRoute.getAbsoluteUrl({}));
@@ -16,5 +15,5 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
 
   await createUserFromOAuth(authUser);
 
-  return NextResponse.redirect(`${origin}${next}`);
+  return NextResponse.redirect(HomePageRoute.getAbsoluteUrl({}));
 };

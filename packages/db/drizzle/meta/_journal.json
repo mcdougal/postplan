@@ -190,6 +190,13 @@
       "when": 1721525170259,
       "tag": "0026_lame_christian_walker",
       "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1721526262079,
+      "tag": "0027_swift_silvermane",
+      "breakpoints": true
     }
   ]
 }

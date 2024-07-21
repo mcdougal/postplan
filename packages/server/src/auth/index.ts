@@ -1,4 +1,3 @@
-import createUserFromOAuth from './createUserFromOAuth';
 import { ForbiddenError } from './errors';
 import exchangeCodeForSession from './exchangeCodeForSession';
 import getAuthUser from './getAuthUser';
@@ -12,7 +11,6 @@ import updateSession from './updateSession';
 export type { CookieMethods };
 
 export {
-  createUserFromOAuth,
   exchangeCodeForSession,
   ForbiddenError,
   getAuthUser,

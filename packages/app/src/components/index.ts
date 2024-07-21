@@ -12,6 +12,7 @@ import FileUpload from './FileUpload';
 import IconButton, { IconButtonIcon } from './IconButton';
 import Input from './Input';
 import Loading from './Loading';
+import Logo from './Logo';
 import NotProse from './NotProse';
 import Prose from './Prose';
 import ReelIcon from './ReelIcon';
@@ -52,6 +53,7 @@ export {
   IconButton,
   Input,
   Loading,
+  Logo,
   NotProse,
   Prose,
   ReelIcon,

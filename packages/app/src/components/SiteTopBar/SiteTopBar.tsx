@@ -4,6 +4,7 @@ import { CurrentUser } from '@/common/users';
 import { HTMLAttributes, forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
+import Logo from '../Logo';
 import TextLink from '../TextLink';
 import Typography from '../Typography';
 
@@ -21,9 +22,12 @@ const SiteTopBar = forwardRef<any, Props>(
           className
         )}
         {...divProps}>
-        <Typography size="lg" weight="bold">
-          Postplan
-        </Typography>
+        <div className="flex items-center gap-2">
+          <Logo size={24} />
+          <Typography size="lg" weight="bold">
+            Postplan
+          </Typography>
+        </div>
         <Typography size="sm">
           {currentUser ? (
             <TextLink as="a" color="default" href={LogOutRoute.getPath({})}>

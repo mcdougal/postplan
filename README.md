@@ -3,7 +3,6 @@
 ## Todo
 
 - Remove all debug code
-- Add padding to logo in Meta dev app
 - Fix actual post thumbnail bug
 
 - Enter a date?

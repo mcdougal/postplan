@@ -2,6 +2,8 @@ import { getRequiredEnvVar } from '@/common/env';
 import { Job } from '@/common/jobs';
 import { JobRoute } from '@/common/routes';
 
+import { log } from '../utils';
+
 type Options = {
   wait?: boolean;
 };
@@ -16,13 +18,15 @@ export default async <J extends Job>(
 
   if (wait) {
     await Promise.all(
-      jobs.map((job) => {
+      jobs.map(async (job) => {
+        log(`Running job ${job.name} ${JSON.stringify(job.data)}`);
+
         const jobUrl = JobRoute.getAbsoluteUrl({
           params: { jobName: job.name },
           searchParams: { data: job.data },
         });
 
-        return fetch(jobUrl, {
+        return await fetch(jobUrl, {
           method: `GET`,
           headers: {
             Authorization: `Bearer ${jobSecret}`,
@@ -33,6 +37,8 @@ export default async <J extends Job>(
     );
   } else {
     jobs.forEach((job) => {
+      log(`Starting job ${job.name} ${JSON.stringify(job.data)}`);
+
       const jobUrl = JobRoute.getAbsoluteUrl({
         params: { jobName: job.name },
         searchParams: { data: job.data },

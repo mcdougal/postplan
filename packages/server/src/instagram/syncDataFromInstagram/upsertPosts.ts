@@ -60,14 +60,32 @@ export default async (
     const captionChanged = asActualPost.caption !== existingPost.caption;
     const mediaUrlChanged = asActualPost.mediaUrl !== existingPost.mediaUrl;
 
-    if (captionChanged || mediaUrlChanged) {
+    if (captionChanged) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `captionChanged: ${existingPost.caption} -> $asActualPost.caption}`
+      );
       await db
         .update(actualPost)
         .set({
           caption: asActualPost.caption,
           mediaUrl: asActualPost.mediaUrl,
-          mediaThumbnailUrl: mediaUrlChanged ? null : undefined,
-          mediaThumbnailUrlExpiresAt: mediaUrlChanged ? null : undefined,
+        })
+        .where(eq(actualPost.id, existingPost.id));
+    }
+
+    if (mediaUrlChanged) {
+      // eslint-disable-next-line no-console
+      console.log(
+        `mediaUrlChanged: ${existingPost.mediaUrl} -> $asActualPost.mediaUrl}`
+      );
+      await db
+        .update(actualPost)
+        .set({
+          caption: asActualPost.caption,
+          mediaUrl: asActualPost.mediaUrl,
+          mediaThumbnailUrl: null,
+          mediaThumbnailUrlExpiresAt: null,
         })
         .where(eq(actualPost.id, existingPost.id));
     }

@@ -190,6 +190,13 @@
       "when": 1721583583175,
       "tag": "0026_red_living_lightning",
       "breakpoints": true
+    },
+    {
+      "idx": 27,
+      "version": "7",
+      "when": 1721586796765,
+      "tag": "0027_concerned_vargas",
+      "breakpoints": true
     }
   ]
 }

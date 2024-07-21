@@ -48,7 +48,10 @@ export default async (args: Args): Promise<InstagramConnection> => {
   if (existingConnection) {
     await db
       .update(instagramConnection)
-      .set(update)
+      .set({
+        ...update,
+        refreshedAt: new Date(),
+      })
       .where(eq(instagramConnection.userId, userId));
     connectionId = existingConnection.id;
   } else {
@@ -58,6 +61,7 @@ export default async (args: Args): Promise<InstagramConnection> => {
         .values({
           ...create,
           id: createId(),
+          refreshedAt: new Date(),
         })
         .returning({
           id: instagramConnection.id,

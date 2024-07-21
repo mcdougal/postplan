@@ -79,7 +79,7 @@ export const instagramConnection = schema.table(`instagram_connection`, {
   id: text(`id`).primaryKey(),
   instagramUserId: text(`instagram_user_id`).notNull(),
   permissions: text(`permissions`).array().notNull(),
-  refreshedAt: timestamp(`refreshed_at`),
+  refreshedAt: timestamp(`refreshed_at`).notNull(),
   updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
   userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
 });

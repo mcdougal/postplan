@@ -1,4 +1,4 @@
-import { and, db, isNotNull, lt, or } from '@/db/connection';
+import { db, lt } from '@/db/connection';
 import { instagramConnection } from '@/db/schema';
 import ms from 'ms';
 
@@ -9,13 +9,7 @@ export default async (): Promise<void> => {
   const oneDayAgo = new Date(Date.now() - ms(`1 day`));
 
   const connectionToRefresh = await db.query.instagramConnection.findFirst({
-    where: or(
-      and(
-        isNotNull(instagramConnection.refreshedAt),
-        lt(instagramConnection.refreshedAt, oneDayAgo)
-      ),
-      lt(instagramConnection.createdAt, oneDayAgo)
-    ),
+    where: lt(instagramConnection.refreshedAt, oneDayAgo),
     columns: {
       userId: true,
     },

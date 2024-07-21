@@ -1,6 +1,7 @@
 import { getRequiredEnvVar } from '@/common/env';
 import { JobSchema } from '@/common/jobs';
 import { JobRoute, JobRouteParams, JobRouteResponse } from '@/common/routes';
+import { sleep } from '@/common/sleep';
 import {
   refreshActualPostMediaUrlsAllUsers,
   refreshActualPostMediaUrlsOneUser,
@@ -41,32 +42,45 @@ export const GET: GetHandler = async (request, { params }) => {
 
   const job = jobParsed.data;
 
-  if (job.name === `refreshActualPostMediaUrlsAllUsers`) {
-    await refreshActualPostMediaUrlsAllUsers();
-  } else if (job.name === `refreshActualPostMediaUrlsOneUser`) {
-    await refreshActualPostMediaUrlsOneUser(job.data);
-  } else if (job.name === `refreshInstagramAccessAllUsers`) {
-    await refreshInstagramAccessAllUsers();
-  } else if (job.name === `refreshInstagramAccessOneUser`) {
-    await refreshInstagramAccessOneUser(job.data);
-  } else if (job.name === `refreshPlannedPostMediaUrlsAllUsers`) {
-    await refreshPlannedPostMediaUrlsAllUsers();
-  } else if (job.name === `refreshPlannedPostMediaUrlsOneUser`) {
-    await refreshPlannedPostMediaUrlsOneUser(job.data);
-  } else if (job.name === `runNightlyTasks`) {
-    await runNightlyTasks();
-  } else if (job.name === `syncInstagramAllUsers`) {
-    await syncInstagramAllUsers();
-  } else if (job.name === `syncInstagramOneUser`) {
-    await syncInstagramOneUser(job.data);
-  } else if (job.name === `uploadActualPostThumbnail`) {
-    await uploadActualPostThumbnail(job.data);
-  } else if (job.name === `uploadPlannedPostMediaItemThumbnail`) {
-    await uploadPlannedPostMediaItemThumbnail(job.data);
-  } else {
-    const exhaustiveCheck: never = job;
-    return exhaustiveCheck;
+  let numRetries = 2;
+  let error: unknown = new Error(`Unexpected error`);
+
+  while (numRetries > 0) {
+    try {
+      if (job.name === `refreshActualPostMediaUrlsAllUsers`) {
+        await refreshActualPostMediaUrlsAllUsers();
+      } else if (job.name === `refreshActualPostMediaUrlsOneUser`) {
+        await refreshActualPostMediaUrlsOneUser(job.data);
+      } else if (job.name === `refreshInstagramAccessAllUsers`) {
+        await refreshInstagramAccessAllUsers();
+      } else if (job.name === `refreshInstagramAccessOneUser`) {
+        await refreshInstagramAccessOneUser(job.data);
+      } else if (job.name === `refreshPlannedPostMediaUrlsAllUsers`) {
+        await refreshPlannedPostMediaUrlsAllUsers();
+      } else if (job.name === `refreshPlannedPostMediaUrlsOneUser`) {
+        await refreshPlannedPostMediaUrlsOneUser(job.data);
+      } else if (job.name === `runNightlyTasks`) {
+        await runNightlyTasks();
+      } else if (job.name === `syncInstagramAllUsers`) {
+        await syncInstagramAllUsers();
+      } else if (job.name === `syncInstagramOneUser`) {
+        await syncInstagramOneUser(job.data);
+      } else if (job.name === `uploadActualPostThumbnail`) {
+        await uploadActualPostThumbnail(job.data);
+      } else if (job.name === `uploadPlannedPostMediaItemThumbnail`) {
+        await uploadPlannedPostMediaItemThumbnail(job.data);
+      } else {
+        const exhaustiveCheck: never = job;
+        return exhaustiveCheck;
+      }
+
+      return NextResponse.json({ success: true });
+    } catch (err) {
+      numRetries -= 1;
+      error = err;
+      await sleep(1000);
+    }
   }
 
-  return NextResponse.json({ success: true });
+  throw error;
 };

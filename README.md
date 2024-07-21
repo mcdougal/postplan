@@ -3,12 +3,10 @@
 ## Todo
 
 - Put "No more planned posts, use desktop" message at bottom of mobile feed
-- Redirect to www not working?
 - Show more posts in feed
 - Enter a date?
 - Test Automatic refreshing of IG access token
 - Doesn't show post when someone collaborates with you (<https://developers.facebook.com/community/threads/1011039596753699/>)
-- Log in with Facebook
 - Submit Meta app for approval
 
 ## Getting Started

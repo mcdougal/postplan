@@ -1,5 +1,5 @@
 import { getRequiredEnvVar } from '@/common/env';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { z } from 'zod';
 
 type Args = {
@@ -45,9 +45,8 @@ export default async (args: Args): Promise<Response> => {
       tokenType: responseParsed.token_type,
     };
   } catch (err) {
-    if (axios.isAxiosError(err)) {
-      throw new Error(JSON.stringify(err.response?.data));
-    }
+    // eslint-disable-next-line @postplan/no-type-assertion, @typescript-eslint/no-explicit-any, no-console
+    console.log(JSON.stringify((err as any)?.response?.data));
     throw err;
   }
 };

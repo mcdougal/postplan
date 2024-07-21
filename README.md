@@ -2,6 +2,10 @@
 
 ## Todo
 
+- Remove all debug code
+- Add padding to logo in Meta dev app
+- Fix actual post thumbnail bug
+
 - Enter a date?
 - Test Automatic refreshing of IG access token
 - Doesn't show post when someone collaborates with you (<https://developers.facebook.com/community/threads/1011039596753699/>)

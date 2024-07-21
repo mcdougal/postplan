@@ -1,11 +1,12 @@
 import { FeedPageRoute, LogInRoute } from '@/common/routes';
 import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
-import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
 import { Button, Logo, TextLink, Typography } from '@/app/components';
 import { Page } from '@/app/pageUtils';
+
+import FeatureExample from './FeatureExample';
 
 const HomePage: Page = async () => {
   const currentUser = await getCurrentUser(cookies());
@@ -34,51 +35,21 @@ const HomePage: Page = async () => {
         <Button as="a" href={LogInRoute.getPath({})} size="xl">
           Sign Up Free
         </Button>
-        <div className="mt-16 flex w-full flex-col items-center border-l-2 border-t-2 border-gray-300 px-6 py-10">
-          <Typography className="mb-6 block text-center" size="xl">
-            See how your feed looks before you post.
-          </Typography>
-          <Image
-            alt="Example of a phone with Instagram feed"
-            height={300}
-            priority
-            src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/phone-example-2024-07-21.png"
-            unoptimized
-            width={300}
-          />
-        </div>
-        <div className="mt-10 flex w-full flex-col items-center border-r-2 border-t-2 border-gray-300 px-6 pb-20 pt-10">
-          <Typography className="mb-8 block text-center" size="xl">
-            Find the purrfect order for your cat pics.
-          </Typography>
-          <div className="rounded-lg p-3 shadow-2xl">
-            <Image
-              alt="Example of a phone with Instagram feed"
-              height={400}
-              priority
-              src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/plan-example-2024-07-21.png"
-              unoptimized
-              width={400}
-            />
-          </div>
-        </div>
-        <div className="mt-10 flex w-full flex-col items-center border-l-2 border-t-2 border-gray-300 px-6 pb-20 pt-10">
-          <Typography className="mb-8 block text-center" size="xl">
-            Discover hashtags and get AI suggestions.
-          </Typography>
-          <div className="rounded-lg p-3 shadow-2xl">
-            <Image
-              alt="Example of a phone with Instagram feed"
-              height={400}
-              priority
-              src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/hashtags-example-2024-07-21.png"
-              unoptimized
-              width={400}
-            />
-          </div>
-        </div>
+        <FeatureExample
+          className="mt-24"
+          label="See how your feed looks before you post."
+          src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/phone-example-2024-07-21.png"
+        />
+        <FeatureExample
+          label="Find the purrfect order for your cat pics."
+          src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/plan-example-2024-07-21.png"
+        />
+        <FeatureExample
+          label="Discover hashtags and get AI suggestions."
+          src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/hashtags-example-2024-07-21.png"
+        />
       </div>
-      <div className="mt-10 flex w-full flex-col items-center border-t-2 border-gray-300 px-6 pb-10 pt-16">
+      <div className="mt-6 flex w-full flex-col items-center px-6 pb-10 pt-16">
         <Typography className="mb-8 block text-center" size="xl">
           Free to use. No ads.
         </Typography>
@@ -86,7 +57,7 @@ const HomePage: Page = async () => {
           Try It Out
         </Button>
       </div>
-      <div className="mt-10 flex w-full flex-col items-center border-t-2 border-gray-300 px-6 py-10">
+      <div className="mt-12 flex w-full flex-col items-center border-t-2 border-gray-300 px-6 py-10">
         <div className="flex items-center gap-4">
           <Logo size={48} />
           <Typography className="block" size="4xl" weight="bold">

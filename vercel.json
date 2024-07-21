@@ -3,6 +3,10 @@
     {
       "path": "/job/runNightlyTasks",
       "schedule": "0 0 * * *"
+    },
+    {
+      "path": "/job/refreshInstagramAccessAllUsers",
+      "schedule": "0 0 * * *"
     }
   ]
 }

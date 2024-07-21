@@ -1,9 +1,12 @@
 'use client';
 
+import { PlannedPost } from '@/server/plannedPosts';
 import { ArrowUpOnSquareIcon } from '@heroicons/react/24/outline';
+import { Dispatch, SetStateAction } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import { Typography } from '@/app/components';
+import { useUploadUserFileRequest } from '@/app/userFiles';
 
 import { Post } from '../types';
 
@@ -12,14 +15,41 @@ import PostPreview from './PostPreview';
 import useDragAndDrop from './useDragAndDrop';
 
 type Props = {
-  onPostsChange: (posts: Array<Post>) => void;
+  plannedPost: PlannedPost;
   posts: Array<Post>;
+  setPosts: Dispatch<SetStateAction<Array<Post>>>;
 };
 
-const DragAndDrop = ({ onPostsChange, posts }: Props): React.ReactElement => {
+const DragAndDrop = ({
+  plannedPost,
+  posts,
+  setPosts,
+}: Props): React.ReactElement => {
+  const uploadUserFileRequest = useUploadUserFileRequest();
+
   const dragAndDrop = useDragAndDrop(async (files) => {
     const newPosts = await Promise.all(files.map(makePostForFile));
-    onPostsChange([...posts, ...newPosts]);
+
+    setPosts((prevPosts) => {
+      return [...prevPosts, ...newPosts];
+    });
+
+    await Promise.all(
+      newPosts.map(async (newPost) => {
+        const result = await uploadUserFileRequest.uploadUserFile(
+          plannedPost.userId,
+          newPost.file
+        );
+
+        setPosts((prevPosts) => {
+          return prevPosts.map((prevPost) => {
+            return prevPost.id === newPost.id
+              ? { ...prevPost, uploadingStatus: result.status }
+              : prevPost;
+          });
+        });
+      })
+    );
   });
 
   return (
@@ -41,10 +71,11 @@ const DragAndDrop = ({ onPostsChange, posts }: Props): React.ReactElement => {
               <PostPreview
                 key={post.id}
                 onRemove={() => {
-                  const newPosts = posts.filter((p) => {
-                    return p.id !== post.id;
+                  setPosts((prevPosts) => {
+                    return prevPosts.filter((p) => {
+                      return p.id !== post.id;
+                    });
                   });
-                  onPostsChange(newPosts);
                 }}
                 post={post}
               />

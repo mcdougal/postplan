@@ -1,7 +1,6 @@
 'use client';
 
 import { getMediaItems } from '@/common/plannedPosts';
-import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { PlusCircleIcon } from '@heroicons/react/24/solid';
 import { Dispatch, SetStateAction, useState } from 'react';
@@ -18,14 +17,12 @@ import useReorderRequest from './useReorderRequest';
 
 type Props = {
   carousel: Carousel;
-  currentUser: CurrentUser;
   plannedPost: PlannedPost;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
 };
 
 const MediaItemReorder = ({
   carousel,
-  currentUser,
   plannedPost,
   setOptimisticPlannedPosts,
 }: Props): React.ReactElement => {
@@ -112,7 +109,6 @@ const MediaItemReorder = ({
         </div>
       </div>
       <AddMediaItemsDialog
-        currentUser={currentUser}
         onClose={() => {
           setAddDialogOpen(false);
         }}

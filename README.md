@@ -2,6 +2,7 @@
 
 ## Todo
 
+- Put "No more planned posts, use desktop" message at bottom of mobile feed
 - Redirect to www not working?
 - Show more posts in feed
 - Enter a date?

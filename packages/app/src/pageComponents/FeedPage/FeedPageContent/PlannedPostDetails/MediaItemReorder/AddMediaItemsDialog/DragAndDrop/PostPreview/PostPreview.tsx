@@ -1,8 +1,9 @@
 'use client';
 
+import { ExclamationCircleIcon } from '@heroicons/react/24/solid';
 import Image from 'next/image';
 
-import { Button } from '@/app/components';
+import { Button, Spinner, Typography } from '@/app/components';
 
 import { Post } from '../../types';
 
@@ -27,6 +28,25 @@ const PostPreview = ({ onRemove, post }: Props): React.ReactElement => {
             style={{ objectFit: `cover`, objectPosition: `center` }}
             unoptimized
           />
+        )}
+        {post.uploadingStatus === `loading` && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-50">
+            <Spinner size={8} />
+          </div>
+        )}
+        {post.uploadingStatus === `error` && (
+          <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-20">
+            <div>
+              <div className="rounded-full bg-white">
+                <ExclamationCircleIcon className="h-10 w-10 text-red-500" />
+              </div>
+              <Typography
+                className="block rounded-md bg-white p-1 text-center leading-none"
+                size="xs">
+                Error
+              </Typography>
+            </div>
+          </div>
         )}
       </div>
       <Button color="secondary" onClick={onRemove} size="xs">

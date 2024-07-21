@@ -1,7 +1,6 @@
 'use client';
 
 import { getFirstMediaItem, isReel } from '@/common/plannedPosts';
-import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -12,13 +11,11 @@ import PlannedPostEditor from './PlannedPostEditor';
 import useCarousel from './useCarousel';
 
 type Props = {
-  currentUser: CurrentUser;
   plannedPost: PlannedPost;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
 };
 
 const PlannedPostDetails = ({
-  currentUser,
   plannedPost,
   setOptimisticPlannedPosts,
 }: Props): React.ReactElement => {
@@ -52,7 +49,6 @@ const PlannedPostDetails = ({
         {!isReel(plannedPost) && (
           <MediaItemReorder
             carousel={carousel}
-            currentUser={currentUser}
             plannedPost={plannedPost}
             setOptimisticPlannedPosts={setOptimisticPlannedPosts}
           />

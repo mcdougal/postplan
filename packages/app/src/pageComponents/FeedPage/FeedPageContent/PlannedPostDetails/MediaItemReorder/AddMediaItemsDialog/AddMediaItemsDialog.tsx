@@ -1,6 +1,5 @@
 'use client';
 
-import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { useState } from 'react';
 
@@ -13,54 +12,49 @@ import {
 } from '@/app/components';
 
 import DragAndDrop from './DragAndDrop';
-import postIsNotImage from './postIsNotImage';
+import getClientErrorMessage from './getClientErrorMessage';
 import { Post } from './types';
 import useCreateMediaItemsRequest from './useCreateMediaItemsRequest';
 
 type Props = {
-  currentUser: CurrentUser;
   onClose: () => void;
   open: boolean;
   plannedPost: PlannedPost;
 };
 
 const AddMediaItemsDialog = ({
-  currentUser,
   onClose,
   open,
   plannedPost,
 }: Props): React.ReactElement => {
   const [posts, setPosts] = useState<Array<Post>>([]);
 
-  const createMediaItemsRequest = useCreateMediaItemsRequest(
-    currentUser,
-    plannedPost,
-    posts,
-    {
-      onCompleted: () => {
-        onClose();
-        setTimeout(() => {
-          setPosts([]);
-        }, 1000);
-      },
-    }
-  );
+  const createMediaItemsRequest = useCreateMediaItemsRequest({
+    onCompleted: () => {
+      onClose();
+      setTimeout(() => {
+        setPosts([]);
+      }, 1000);
+    },
+  });
 
-  const hasNonImageFile = posts.some(postIsNotImage);
-  const errorMessage = hasNonImageFile
-    ? `Only image files are allowed`
-    : createMediaItemsRequest.error;
+  const clientErrorMessage = getClientErrorMessage(posts);
+  const serverErrorMessage = createMediaItemsRequest.error;
 
   return (
     <Dialog maxWidth="2xl" onClose={onClose} open={open}>
       <div className="mb-5 flex">
         <DialogTitle className="flex-1">Add To Carousel</DialogTitle>
       </div>
-      <DragAndDrop onPostsChange={setPosts} posts={posts} />
+      <DragAndDrop
+        plannedPost={plannedPost}
+        posts={posts}
+        setPosts={setPosts}
+      />
       <DialogActions className="mt-6">
-        {errorMessage && (
+        {(clientErrorMessage || serverErrorMessage) && (
           <Typography color="red" size="md">
-            {errorMessage}
+            {clientErrorMessage || serverErrorMessage}
           </Typography>
         )}
         <Button
@@ -73,10 +67,18 @@ const AddMediaItemsDialog = ({
         </Button>
         {posts.length > 0 && (
           <Button
-            disabled={hasNonImageFile}
+            disabled={Boolean(clientErrorMessage)}
             loading={createMediaItemsRequest.loading}
             onClick={() => {
-              createMediaItemsRequest.createMediaItems();
+              const isLoading = posts.some((post) => {
+                return post.uploadingStatus === `loading`;
+              });
+
+              if (isLoading) {
+                return;
+              }
+
+              createMediaItemsRequest.createMediaItems(plannedPost, posts);
             }}
             size="xl">
             Add {posts.length}

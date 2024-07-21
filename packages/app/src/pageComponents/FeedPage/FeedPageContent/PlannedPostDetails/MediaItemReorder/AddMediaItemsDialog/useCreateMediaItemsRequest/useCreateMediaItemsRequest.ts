@@ -1,4 +1,3 @@
-import { CurrentUser } from '@/common/users';
 import { PlannedPost } from '@/server/plannedPosts';
 import { useState } from 'react';
 
@@ -10,22 +9,22 @@ type Callbacks = {
   onCompleted: () => void;
 };
 
+type CreateMediaItems = (
+  plannedPost: PlannedPost,
+  posts: Array<Post>
+) => Promise<void>;
+
 type CreateMediaItemsRequest = {
-  createMediaItems: () => Promise<void>;
+  createMediaItems: CreateMediaItems;
   error: string | null;
   loading: boolean;
 };
 
-export default (
-  currentUser: CurrentUser,
-  plannedPost: PlannedPost,
-  posts: Array<Post>,
-  { onCompleted }: Callbacks
-): CreateMediaItemsRequest => {
+export default ({ onCompleted }: Callbacks): CreateMediaItemsRequest => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const createMediaItems = async (): Promise<void> => {
+  const createMediaItems: CreateMediaItems = async (plannedPost, posts) => {
     setLoading(true);
     setError(null);
 
@@ -37,22 +36,11 @@ export default (
       };
     });
 
-    const formData = new FormData();
-    formData.append(
-      `data`,
-      JSON.stringify({
+    const response = await createMediaItemsServerAction({
+      data: {
         mediaItems: mediaItemsData,
         plannedPostId: plannedPost.id,
-        userId: plannedPost.userId,
-      })
-    );
-
-    posts.forEach((post) => {
-      formData.append(post.file.name, post.file);
-    });
-
-    const response = await createMediaItemsServerAction({
-      data: formData,
+      },
     });
 
     if (response.status === `error`) {

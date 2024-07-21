@@ -6,13 +6,13 @@ import { Dispatch, SetStateAction } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import { Typography } from '@/app/components';
+import { useUploadUserFileRequest } from '@/app/userFiles';
 
 import { Post } from '../types';
 
 import makePostForFile from './makePostForFile';
 import PostPreview from './PostPreview';
 import useDragAndDrop from './useDragAndDrop';
-import useUploadFileRequest from './useUploadFileRequest';
 
 type Props = {
   currentUser: CurrentUser;
@@ -25,7 +25,7 @@ const DragAndDrop = ({
   posts,
   setPosts,
 }: Props): React.ReactElement => {
-  const uploadFileRequest = useUploadFileRequest();
+  const uploadUserFileRequest = useUploadUserFileRequest();
 
   const dragAndDrop = useDragAndDrop(async (files) => {
     const newPosts = await Promise.all(files.map(makePostForFile));
@@ -36,7 +36,7 @@ const DragAndDrop = ({
 
     await Promise.all(
       newPosts.map(async (newPost) => {
-        const result = await uploadFileRequest.uploadFile(
+        const result = await uploadUserFileRequest.uploadUserFile(
           currentUser.id,
           newPost.file
         );
@@ -71,10 +71,11 @@ const DragAndDrop = ({
               <PostPreview
                 key={post.id}
                 onRemove={() => {
-                  const newPosts = posts.filter((p) => {
-                    return p.id !== post.id;
+                  setPosts((prevPosts) => {
+                    return prevPosts.filter((p) => {
+                      return p.id !== post.id;
+                    });
                   });
-                  setPosts(newPosts);
                 }}
                 post={post}
               />

@@ -1,24 +1,24 @@
 import { useState } from 'react';
 
-import { uploadUserFile } from '@/app/userFiles';
+import uploadUserFile from '../uploadUserFile';
 
 import fileUploadUrlServerAction from './fileUploadUrlServerAction';
 
 type Response = { status: `error`; message: string } | { status: `success` };
 
-type UploadFile = (userId: string, file: File) => Promise<Response>;
+type UploadUserFile = (userId: string, file: File) => Promise<Response>;
 
-type UploadFileRequest = {
+type UploadUserFileRequest = {
   error: string | null;
-  uploadFile: UploadFile;
   loading: boolean;
+  uploadUserFile: UploadUserFile;
 };
 
-export default (): UploadFileRequest => {
+export default (): UploadUserFileRequest => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const uploadFile: UploadFile = async (userId, file) => {
+  const uploadFile: UploadUserFile = async (userId, file) => {
     setLoading(true);
     setError(null);
 
@@ -54,6 +54,6 @@ export default (): UploadFileRequest => {
   return {
     error,
     loading,
-    uploadFile,
+    uploadUserFile: uploadFile,
   };
 };

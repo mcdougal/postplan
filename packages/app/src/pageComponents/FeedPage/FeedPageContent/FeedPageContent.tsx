@@ -86,7 +86,6 @@ const FeedPageContent = ({
             return (
               <PlannedPostDetails
                 key={selectedPost.plannedPost.id}
-                currentUser={currentUser}
                 plannedPost={selectedPost.plannedPost}
                 setOptimisticPlannedPosts={setOptimisticPlannedPosts}
               />

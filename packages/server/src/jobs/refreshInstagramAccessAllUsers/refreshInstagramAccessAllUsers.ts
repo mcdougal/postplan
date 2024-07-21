@@ -17,6 +17,9 @@ export default async (): Promise<void> => {
     return canRefreshAccessToken(connection);
   });
 
+  // eslint-disable-next-line no-console
+  console.log(`refreshableConnections: ${refreshableConnections.length}`);
+
   const jobs: Array<Job> = refreshableConnections.map((connection) => {
     return {
       name: `refreshInstagramAccessOneUser`,

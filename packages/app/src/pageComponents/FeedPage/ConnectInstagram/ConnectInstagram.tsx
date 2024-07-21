@@ -1,11 +1,9 @@
+import { getInstagramOAuthUrl } from '@/server/instagram';
 import Image from 'next/image';
 
-import { Typography } from '@/app/components';
-import { Page } from '@/app/pageUtils';
+import { Button, Typography } from '@/app/components';
 
-import LogInForm from './LogInForm';
-
-const LogIn: Page = async () => {
+const ConnectInstagram = (): React.ReactElement => {
   return (
     <div className="mx-auto mt-10 max-w-96 px-4 md:mt-[10vh]">
       <div className="mb-4 flex flex-col items-center">
@@ -20,13 +18,18 @@ const LogIn: Page = async () => {
         <Typography className="mb-10 block" size="4xl" weight="bold">
           Postplan
         </Typography>
-        <Typography className="mb-4" size="2xl">
-          Log In / Create Account
+        <Typography className="mb-6" size="2xl">
+          Get Started
+        </Typography>
+        <Button as="a" href={getInstagramOAuthUrl()} size="xl">
+          Connect Instagram
+        </Button>
+        <Typography className="mt-6 block text-center" size="md">
+          Connect Instagram to see how your planned posts look on your feed
         </Typography>
       </div>
-      <LogInForm />
     </div>
   );
 };
 
-export default LogIn;
+export default ConnectInstagram;

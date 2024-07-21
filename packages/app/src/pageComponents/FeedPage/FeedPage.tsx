@@ -1,4 +1,4 @@
-import { HomePageRoute, LogInRoute } from '@/common/routes';
+import { LogInRoute } from '@/common/routes';
 import {
   hasActiveInstagramConnection,
   queryActualPosts,
@@ -11,6 +11,7 @@ import { redirect } from 'next/navigation';
 import { SiteTopBar } from '@/app/components';
 import { Page } from '@/app/pageUtils';
 
+import ConnectInstagram from './ConnectInstagram';
 import FeedPageContent from './FeedPageContent';
 import MobileFeed from './MobileFeed';
 import sortPlannedPosts from './sortPlannedPosts';
@@ -27,7 +28,7 @@ const FeedPage: Page = async () => {
   });
 
   if (!isInstagramConnected) {
-    redirect(HomePageRoute.getPath({}));
+    return <ConnectInstagram />;
   }
 
   const [plannedPosts, actualPosts] = await Promise.all([

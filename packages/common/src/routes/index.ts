@@ -1,4 +1,4 @@
-import FeedRoute from './FeedRoute';
+import FeedPageRoute from './FeedPageRoute';
 import HomePageRoute from './HomePageRoute';
 import InstagramDeauthorizeRoute from './InstagramDeauthorizeRoute';
 import InstagramDeleteRoute from './InstagramDeleteRoute';
@@ -11,7 +11,7 @@ import SignUpRoute from './SignUpRoute';
 export type { JobRouteParams, JobRouteResponse };
 
 export {
-  FeedRoute,
+  FeedPageRoute,
   HomePageRoute,
   InstagramDeauthorizeRoute,
   InstagramDeleteRoute,

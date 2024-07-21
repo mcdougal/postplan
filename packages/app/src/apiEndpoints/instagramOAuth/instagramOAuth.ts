@@ -1,4 +1,4 @@
-import { HomePageRoute } from '@/common/routes';
+import { FeedPageRoute } from '@/common/routes';
 import {
   exchangeCodeForToken,
   generateLongLivedToken,
@@ -13,7 +13,7 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
     const code = request.nextUrl.searchParams.get(`code`);
 
     if (!code) {
-      return NextResponse.redirect(HomePageRoute.getAbsoluteUrl({}));
+      return NextResponse.redirect(FeedPageRoute.getAbsoluteUrl({}));
     }
 
     const shortLivedTokenResponse = await exchangeCodeForToken({
@@ -37,6 +37,6 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
       update: dataToSave,
     });
 
-    return NextResponse.redirect(HomePageRoute.getAbsoluteUrl({}));
+    return NextResponse.redirect(FeedPageRoute.getAbsoluteUrl({}));
   });
 };

@@ -9,13 +9,13 @@ import './globals.css';
 // eslint-disable-next-line @typescript-eslint/quotes
 const inter = Inter({ subsets: ['latin'] });
 
+const title = `Postplan`;
+const description = `Plan your Instagram posts in advance.`;
+
 export const metadata: Metadata = {
-  title: `Postplan`,
-  description: `Postplan`,
-  openGraph: {
-    title: `Postplan`,
-    description: `Postplan`,
-  },
+  title,
+  description,
+  openGraph: { title, description },
 };
 
 type Props = Readonly<{

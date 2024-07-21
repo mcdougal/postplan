@@ -1,6 +1,6 @@
 'use client';
 
-import { HomePageRoute } from '@/common/routes';
+import { FeedPageRoute } from '@/common/routes';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -17,7 +17,7 @@ const LogInForm = (): React.ReactElement => {
         const response = await logInOrSignUpServerAction(formData);
 
         if (response.status === `success`) {
-          router.push(HomePageRoute.getPath({}));
+          router.push(FeedPageRoute.getPath({}));
         } else if (response.status === `error`) {
           setErrorMessage(response.message);
         } else {

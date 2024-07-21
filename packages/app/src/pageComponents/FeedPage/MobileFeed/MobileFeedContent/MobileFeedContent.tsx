@@ -13,24 +13,31 @@ type Props = {
 const MobileFeedContent = ({ plannedPosts }: Props): React.ReactElement => {
   return (
     <Container size="xs">
-      <div className="p-4">
-        <Typography size="md">
-          Download images and captions for planned posts. To edit planned posts,
-          visit the desktop site.
-        </Typography>
-      </div>
-      {plannedPosts.length === 0 && (
+      {plannedPosts.length === 0 ? (
         <div className="px-4 py-10">
           <Typography className="block text-center" color="gray" size="lg">
-            You haven’t planned any posts
+            You haven’t planned any posts. Open Postplan on your desktop to add
+            planned posts.
           </Typography>
         </div>
+      ) : (
+        <div className="pt-4">
+          {plannedPosts.map((plannedPost) => {
+            return (
+              <MobilePlannedPost
+                key={plannedPost.id}
+                plannedPost={plannedPost}
+              />
+            );
+          })}
+          <div className="border-t-2 border-gray-300 px-4 pb-10 pt-6">
+            <Typography size="md">
+              No more posts planned. Open Postplan on your desktop to add and
+              edit planned posts.
+            </Typography>
+          </div>
+        </div>
       )}
-      {plannedPosts.map((plannedPost) => {
-        return (
-          <MobilePlannedPost key={plannedPost.id} plannedPost={plannedPost} />
-        );
-      })}
     </Container>
   );
 };

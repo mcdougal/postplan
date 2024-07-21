@@ -32,20 +32,16 @@ const AddPlannedPostsDialog = ({
   const [isCarousel, setIsCarousel] = useState(false);
   const [isReel, setIsReel] = useState(false);
 
-  const createPlannedPostsRequest = useCreatePlannedPostsRequest(
-    currentUser,
-    posts,
-    {
-      onCompleted: () => {
-        onClose();
-        setTimeout(() => {
-          setPosts([]);
-          setIsCarousel(false);
-          setIsReel(false);
-        }, 1000);
-      },
-    }
-  );
+  const createPlannedPostsRequest = useCreatePlannedPostsRequest({
+    onCompleted: () => {
+      onClose();
+      setTimeout(() => {
+        setPosts([]);
+        setIsCarousel(false);
+        setIsReel(false);
+      }, 1000);
+    },
+  });
 
   const clientErrorMessage = getClientErrorMessage(posts, isReel);
   const serverErrorMessage = createPlannedPostsRequest.error;
@@ -75,7 +71,11 @@ const AddPlannedPostsDialog = ({
           size="md"
         />
       </div>
-      <DragAndDrop onPostsChange={setPosts} posts={posts} />
+      <DragAndDrop
+        currentUser={currentUser}
+        posts={posts}
+        setPosts={setPosts}
+      />
       <DialogActions className="mt-6">
         {(clientErrorMessage || serverErrorMessage) && (
           <Typography color="red" size="md">
@@ -95,7 +95,15 @@ const AddPlannedPostsDialog = ({
             disabled={Boolean(clientErrorMessage)}
             loading={createPlannedPostsRequest.loading}
             onClick={() => {
-              createPlannedPostsRequest.createPlannedPosts({
+              const isLoading = posts.some((post) => {
+                return post.uploadingStatus === `loading`;
+              });
+
+              if (isLoading) {
+                return;
+              }
+
+              createPlannedPostsRequest.createPlannedPosts(currentUser, posts, {
                 isCarousel,
                 isReel,
               });

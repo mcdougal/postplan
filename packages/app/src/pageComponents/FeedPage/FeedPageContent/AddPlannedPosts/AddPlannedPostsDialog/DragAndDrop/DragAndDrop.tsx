@@ -1,6 +1,8 @@
 'use client';
 
+import { CurrentUser } from '@/common/users';
 import { ArrowUpOnSquareIcon } from '@heroicons/react/24/outline';
+import { Dispatch, SetStateAction } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 import { Typography } from '@/app/components';
@@ -10,16 +12,44 @@ import { Post } from '../types';
 import makePostForFile from './makePostForFile';
 import PostPreview from './PostPreview';
 import useDragAndDrop from './useDragAndDrop';
+import useUploadFileRequest from './useUploadFileRequest';
 
 type Props = {
-  onPostsChange: (posts: Array<Post>) => void;
+  currentUser: CurrentUser;
   posts: Array<Post>;
+  setPosts: Dispatch<SetStateAction<Array<Post>>>;
 };
 
-const DragAndDrop = ({ onPostsChange, posts }: Props): React.ReactElement => {
+const DragAndDrop = ({
+  currentUser,
+  posts,
+  setPosts,
+}: Props): React.ReactElement => {
+  const uploadFileRequest = useUploadFileRequest();
+
   const dragAndDrop = useDragAndDrop(async (files) => {
     const newPosts = await Promise.all(files.map(makePostForFile));
-    onPostsChange([...posts, ...newPosts]);
+
+    setPosts((prevPosts) => {
+      return [...prevPosts, ...newPosts];
+    });
+
+    await Promise.all(
+      newPosts.map(async (newPost) => {
+        const result = await uploadFileRequest.uploadFile(
+          currentUser.id,
+          newPost.file
+        );
+
+        setPosts((prevPosts) => {
+          return prevPosts.map((prevPost) => {
+            return prevPost.id === newPost.id
+              ? { ...prevPost, uploadingStatus: result.status }
+              : prevPost;
+          });
+        });
+      })
+    );
   });
 
   return (
@@ -44,7 +74,7 @@ const DragAndDrop = ({ onPostsChange, posts }: Props): React.ReactElement => {
                   const newPosts = posts.filter((p) => {
                     return p.id !== post.id;
                   });
-                  onPostsChange(newPosts);
+                  setPosts(newPosts);
                 }}
                 post={post}
               />

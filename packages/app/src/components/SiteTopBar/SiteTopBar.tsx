@@ -23,7 +23,7 @@ const SiteTopBar = forwardRef<any, Props>(
         )}
         {...divProps}>
         <div className="flex items-center gap-2">
-          <Logo size={24} />
+          <Logo size={20} />
           <Typography size="lg" weight="bold">
             Postplan
           </Typography>

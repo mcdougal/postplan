@@ -17,5 +17,6 @@ export default async (file: File): Promise<Post> => {
     file: renamedFile,
     id: postId,
     resolution,
+    uploadingStatus: `loading`,
   };
 };

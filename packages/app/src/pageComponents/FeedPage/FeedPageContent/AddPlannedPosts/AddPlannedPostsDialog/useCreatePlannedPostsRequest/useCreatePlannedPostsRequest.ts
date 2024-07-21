@@ -9,10 +9,14 @@ type Callbacks = {
   onCompleted: () => void;
 };
 
-type CreatePlannedPosts = (options: {
-  isCarousel: boolean;
-  isReel: boolean;
-}) => Promise<void>;
+type CreatePlannedPosts = (
+  currentUser: CurrentUser,
+  posts: Array<Post>,
+  options: {
+    isCarousel: boolean;
+    isReel: boolean;
+  }
+) => Promise<void>;
 
 type CreatePlannedPostsRequest = {
   createPlannedPosts: CreatePlannedPosts;
@@ -20,25 +24,22 @@ type CreatePlannedPostsRequest = {
   loading: boolean;
 };
 
-export default (
-  currentUser: CurrentUser,
-  posts: Array<Post>,
-  { onCompleted }: Callbacks
-): CreatePlannedPostsRequest => {
+export default ({ onCompleted }: Callbacks): CreatePlannedPostsRequest => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const createPlannedPosts: CreatePlannedPosts = async ({
-    isCarousel,
-    isReel,
-  }): Promise<void> => {
+  const createPlannedPosts: CreatePlannedPosts = async (
+    currentUser,
+    posts,
+    { isCarousel, isReel }
+  ): Promise<void> => {
     setLoading(true);
     setError(null);
 
     const plannedPostsData = isCarousel
       ? [
           {
-            files: posts.map((post) => {
+            mediaItems: posts.map((post) => {
               return {
                 fileName: post.file.name,
                 height: post.resolution.height,
@@ -49,7 +50,7 @@ export default (
         ]
       : posts.map((post) => {
           return {
-            files: [
+            mediaItems: [
               {
                 fileName: post.file.name,
                 height: post.resolution.height,
@@ -59,22 +60,12 @@ export default (
           };
         });
 
-    const formData = new FormData();
-    formData.append(
-      `data`,
-      JSON.stringify({
+    const response = await createPlannedPostsServerAction({
+      data: {
         isReel,
         plannedPosts: plannedPostsData,
         userId: currentUser.id,
-      })
-    );
-
-    posts.forEach((post) => {
-      formData.append(post.file.name, post.file);
-    });
-
-    const response = await createPlannedPostsServerAction({
-      data: formData,
+      },
     });
 
     setLoading(false);

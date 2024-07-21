@@ -2,20 +2,21 @@ import { FeedPageRoute, LogInRoute } from '@/common/routes';
 import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
+import { redirect } from 'next/navigation';
 
 import { Button, Logo, TextLink, Typography } from '@/app/components';
 import { Page } from '@/app/pageUtils';
 
 const HomePage: Page = async () => {
   const currentUser = await getCurrentUser(cookies());
-  const logInPath = currentUser
-    ? FeedPageRoute.getPath({})
-    : LogInRoute.getPath({});
+  if (currentUser) {
+    redirect(FeedPageRoute.getPath({}));
+  }
 
   return (
     <div className="mx-auto mt-16 max-w-xl px-4 md:mt-[10vh]">
       <Typography className="absolute right-5 top-3" size="sm">
-        <TextLink as="a" color="default" href={logInPath}>
+        <TextLink as="a" color="default" href={LogInRoute.getPath({})}>
           Log In
         </TextLink>
       </Typography>
@@ -30,7 +31,7 @@ const HomePage: Page = async () => {
         <Typography className="mb-5 block text-center" size="md">
           Postplan lets you plan your Instagram posts in advance.
         </Typography>
-        <Button as="a" href={logInPath} size="xl">
+        <Button as="a" href={LogInRoute.getPath({})} size="xl">
           Sign Up Free
         </Button>
         <div className="mt-16 flex w-full flex-col items-center border-l-2 border-t-2 border-gray-300 px-6 py-10">
@@ -81,7 +82,7 @@ const HomePage: Page = async () => {
         <Typography className="mb-8 block text-center" size="xl">
           Free to use. No ads.
         </Typography>
-        <Button as="a" href={logInPath} size="xl">
+        <Button as="a" href={LogInRoute.getPath({})} size="xl">
           Try It Out
         </Button>
       </div>

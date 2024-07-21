@@ -1,6 +1,9 @@
 import { FeedPageRoute } from '@/common/routes';
-import { exchangeCodeForToken, upsertAccessToken } from '@/server/instagram';
-import ms from 'ms';
+import {
+  exchangeCodeForToken,
+  generateLongLivedToken,
+  upsertAccessToken,
+} from '@/server/instagram';
 import { NextRequest, NextResponse } from 'next/server';
 
 import { log, withAuth } from '../utils';
@@ -17,21 +20,14 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
     const shortLivedTokenResponse = await exchangeCodeForToken({
       data: { code },
     });
-    // log(`generateLongLivedToken`);
-    // const longLivedTokenResponse = await generateLongLivedToken({
-    //   data: { shortLivedAccessToken: shortLivedTokenResponse.accessToken },
-    // });
-
-    // const dataToSave = {
-    //   accessToken: longLivedTokenResponse.accessToken,
-    //   expiresAt: longLivedTokenResponse.expiresAt,
-    //   instagramUserId: shortLivedTokenResponse.userId,
-    //   permissions: shortLivedTokenResponse.permissions,
-    // };
+    log(`generateLongLivedToken`);
+    const longLivedTokenResponse = await generateLongLivedToken({
+      data: { shortLivedAccessToken: shortLivedTokenResponse.accessToken },
+    });
 
     const dataToSave = {
-      accessToken: shortLivedTokenResponse.accessToken,
-      expiresAt: new Date(Date.now() + ms(`1 hour`)),
+      accessToken: longLivedTokenResponse.accessToken,
+      expiresAt: longLivedTokenResponse.expiresAt,
       instagramUserId: shortLivedTokenResponse.userId,
       permissions: shortLivedTokenResponse.permissions,
     };

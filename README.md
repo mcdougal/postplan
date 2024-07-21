@@ -4,6 +4,7 @@
 
 - Remove all debug code
 - Fix actual post thumbnail bug
+- Re-OAuth for Deanna's user on prod
 
 - Enter a date?
 - Test Automatic refreshing of IG access token

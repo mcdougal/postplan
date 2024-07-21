@@ -1,6 +1,6 @@
 {
-  "id": "ccc6a001-825d-4449-a7ae-a5704e35a92f",
-  "prevId": "6e276fe4-cc6a-460a-bc26-63a6b430dcd1",
+  "id": "29b797f6-d3b5-45d3-b5b0-cf3aca402fd2",
+  "prevId": "10634b6b-1a32-4520-9d27-434f6ed61883",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -210,7 +210,7 @@
           "name": "refreshed_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "updated_at": {
           "name": "updated_at",

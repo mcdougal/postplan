@@ -4,10 +4,11 @@ import { HomePageRoute } from '@/common/routes';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { Typography } from '@/app/components';
+import { Button, Typography } from '@/app/components';
 
 import LogInFormFields from './LogInFormFields';
 import logInServerAction from './logInServerAction';
+import logInWithFacebookServerAction from './logInWithFacebookServerAction';
 
 const LogInForm = (): React.ReactElement => {
   const router = useRouter();
@@ -17,6 +18,17 @@ const LogInForm = (): React.ReactElement => {
     <>
       <Typography className="mb-6 block" size="3xl">
         Log In
+      </Typography>
+      <Button
+        className="w-full"
+        onClick={async () => {
+          await logInWithFacebookServerAction();
+        }}
+        size="xl">
+        Log In With Facebook
+      </Button>
+      <Typography className="my-4 block text-center" size="sm">
+        Or
       </Typography>
       <form
         action={async (formData) => {

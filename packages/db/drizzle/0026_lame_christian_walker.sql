@@ -1,0 +1,1 @@
+ALTER TABLE "postplan"."user" ALTER COLUMN "email" DROP NOT NULL;

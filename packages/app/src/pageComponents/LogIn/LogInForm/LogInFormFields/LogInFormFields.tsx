@@ -15,7 +15,12 @@ const LogInFormFields = ({ errorMessage }: Props): React.ReactElement => {
     <div className="flex flex-col gap-3">
       <Input autoFocus label="Email" name="email" type="email" />
       <Input label="Password" name="password" type="password" />
-      <Button className="mt-3" loading={status.pending} size="xl" type="submit">
+      <Button
+        className="mt-3"
+        color="secondary"
+        loading={status.pending}
+        size="xl"
+        type="submit">
         Log In
       </Button>
       {errorMessage && (

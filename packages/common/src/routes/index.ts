@@ -1,3 +1,4 @@
+import FacebookOAuthRoute from './FacebookOAuthRoute';
 import FeedRoute from './FeedRoute';
 import HomePageRoute from './HomePageRoute';
 import InstagramDeauthorizeRoute from './InstagramDeauthorizeRoute';
@@ -11,6 +12,7 @@ import SignUpRoute from './SignUpRoute';
 export type { JobRouteParams, JobRouteResponse };
 
 export {
+  FacebookOAuthRoute,
   FeedRoute,
   HomePageRoute,
   InstagramDeauthorizeRoute,

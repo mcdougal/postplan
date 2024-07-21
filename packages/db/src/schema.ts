@@ -34,7 +34,7 @@ export const user = schema.table(
   {
     authUserId: text(`auth_user_id`).notNull(),
     createdAt: timestamp(`created_at`).defaultNow().notNull(),
-    email: text(`email`).notNull(),
+    email: text(`email`),
     id: text(`id`).primaryKey(),
     updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
   },

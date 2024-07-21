@@ -13,7 +13,7 @@ import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 
 import { GetHandlerJson } from '../types';
-import { badRequest, unauthorized } from '../utils';
+import { badRequest, log, unauthorized } from '../utils';
 
 type GetHandler = GetHandlerJson<JobRouteParams, JobRouteResponse>;
 
@@ -35,6 +35,8 @@ export const GET: GetHandler = async (request, { params }) => {
   }
 
   const job = jobParsed.data;
+
+  log(`Running job: ${job.name}`);
 
   let numRetries = 2;
   let error: unknown = new Error(`Unexpected error`);
@@ -58,6 +60,7 @@ export const GET: GetHandler = async (request, { params }) => {
 
       return NextResponse.json({ success: true });
     } catch (err) {
+      log(`Retrying job: ${job.name}`);
       numRetries -= 1;
       error = err;
       await sleep(1000);

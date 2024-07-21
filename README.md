@@ -2,7 +2,6 @@
 
 ## Todo
 
-- Use cards with boxy shadows for features on home page
 - Show more posts in feed
 - Enter a date?
 - Test Automatic refreshing of IG access token

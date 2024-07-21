@@ -39,7 +39,7 @@ const FeedPage: Page = async () => {
     queryActualPosts({
       auth: { currentUserId: currentUser.id },
       where: { userId: currentUser.id },
-      limit: 40,
+      limit: 100,
     }),
   ]);
 

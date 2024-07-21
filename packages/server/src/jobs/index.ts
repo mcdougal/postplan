@@ -1,25 +1,13 @@
-import refreshActualPostMediaUrlsAllUsers from './refreshActualPostMediaUrlsAllUsers';
-import refreshActualPostMediaUrlsOneUser from './refreshActualPostMediaUrlsOneUser';
-import refreshInstagramAccessAllUsers from './refreshInstagramAccessAllUsers';
-import refreshInstagramAccessOneUser from './refreshInstagramAccessOneUser';
-import refreshPlannedPostMediaUrlsAllUsers from './refreshPlannedPostMediaUrlsAllUsers';
-import refreshPlannedPostMediaUrlsOneUser from './refreshPlannedPostMediaUrlsOneUser';
+import createThumbnails from './createThumbnails';
+import refreshInstagramConnections from './refreshInstagramConnections';
+import refreshMediaUrls from './refreshMediaUrls';
 import runNightlyTasks from './runNightlyTasks';
-import syncInstagramAllUsers from './syncInstagramAllUsers';
-import syncInstagramOneUser from './syncInstagramOneUser';
-import uploadActualPostThumbnail from './uploadActualPostThumbnail';
-import uploadPlannedPostMediaItemThumbnail from './uploadPlannedPostMediaItemThumbnail';
+import syncInstagram from './syncInstagram';
 
 export {
-  refreshActualPostMediaUrlsAllUsers,
-  refreshActualPostMediaUrlsOneUser,
-  refreshInstagramAccessAllUsers,
-  refreshInstagramAccessOneUser,
-  refreshPlannedPostMediaUrlsAllUsers,
-  refreshPlannedPostMediaUrlsOneUser,
+  createThumbnails,
+  refreshInstagramConnections,
+  refreshMediaUrls,
   runNightlyTasks,
-  syncInstagramAllUsers,
-  syncInstagramOneUser,
-  uploadActualPostThumbnail,
-  uploadPlannedPostMediaItemThumbnail,
+  syncInstagram,
 };

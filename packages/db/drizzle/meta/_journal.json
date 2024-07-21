@@ -183,6 +183,13 @@
       "when": 1721513487141,
       "tag": "0025_sloppy_swordsman",
       "breakpoints": true
+    },
+    {
+      "idx": 26,
+      "version": "7",
+      "when": 1721583583175,
+      "tag": "0026_red_living_lightning",
+      "breakpoints": true
     }
   ]
 }

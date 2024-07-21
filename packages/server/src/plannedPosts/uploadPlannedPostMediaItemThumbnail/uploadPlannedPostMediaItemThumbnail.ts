@@ -1,11 +1,25 @@
 import { getThumbnailFileName } from '@/common/userFiles';
 import { db, eq, firstOrThrow } from '@/db/connection';
 import { plannedPostMediaItem } from '@/db/schema';
+import ms from 'ms';
 import sharp from 'sharp';
 
+import { ForbiddenError } from '@/server/auth';
 import { generateFileDownloadUrl, uploadUserFile } from '@/server/userFiles';
 
-export default async (plannedPostMediaItemId: string): Promise<void> => {
+type Args = {
+  auth: {
+    currentUserId: string;
+  };
+  where: {
+    plannedPostMediaItemId: string;
+  };
+};
+
+export default async (args: Args): Promise<void> => {
+  const { currentUserId } = args.auth;
+  const { plannedPostMediaItemId } = args.where;
+
   const matchingMediaItem = firstOrThrow(
     await db.query.plannedPostMediaItem.findMany({
       where: eq(plannedPostMediaItem.id, plannedPostMediaItemId),
@@ -24,6 +38,10 @@ export default async (plannedPostMediaItemId: string): Promise<void> => {
   );
 
   const { userId } = matchingMediaItem.plannedPost;
+
+  if (currentUserId !== userId) {
+    throw new ForbiddenError();
+  }
 
   const mediaResponse = await fetch(matchingMediaItem.mediaUrl);
   if (!mediaResponse.ok) {
@@ -48,13 +66,20 @@ export default async (plannedPostMediaItemId: string): Promise<void> => {
     },
   });
 
+  const expiresIn = ms(`7 days`);
+  const expiresAt = new Date(Date.now() + expiresIn);
+
   const mediaThumbnailUrl = await generateFileDownloadUrl({
     auth: { currentUserId: userId },
     where: { fileName: thumbnailFileName, userId },
+    expiresIn,
   });
 
   await db
     .update(plannedPostMediaItem)
-    .set({ mediaThumbnailUrl })
+    .set({
+      mediaThumbnailUrl,
+      mediaThumbnailUrlExpiresAt: expiresAt,
+    })
     .where(eq(plannedPostMediaItem.id, plannedPostMediaItemId));
 };

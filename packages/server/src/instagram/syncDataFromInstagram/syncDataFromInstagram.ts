@@ -1,5 +1,3 @@
-import { Job } from '@/common/jobs';
-
 import { ForbiddenError } from '@/server/auth';
 import { runJobs } from '@/server/jobsRunner';
 
@@ -35,18 +33,6 @@ export default async (args: Args): Promise<void> => {
   });
 
   await removeDeletedPosts(connection.userId, instagramMediaItems);
-
-  const { newThumbnailPostIds } = await upsertPosts(
-    connection.userId,
-    instagramMediaItems
-  );
-
-  const jobs: Array<Job> = newThumbnailPostIds.map((postId) => {
-    return {
-      name: `uploadActualPostThumbnail`,
-      data: { actualPostId: postId },
-    };
-  });
-
-  await runJobs(jobs);
+  await upsertPosts(connection.userId, instagramMediaItems);
+  await runJobs([{ name: `createThumbnails`, data: {} }]);
 };

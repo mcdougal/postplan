@@ -3,8 +3,6 @@ import { Job } from '@/common/jobs';
 import { JobRoute } from '@/common/routes';
 import { sleep } from '@/common/sleep';
 
-import { log } from '../utils';
-
 type Options = {
   /**
    * Wait for all jobs to finish before returning.
@@ -21,8 +19,6 @@ export default async <J extends Job>(
   if (options?.wait) {
     await Promise.all(
       jobs.map(async (job) => {
-        log(`Running job ${job.name} ${JSON.stringify(job.data)}`);
-
         const jobUrl = JobRoute.getAbsoluteUrl({
           params: { jobName: job.name },
           searchParams: { data: job.data },
@@ -39,8 +35,6 @@ export default async <J extends Job>(
     );
   } else {
     jobs.forEach((job) => {
-      log(`Starting job ${job.name} ${JSON.stringify(job.data)}`);
-
       const jobUrl = JobRoute.getAbsoluteUrl({
         params: { jobName: job.name },
         searchParams: { data: job.data },

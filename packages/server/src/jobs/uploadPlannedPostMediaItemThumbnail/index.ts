@@ -1,3 +1,0 @@
-import uploadPlannedPostMediaItemThumbnail from './uploadPlannedPostMediaItemThumbnail';
-
-export default uploadPlannedPostMediaItemThumbnail;

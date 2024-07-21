@@ -1,4 +1,4 @@
-import { db, eq, first, firstOrThrow, lower } from '@/db/connection';
+import { db, eq, first, lower } from '@/db/connection';
 import { user } from '@/db/schema';
 import { createId } from '@paralleldrive/cuid2';
 import { CookieMethodsServer } from '@supabase/ssr';
@@ -25,16 +25,14 @@ export default async (
 
   const signedUpUser = await signUp(email, password, cookies);
 
-  firstOrThrow(
-    await db
-      .insert(user)
-      .values({
-        authUserId: signedUpUser.id,
-        email,
-        id: createId(),
-      })
-      .returning({
-        id: user.id,
-      })
-  );
+  await db
+    .insert(user)
+    .values({
+      authUserId: signedUpUser.id,
+      email,
+      id: createId(),
+    })
+    .returning({
+      id: user.id,
+    });
 };

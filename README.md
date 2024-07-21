@@ -2,7 +2,7 @@
 
 ## Todo
 
-- Put "No more planned posts, use desktop" message at bottom of mobile feed
+- Use cards with boxy shadows for features on home page
 - Show more posts in feed
 - Enter a date?
 - Test Automatic refreshing of IG access token

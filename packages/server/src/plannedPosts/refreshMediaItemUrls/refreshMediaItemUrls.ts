@@ -1,7 +1,7 @@
 import { getThumbnailFileName } from '@/common/userFiles';
 import { db, eq } from '@/db/connection';
-import { plannedPost, plannedPostMediaItem } from '@/db/schema';
-import { forEachSeries } from 'p-iteration';
+import { plannedPostMediaItem } from '@/db/schema';
+import ms from 'ms';
 
 import { ForbiddenError } from '@/server/auth';
 import { generateFileDownloadUrl } from '@/server/userFiles';
@@ -11,47 +11,61 @@ type Args = {
     currentUserId: string;
   };
   where: {
-    userId: string;
+    plannedPostMediaItemId: string;
   };
 };
 
 export default async (args: Args): Promise<void> => {
   const { currentUserId } = args.auth;
-  const { userId } = args.where;
+  const { plannedPostMediaItemId } = args.where;
 
-  if (currentUserId !== userId) {
-    throw new ForbiddenError();
-  }
-
-  const plannedPosts = await db.query.plannedPost.findMany({
-    where: eq(plannedPost.userId, userId),
-    columns: { id: true },
+  const matchingMediaItem = await db.query.plannedPostMediaItem.findFirst({
+    where: eq(plannedPostMediaItem.id, plannedPostMediaItemId),
+    columns: { fileName: true, id: true },
     with: {
-      mediaItems: {
+      plannedPost: {
         columns: {
-          fileName: true,
-          id: true,
+          userId: true,
         },
       },
     },
   });
 
-  await forEachSeries(plannedPosts, async ({ mediaItems }) => {
-    await forEachSeries(mediaItems, async ({ fileName, id }) => {
-      const mediaUrl = await generateFileDownloadUrl({
-        auth: { currentUserId },
-        where: { fileName, userId },
-      });
+  if (
+    !matchingMediaItem ||
+    currentUserId !== matchingMediaItem.plannedPost.userId
+  ) {
+    throw new ForbiddenError();
+  }
 
-      const mediaThumbnailUrl = await generateFileDownloadUrl({
-        auth: { currentUserId },
-        where: { fileName: getThumbnailFileName(fileName), userId },
-      });
+  const expiresIn = ms(`7 days`);
+  const expiresAt = new Date(Date.now() + expiresIn);
 
-      await db
-        .update(plannedPostMediaItem)
-        .set({ mediaUrl, mediaThumbnailUrl })
-        .where(eq(plannedPostMediaItem.id, id));
-    });
+  const mediaUrl = await generateFileDownloadUrl({
+    auth: { currentUserId },
+    where: {
+      fileName: matchingMediaItem.fileName,
+      userId: matchingMediaItem.plannedPost.userId,
+    },
+    expiresIn,
   });
+
+  const mediaThumbnailUrl = await generateFileDownloadUrl({
+    auth: { currentUserId },
+    where: {
+      fileName: getThumbnailFileName(matchingMediaItem.fileName),
+      userId: matchingMediaItem.plannedPost.userId,
+    },
+    expiresIn,
+  });
+
+  await db
+    .update(plannedPostMediaItem)
+    .set({
+      mediaThumbnailUrl,
+      mediaThumbnailUrlExpiresAt: expiresAt,
+      mediaUrl,
+      mediaUrlExpiresAt: expiresAt,
+    })
+    .where(eq(plannedPostMediaItem.id, matchingMediaItem.id));
 };

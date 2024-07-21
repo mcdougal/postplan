@@ -33,8 +33,8 @@ export default authenticatedServerAction<Args>({
     await runJobs(
       [
         {
-          name: `syncInstagramOneUser`,
-          data: { connectionId: instagramConnection.id },
+          name: `syncInstagram`,
+          data: { connectionId: instagramConnection.id, single: true },
         },
       ],
       { wait: true }

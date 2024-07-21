@@ -1,14 +1,16 @@
 import { getRequiredEnvVar } from '@/common/env';
-import ms from 'ms';
 
 import { getSupabaseClient } from '../utils';
 
-export default async (key: string): Promise<string> => {
+export default async (
+  key: string,
+  { expiresIn }: { expiresIn: number }
+): Promise<string> => {
   const supabase = getSupabaseClient();
 
   const { data, error } = await supabase.storage
     .from(getRequiredEnvVar(`SUPABASE_POSTPLAN_BUCKET_NAME`))
-    .createSignedUrl(key, Math.floor(ms(`7 days`) / 1000));
+    .createSignedUrl(key, Math.floor(expiresIn / 1000));
 
   if (error) {
     throw error;

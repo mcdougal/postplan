@@ -1,5 +1,6 @@
 'use server';
 
+import { runJobs } from '@/server/jobsRunner';
 import { createMediaItem } from '@/server/plannedPosts';
 import { revalidatePath } from 'next/cache';
 
@@ -29,6 +30,8 @@ export default authenticatedServerAction<Args>({
         });
       })
     );
+
+    await runJobs([{ name: `createThumbnails`, data: {} }]);
 
     revalidatePath(`/`, `layout`);
 

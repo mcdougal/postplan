@@ -1,9 +1,9 @@
 import { db, eq, firstOrThrow } from '@/db/connection';
 import { plannedPost, plannedPostMediaItem } from '@/db/schema';
 import { createId } from '@paralleldrive/cuid2';
+import ms from 'ms';
 
 import { ForbiddenError } from '@/server/auth';
-import { runJobs } from '@/server/jobsRunner';
 import { generateFileDownloadUrl } from '@/server/userFiles';
 
 import isAuthorized from './isAuthorized';
@@ -39,12 +39,16 @@ export default async (args: Args): Promise<Response> => {
     })
   );
 
+  const expiresIn = ms(`7 days`);
+  const expiresAt = new Date(Date.now() + expiresIn);
+
   const mediaUrl = await generateFileDownloadUrl({
     auth: { currentUserId },
     where: {
       fileName,
       userId: matchingPlannedPost.userId,
     },
+    expiresIn,
   });
 
   const insertedMediaItem = firstOrThrow(
@@ -55,6 +59,7 @@ export default async (args: Args): Promise<Response> => {
         height,
         id: createId(),
         mediaUrl,
+        mediaUrlExpiresAt: expiresAt,
         plannedPostId,
         width,
       })
@@ -62,13 +67,6 @@ export default async (args: Args): Promise<Response> => {
         id: plannedPostMediaItem.id,
       })
   );
-
-  await runJobs([
-    {
-      name: `uploadPlannedPostMediaItemThumbnail`,
-      data: { plannedPostMediaItemId: insertedMediaItem.id },
-    },
-  ]);
 
   return {
     mediaItem: { id: insertedMediaItem.id },

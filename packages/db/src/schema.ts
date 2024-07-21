@@ -54,6 +54,7 @@ export const actualPost = schema.table(`actual_post`, {
   id: text(`id`).primaryKey(),
   instagramId: text(`instagram_id`).notNull(),
   mediaThumbnailUrl: text(`media_thumbnail_url`),
+  mediaThumbnailUrlExpiresAt: timestamp(`media_thumbnail_url_expires_at`),
   mediaType: actualPostMediaType(`media_type`).notNull(),
   mediaUrl: text(`media_url`).notNull(),
   permalink: text(`permalink`).notNull(),
@@ -101,7 +102,9 @@ export const plannedPostMediaItem = schema.table(`planned_post_media_item`, {
   height: integer(`height`).notNull(),
   id: text(`id`).primaryKey(),
   mediaThumbnailUrl: text(`media_thumbnail_url`),
+  mediaThumbnailUrlExpiresAt: timestamp(`media_thumbnail_url_expires_at`),
   mediaUrl: text(`media_url`).notNull(),
+  mediaUrlExpiresAt: timestamp(`media_url_expires_at`),
   order: integer(`order`),
   plannedPostId: text(`planned_post_id`)
     .references(plannedPostId, { onDelete: `cascade` })

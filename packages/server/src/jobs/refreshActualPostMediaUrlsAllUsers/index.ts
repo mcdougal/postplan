@@ -1,3 +1,0 @@
-import refreshActualPostMediaUrlsAllUsers from './refreshActualPostMediaUrlsAllUsers';
-
-export default refreshActualPostMediaUrlsAllUsers;

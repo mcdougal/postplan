@@ -1,4 +1,4 @@
-import { and, db, eq, firstOrThrow, inArray } from '@/db/connection';
+import { and, db, eq, inArray } from '@/db/connection';
 import { actualPost } from '@/db/schema';
 import { createId } from '@paralleldrive/cuid2';
 import { forEachSeries } from 'p-iteration';
@@ -10,9 +10,9 @@ import { InstagramMediaItem } from '../types';
 export default async (
   userId: string,
   instagramMediaItems: Array<InstagramMediaItem>
-): Promise<{ newThumbnailPostIds: Array<string> }> => {
+): Promise<void> => {
   if (instagramMediaItems.length === 0) {
-    return { newThumbnailPostIds: [] };
+    return;
   }
 
   const fetchedInstagramIds = instagramMediaItems.map((item) => {
@@ -38,28 +38,22 @@ export default async (
     })
   );
 
-  const newThumbnailPostIds: Array<string> = [];
-
   await forEachSeries(instagramMediaItems, async (instagramMediaItem) => {
     const asActualPost = instagramMediaItemToActualPost(instagramMediaItem);
     const existingPost = existingPostsMap.get(asActualPost.instagramId);
 
     if (!existingPost) {
-      const insertedActualPost = firstOrThrow(
-        await db
-          .insert(actualPost)
-          .values({
-            ...asActualPost,
-            fileName: `${uuidv4()}.jpg`,
-            id: createId(),
-            userId,
-          })
-          .returning({
-            id: actualPost.id,
-          })
-      );
-
-      newThumbnailPostIds.push(insertedActualPost.id);
+      await db
+        .insert(actualPost)
+        .values({
+          ...asActualPost,
+          fileName: `${uuidv4()}.jpg`,
+          id: createId(),
+          userId,
+        })
+        .returning({
+          id: actualPost.id,
+        });
       return;
     }
 
@@ -69,14 +63,13 @@ export default async (
     if (captionChanged || mediaUrlChanged) {
       await db
         .update(actualPost)
-        .set({ caption: asActualPost.caption, mediaUrl: asActualPost.mediaUrl })
+        .set({
+          caption: asActualPost.caption,
+          mediaUrl: asActualPost.mediaUrl,
+          mediaThumbnailUrl: mediaUrlChanged ? null : undefined,
+          mediaThumbnailUrlExpiresAt: mediaUrlChanged ? null : undefined,
+        })
         .where(eq(actualPost.id, existingPost.id));
-
-      if (mediaUrlChanged) {
-        newThumbnailPostIds.push(existingPost.id);
-      }
     }
   });
-
-  return { newThumbnailPostIds };
 };

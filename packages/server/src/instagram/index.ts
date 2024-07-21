@@ -10,7 +10,6 @@ import isConnectionActive from './isConnectionActive';
 import queryActiveConnection from './queryActiveConnection';
 import queryActualPosts from './queryActualPosts';
 import refreshAccessToken from './refreshAccessToken';
-import refreshMediaItemUrls from './refreshMediaItemUrls';
 import syncDataFromInstagram from './syncDataFromInstagram';
 import { ActualPost, InstagramMediaItem } from './types';
 import upsertAccessToken from './upsertAccessToken';
@@ -30,7 +29,6 @@ export {
   queryActiveConnection,
   queryActualPosts,
   refreshAccessToken,
-  refreshMediaItemUrls,
   syncDataFromInstagram,
   upsertAccessToken,
 };

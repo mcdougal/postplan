@@ -46,7 +46,7 @@ export default async (args: Args): Promise<Response> => {
     };
   } catch (err) {
     if (axios.isAxiosError(err)) {
-      throw new Error(err.response?.data);
+      throw new Error(JSON.stringify(err.response?.data));
     }
     throw err;
   }

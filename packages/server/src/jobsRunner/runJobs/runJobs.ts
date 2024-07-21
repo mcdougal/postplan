@@ -52,5 +52,5 @@ export default async <J extends Job>(
 
   // If a Vercel function terminates before all fetch requests have initiated,
   // then the fetch requests will not be triggered.
-  await sleep(500);
+  await sleep(5000);
 };

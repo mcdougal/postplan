@@ -2,7 +2,6 @@
 
 ## Todo
 
-- Show more posts in feed
 - Enter a date?
 - Test Automatic refreshing of IG access token
 - Doesn't show post when someone collaborates with you (<https://developers.facebook.com/community/threads/1011039596753699/>)

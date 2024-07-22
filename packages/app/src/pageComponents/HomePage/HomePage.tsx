@@ -37,19 +37,22 @@ const HomePage: Page = async () => {
         </Button>
         <FeatureExample
           className="mt-24"
+          height={397}
           label="See how your feed looks before you post."
-          size={300}
           src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/phone-example-2024-07-22.png"
+          width={300}
         />
         <FeatureExample
+          height={382}
           label="Find a yummy arrangement for your food pics!"
-          size={400}
           src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/plan-example-2024-07-22.png"
+          width={400}
         />
         <FeatureExample
+          height={344}
           label="Discover hashtags and get AI suggestions."
-          size={400}
           src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/hashtags-example-2024-07-22.png"
+          width={400}
         />
       </div>
       <div className="mt-6 flex w-full flex-col items-center px-6 pb-10 pt-16">

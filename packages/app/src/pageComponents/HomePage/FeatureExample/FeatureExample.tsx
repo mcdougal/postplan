@@ -6,15 +6,17 @@ import { Typography } from '@/app/components';
 type Props = {
   className?: string;
   label: string;
-  size: number;
+  height: number;
   src: string;
+  width: number;
 };
 
 const FeatureExample = ({
   className,
+  height,
   label,
-  size,
   src,
+  width,
 }: Props): React.ReactElement => {
   return (
     <div className={twMerge(`relative mt-16 flex w-full`, className)}>
@@ -25,11 +27,11 @@ const FeatureExample = ({
         </Typography>
         <Image
           alt={label}
-          height={size}
+          height={height}
           priority
           src={src}
           unoptimized
-          width={size}
+          width={width}
         />
       </div>
     </div>

@@ -1,3 +1,3 @@
-import { GET } from './inngest';
+import { GET, POST, PUT } from './inngest';
 
-export { GET };
+export { GET, POST, PUT };

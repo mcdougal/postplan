@@ -1,4 +1,4 @@
 /* eslint-disable @postplan/package-imports */
-import { GET } from '@/app/apiEndpoints/inngest';
+import { GET, POST, PUT } from '@/app/apiEndpoints/inngest';
 
-export { GET };
+export { GET, POST, PUT };

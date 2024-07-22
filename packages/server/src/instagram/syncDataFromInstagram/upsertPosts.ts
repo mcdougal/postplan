@@ -61,10 +61,6 @@ export default async (
     const mediaUrlChanged = asActualPost.mediaUrl !== existingPost.mediaUrl;
 
     if (captionChanged) {
-      // eslint-disable-next-line no-console
-      console.log(
-        `captionChanged: ${existingPost.caption} -> $asActualPost.caption}`
-      );
       await db
         .update(actualPost)
         .set({
@@ -75,10 +71,6 @@ export default async (
     }
 
     if (mediaUrlChanged) {
-      // eslint-disable-next-line no-console
-      console.log(
-        `mediaUrlChanged: ${existingPost.mediaUrl} -> $asActualPost.mediaUrl}`
-      );
       await db
         .update(actualPost)
         .set({

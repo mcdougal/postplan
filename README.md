@@ -2,7 +2,7 @@
 
 ## Todo
 
-- Remove all debug code
+- Use Inngest for jobs queue
 - Fix actual post thumbnail bug
 - Re-OAuth for Deanna's user on prod
 

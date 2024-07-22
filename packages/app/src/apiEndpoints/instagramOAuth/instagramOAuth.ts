@@ -6,7 +6,7 @@ import {
 } from '@/server/instagram';
 import { NextRequest, NextResponse } from 'next/server';
 
-import { log, withAuth } from '../utils';
+import { withAuth } from '../utils';
 
 export const GET = async (request: NextRequest): Promise<NextResponse> => {
   return withAuth(async (currentUser) => {
@@ -16,11 +16,9 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
       return NextResponse.redirect(FeedPageRoute.getAbsoluteUrl({}));
     }
 
-    log(`exchangeCodeForToken`);
     const shortLivedTokenResponse = await exchangeCodeForToken({
       data: { code },
     });
-    log(`generateLongLivedToken`);
     const longLivedTokenResponse = await generateLongLivedToken({
       data: { shortLivedAccessToken: shortLivedTokenResponse.accessToken },
     });

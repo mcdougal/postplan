@@ -1,20 +1,20 @@
 import { addSearchParams, makeRoute, parseOptionalJson } from './utils';
 
-export type JobRouteParams = {
+export type CronRouteParams = {
   jobName: string;
 };
 
-export type JobRouteSearchParams = {
+export type CronRouteSearchParams = {
   data?: Record<string, unknown>;
 };
 
-export type JobRouteResponse = {
+export type CronRouteResponse = {
   success: true;
 };
 
-export default makeRoute<JobRouteParams, JobRouteSearchParams>({
+export default makeRoute<CronRouteParams, CronRouteSearchParams>({
   path: ({ params, searchParams }) => {
-    return addSearchParams(`/job/${params.jobName}`, {
+    return addSearchParams(`/cron/${params.jobName}`, {
       data: JSON.stringify(searchParams.data),
     });
   },

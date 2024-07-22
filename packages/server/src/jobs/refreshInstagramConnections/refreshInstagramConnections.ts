@@ -3,7 +3,7 @@ import { instagramConnection } from '@/db/schema';
 import ms from 'ms';
 
 import { refreshAccessToken } from '@/server/instagram';
-import { runJobs } from '@/server/jobsRunner';
+import { addJobToQueue } from '@/server/jobsQueue';
 
 export default async (): Promise<void> => {
   const oneDayAgo = new Date(Date.now() - ms(`1 day`));
@@ -20,6 +20,6 @@ export default async (): Promise<void> => {
       auth: { currentUserId: connectionToRefresh.userId },
       where: { userId: connectionToRefresh.userId },
     });
-    await runJobs([{ name: `refreshInstagramConnections`, data: {} }]);
+    await addJobToQueue({ name: `refreshInstagramConnections`, data: {} });
   }
 };

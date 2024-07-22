@@ -1,5 +1,5 @@
 /* eslint-disable @postplan/package-imports */
-import { GET } from '@/app/apiEndpoints/job';
+import { GET } from '@/app/apiEndpoints/cron';
 
 export const maxDuration = 60;
 

@@ -14,6 +14,7 @@
     "delta-lint:markdown": "markdownlint **/*.md",
     "delta-lint": "run-p delta-lint:**",
     "dev": "npm run dev -w @postplan/app",
+    "inngest": "npx --yes inngest-cli@latest dev --no-discovery -u http://localhost:3000/inngest",
     "job": "npm run job -w @postplan/app",
     "lint:code": "npm run lint:code --workspaces --if-present",
     "lint:markdown": "markdownlint **/*.md",

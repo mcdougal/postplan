@@ -1,5 +1,5 @@
 import { ForbiddenError } from '@/server/auth';
-import { runJobs } from '@/server/jobsRunner';
+import { addJobToQueue } from '@/server/jobsQueue';
 
 import fetchInstagramMediaItems from '../fetchInstagramMediaItems';
 
@@ -34,5 +34,5 @@ export default async (args: Args): Promise<void> => {
 
   await removeDeletedPosts(connection.userId, instagramMediaItems);
   await upsertPosts(connection.userId, instagramMediaItems);
-  await runJobs([{ name: `createThumbnails`, data: {} }]);
+  await addJobToQueue({ name: `createThumbnails`, data: {} });
 };

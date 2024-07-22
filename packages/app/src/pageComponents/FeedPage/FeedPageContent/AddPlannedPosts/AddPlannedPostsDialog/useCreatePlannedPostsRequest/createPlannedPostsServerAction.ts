@@ -1,6 +1,6 @@
 'use server';
 
-import { runJobs } from '@/server/jobsRunner';
+import { addJobToQueue } from '@/server/jobsQueue';
 import { createPlannedPost } from '@/server/plannedPosts';
 import { revalidatePath } from 'next/cache';
 
@@ -36,7 +36,7 @@ export default authenticatedServerAction<Args>({
       })
     );
 
-    await runJobs([{ name: `createThumbnails`, data: {} }]);
+    await addJobToQueue({ name: `createThumbnails`, data: {} });
 
     revalidatePath(`/`, `layout`);
 

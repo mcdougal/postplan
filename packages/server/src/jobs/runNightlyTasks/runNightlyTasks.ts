@@ -1,10 +1,8 @@
-import { runJobs } from '@/server/jobsRunner';
+import { addJobToQueue } from '@/server/jobsQueue';
 
 export default async (): Promise<void> => {
-  await runJobs([
-    { name: `createThumbnails`, data: {} },
-    { name: `refreshInstagramConnections`, data: {} },
-    { name: `refreshMediaUrls`, data: {} },
-    { name: `syncInstagram`, data: {} },
-  ]);
+  await addJobToQueue({ name: `createThumbnails`, data: {} });
+  await addJobToQueue({ name: `refreshInstagramConnections`, data: {} });
+  await addJobToQueue({ name: `refreshMediaUrls`, data: {} });
+  await addJobToQueue({ name: `syncInstagram`, data: {} });
 };

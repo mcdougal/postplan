@@ -2,7 +2,7 @@ import { db, isNull } from '@/db/connection';
 import { actualPost, plannedPostMediaItem } from '@/db/schema';
 
 import { uploadActualPostThumbnail } from '@/server/actualPosts';
-import { runJobs } from '@/server/jobsRunner';
+import { addJobToQueue } from '@/server/jobsQueue';
 import { uploadPlannedPostMediaItemThumbnail } from '@/server/plannedPosts';
 
 export default async (): Promise<void> => {
@@ -27,7 +27,7 @@ export default async (): Promise<void> => {
       auth: { currentUserId: plannedWithoutThumbnail.plannedPost.userId },
       where: { plannedPostMediaItemId: plannedWithoutThumbnail.id },
     });
-    await runJobs([{ name: `createThumbnails`, data: {} }]);
+    await addJobToQueue({ name: `createThumbnails`, data: {} });
     return;
   }
 
@@ -44,6 +44,6 @@ export default async (): Promise<void> => {
       auth: { currentUserId: actualWithoutThumbnail.userId },
       where: { actualPostId: actualWithoutThumbnail.id },
     });
-    await runJobs([{ name: `createThumbnails`, data: {} }]);
+    await addJobToQueue({ name: `createThumbnails`, data: {} });
   }
 };

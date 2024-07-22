@@ -3,7 +3,7 @@ import { db, desc, eq, lt } from '@/db/connection';
 import { instagramConnection } from '@/db/schema';
 
 import { isConnectionActive, syncDataFromInstagram } from '@/server/instagram';
-import { runJobs } from '@/server/jobsRunner';
+import { addJobToQueue } from '@/server/jobsQueue';
 
 export default async (data: SyncInstagramJob['data']): Promise<void> => {
   const { connectionId, single } = data;
@@ -43,11 +43,9 @@ export default async (data: SyncInstagramJob['data']): Promise<void> => {
   });
 
   if (nextConnection) {
-    await runJobs([
-      {
-        name: `syncInstagram`,
-        data: { connectionId: nextConnection.id },
-      },
-    ]);
+    await addJobToQueue({
+      name: `syncInstagram`,
+      data: { connectionId: nextConnection.id },
+    });
   }
 };

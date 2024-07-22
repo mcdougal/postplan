@@ -1,7 +1,7 @@
 'use server';
 
 import { queryActiveConnection } from '@/server/instagram';
-import { runJobs } from '@/server/jobsRunner';
+import { addJobToQueue } from '@/server/jobsQueue';
 import { revalidatePath } from 'next/cache';
 
 import { authenticatedServerAction } from '@/app/serverActions';
@@ -30,15 +30,10 @@ export default authenticatedServerAction<Args>({
       return { status: `error`, message: `Instagram connection not found` };
     }
 
-    await runJobs(
-      [
-        {
-          name: `syncInstagram`,
-          data: { connectionId: instagramConnection.id, single: true },
-        },
-      ],
-      { wait: true }
-    );
+    await addJobToQueue({
+      name: `syncInstagram`,
+      data: { connectionId: instagramConnection.id, single: true },
+    });
 
     revalidatePath(`/`, `layout`);
 

@@ -3,7 +3,7 @@ import { actualPost, plannedPostMediaItem } from '@/db/schema';
 import ms from 'ms';
 
 import { refreshMediaThumbnailUrl } from '@/server/actualPosts';
-import { runJobs } from '@/server/jobsRunner';
+import { addJobToQueue } from '@/server/jobsQueue';
 import { refreshMediaItemUrls } from '@/server/plannedPosts';
 
 export default async (): Promise<void> => {
@@ -33,7 +33,7 @@ export default async (): Promise<void> => {
       auth: { currentUserId: expiringPlanned.plannedPost.userId },
       where: { plannedPostMediaItemId: expiringPlanned.id },
     });
-    await runJobs([{ name: `refreshMediaUrls`, data: {} }]);
+    await addJobToQueue({ name: `refreshMediaUrls`, data: {} });
     return;
   }
 
@@ -53,6 +53,6 @@ export default async (): Promise<void> => {
       auth: { currentUserId: expiringActual.userId },
       where: { actualPostId: expiringActual.id },
     });
-    await runJobs([{ name: `refreshMediaUrls`, data: {} }]);
+    await addJobToQueue({ name: `refreshMediaUrls`, data: {} });
   }
 };

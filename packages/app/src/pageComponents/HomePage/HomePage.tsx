@@ -38,15 +38,18 @@ const HomePage: Page = async () => {
         <FeatureExample
           className="mt-24"
           label="See how your feed looks before you post."
-          src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/phone-example-2024-07-22.jpg"
+          size={300}
+          src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/phone-example-2024-07-22.png"
         />
         <FeatureExample
-          label="Find the purrfect order for your cat pics."
-          src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/plan-example-2024-07-21.png"
+          label="Find a yummy arrangement for your food pics!"
+          size={400}
+          src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/plan-example-2024-07-22.png"
         />
         <FeatureExample
           label="Discover hashtags and get AI suggestions."
-          src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/hashtags-example-2024-07-21.png"
+          size={400}
+          src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/hashtags-example-2024-07-22.png"
         />
       </div>
       <div className="mt-6 flex w-full flex-col items-center px-6 pb-10 pt-16">

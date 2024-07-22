@@ -14,5 +14,10 @@
 - `npm install`
 - `npm run db:start`
 - `npm run db:migrate`
-- Create `postplan` bucket in Supabase
-- Create new `all_access` bucket policy
+
+## Running Dev Environment
+
+- `npm run dev`
+- `npm run lt:app`
+- `npm run lt:supabase`
+- `npm run inngest`

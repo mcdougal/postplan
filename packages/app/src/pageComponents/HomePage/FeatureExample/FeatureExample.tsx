@@ -6,12 +6,14 @@ import { Typography } from '@/app/components';
 type Props = {
   className?: string;
   label: string;
+  size: number;
   src: string;
 };
 
 const FeatureExample = ({
   className,
   label,
+  size,
   src,
 }: Props): React.ReactElement => {
   return (
@@ -23,11 +25,11 @@ const FeatureExample = ({
         </Typography>
         <Image
           alt={label}
-          height={400}
+          height={size}
           priority
           src={src}
           unoptimized
-          width={400}
+          width={size}
         />
       </div>
     </div>

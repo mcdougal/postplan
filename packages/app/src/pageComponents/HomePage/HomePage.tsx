@@ -11,13 +11,13 @@ import FeatureExample from './FeatureExample';
 const HomePage: Page = async () => {
   const currentUser = await getCurrentUser(cookies());
   if (currentUser) {
-    redirect(FeedPageRoute.getPath({}));
+    redirect(FeedPageRoute.getPath());
   }
 
   return (
     <div className="mx-auto mt-16 max-w-xl px-4 md:mt-[10vh]">
       <Typography className="absolute right-5 top-3" size="sm">
-        <TextLink as="a" color="default" href={LogInRoute.getPath({})}>
+        <TextLink as="a" color="default" href={LogInRoute.getPath()}>
           Log In
         </TextLink>
       </Typography>
@@ -32,7 +32,7 @@ const HomePage: Page = async () => {
         <Typography className="mb-5 block text-center" size="md">
           Postplan lets you plan your Instagram posts in advance.
         </Typography>
-        <Button as="a" href={LogInRoute.getPath({})} size="xl">
+        <Button as="a" href={LogInRoute.getPath()} size="xl">
           Sign Up Free
         </Button>
         <FeatureExample
@@ -53,7 +53,7 @@ const HomePage: Page = async () => {
         <Typography className="mb-8 block text-center" size="xl">
           Free to use. No ads.
         </Typography>
-        <Button as="a" href={LogInRoute.getPath({})} size="xl">
+        <Button as="a" href={LogInRoute.getPath()} size="xl">
           Try It Out
         </Button>
       </div>

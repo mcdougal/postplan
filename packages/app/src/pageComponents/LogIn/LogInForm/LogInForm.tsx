@@ -17,7 +17,7 @@ const LogInForm = (): React.ReactElement => {
         const response = await logInOrSignUpServerAction(formData);
 
         if (response.status === `success`) {
-          router.push(FeedPageRoute.getPath({}));
+          router.push(FeedPageRoute.getPath());
         } else if (response.status === `error`) {
           setErrorMessage(response.message);
         } else {

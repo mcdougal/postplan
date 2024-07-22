@@ -1,7 +1,5 @@
-import { makeRoute } from './utils';
-
-export default makeRoute({
-  path: () => {
+export default {
+  getPath: (): string => {
     return `/instagram/deauthorize`;
   },
-});
+};

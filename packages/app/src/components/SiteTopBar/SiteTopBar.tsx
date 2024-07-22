@@ -30,11 +30,11 @@ const SiteTopBar = forwardRef<any, Props>(
         </div>
         <Typography size="sm">
           {currentUser ? (
-            <TextLink as="a" color="default" href={LogOutRoute.getPath({})}>
+            <TextLink as="a" color="default" href={LogOutRoute.getPath()}>
               Log Out
             </TextLink>
           ) : (
-            <TextLink as="a" color="default" href={LogInRoute.getPath({})}>
+            <TextLink as="a" color="default" href={LogInRoute.getPath()}>
               Log In
             </TextLink>
           )}

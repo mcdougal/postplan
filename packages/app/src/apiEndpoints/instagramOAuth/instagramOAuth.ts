@@ -13,7 +13,7 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
     const code = request.nextUrl.searchParams.get(`code`);
 
     if (!code) {
-      return NextResponse.redirect(FeedPageRoute.getAbsoluteUrl({}));
+      return NextResponse.redirect(FeedPageRoute.getAbsoluteUrl());
     }
 
     const shortLivedTokenResponse = await exchangeCodeForToken({
@@ -37,6 +37,6 @@ export const GET = async (request: NextRequest): Promise<NextResponse> => {
       update: dataToSave,
     });
 
-    return NextResponse.redirect(FeedPageRoute.getAbsoluteUrl({}));
+    return NextResponse.redirect(FeedPageRoute.getAbsoluteUrl());
   });
 };

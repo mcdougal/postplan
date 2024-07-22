@@ -1,7 +1,10 @@
-import { makeRoute } from './utils';
+import { getSiteUrl } from '@/common/env';
 
-export default makeRoute({
-  path: () => {
+export default {
+  getPath: (): string => {
     return `/feed`;
   },
-});
+  getAbsoluteUrl: (): string => {
+    return `${getSiteUrl()}/feed`;
+  },
+};

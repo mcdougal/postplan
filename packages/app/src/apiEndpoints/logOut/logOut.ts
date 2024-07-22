@@ -9,5 +9,5 @@ export const GET = async (): Promise<NextResponse> => {
 
   revalidatePath(`/`, `layout`);
 
-  return NextResponse.redirect(LogInRoute.getAbsoluteUrl({}));
+  return NextResponse.redirect(LogInRoute.getAbsoluteUrl());
 };

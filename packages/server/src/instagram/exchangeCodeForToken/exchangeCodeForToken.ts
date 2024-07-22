@@ -29,7 +29,7 @@ export default async (args: Args): Promise<Response> => {
       client_secret: getRequiredEnvVar(`INSTAGRAM_APP_SECRET`),
       code,
       grant_type: `authorization_code`,
-      redirect_uri: InstagramOAuthRoute.getAbsoluteUrl({}),
+      redirect_uri: InstagramOAuthRoute.getAbsoluteUrl(),
     },
     {
       headers: {

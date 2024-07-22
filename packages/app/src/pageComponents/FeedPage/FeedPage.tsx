@@ -19,7 +19,7 @@ import sortPlannedPosts from './sortPlannedPosts';
 const FeedPage: Page = async () => {
   const currentUser = await getCurrentUser(cookies());
   if (!currentUser) {
-    redirect(LogInRoute.getPath({}));
+    redirect(LogInRoute.getPath());
   }
 
   const isInstagramConnected = await hasActiveInstagramConnection({

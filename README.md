@@ -6,9 +6,10 @@
 - Fix actual post thumbnail bug
 - Re-OAuth for Deanna's user on prod
 
-- Enter a date?
 - Test Automatic refreshing of IG access token
+- Test what happens when someone unchecks content permission in IG oauth
 - Doesn't show post when someone collaborates with you (<https://developers.facebook.com/community/threads/1011039596753699/>)
+- Enter a date?
 - Submit Meta app for approval
 
 ## Getting Started

@@ -38,7 +38,7 @@ const HomePage: Page = async () => {
         <FeatureExample
           className="mt-24"
           label="See how your feed looks before you post."
-          src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/phone-example-2024-07-21.png"
+          src="https://rozbsaxyrosvdpentkzj.supabase.co/storage/v1/object/public/assets/phone-example-2024-07-22.jpg"
         />
         <FeatureExample
           label="Find the purrfect order for your cat pics."

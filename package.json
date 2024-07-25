@@ -19,11 +19,10 @@
     "lint:code": "npm run lint:code --workspaces --if-present",
     "lint:markdown": "markdownlint **/*.md",
     "lint": "run-p lint:**",
-    "lt:app": "lt --subdomain postplan-cedric-app --port 3000",
-    "lt:supabase": "lt --subdomain postplan-cedric-supabase --port 54321",
     "postinstall": "npm run build -w @postplan/eslint-plugin",
     "prepare": "husky",
     "start": "npm run start -w @postplan/app",
+    "tunnel": ". .env && cloudflared tunnel run $CLOUDFLARE_TUNNEL_NAME",
     "types": "npm run types --workspaces --if-present"
   },
   "devDependencies": {

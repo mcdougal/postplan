@@ -11,6 +11,7 @@
 
 ## Getting Started
 
+- [Cloudflare Tunnel setup instructions](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-local-tunnel/#prerequisites)
 - `npm install`
 - `npm run db:start`
 - `npm run db:migrate`
@@ -18,6 +19,5 @@
 ## Running Dev Environment
 
 - `npm run dev`
-- `npm run lt:app`
-- `npm run lt:supabase`
 - `npm run inngest`
+- `npm run tunnel`

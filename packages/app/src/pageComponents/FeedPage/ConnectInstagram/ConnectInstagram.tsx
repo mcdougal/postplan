@@ -17,7 +17,8 @@ const ConnectInstagram = (): React.ReactElement => {
           Connect Instagram
         </Button>
         <Typography className="mt-6 block text-center" size="md">
-          Connect Instagram to see how your planned posts look on your feed
+          Postplan can only read public data from your Instagram account - it
+          can’t make posts, delete posts or make any changes to your account.
         </Typography>
       </div>
     </div>

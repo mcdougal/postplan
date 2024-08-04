@@ -18,11 +18,12 @@ export default (actualPost: ActualPost): Resolution | null => {
     }
 
     const run = async (): Promise<void> => {
-      const image = await createImage(actualPost.mediaUrl);
-      setResolution({
-        height: image.height,
-        width: image.width,
-      });
+      try {
+        const image = await createImage(actualPost.mediaUrl);
+        setResolution({ height: image.height, width: image.width });
+      } catch (err) {
+        setResolution({ height: 620, width: 348 });
+      }
     };
     run();
   }, [actualPost.mediaType, actualPost.mediaUrl]);

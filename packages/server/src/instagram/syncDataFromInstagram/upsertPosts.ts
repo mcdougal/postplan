@@ -54,6 +54,14 @@ export default async (
         .returning({
           id: actualPost.id,
         });
+    } else {
+      await db
+        .update(actualPost)
+        .set({
+          caption: asActualPost.caption,
+          mediaUrl: asActualPost.mediaUrl,
+        })
+        .where(eq(actualPost.id, existingPost.id));
     }
   });
 };

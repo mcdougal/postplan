@@ -1,7 +1,7 @@
 {
   "crons": [
     {
-      "path": "/job/runNightlyTasks",
+      "path": "/cron/runNightlyTasks",
       "schedule": "0 0 * * *"
     }
   ]

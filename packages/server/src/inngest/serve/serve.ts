@@ -20,12 +20,8 @@ const makeJobFunction = <J extends Job>(
     { id: jobName },
     { event: jobName },
     async ({ event }) => {
-      // eslint-disable-next-line no-console
-      console.log(`serve job ${jobName}`);
       // eslint-disable-next-line @postplan/no-type-assertion, @typescript-eslint/no-explicit-any
       await jobHandler(event.data as any);
-      // eslint-disable-next-line no-console
-      console.log(`job completed ${jobName}`);
       return { event };
     }
   );

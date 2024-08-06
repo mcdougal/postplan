@@ -1,4 +1,4 @@
-import { db, desc, eq } from '@/db/connection';
+import { and, db, desc, eq, isNotNull } from '@/db/connection';
 import { actualPost } from '@/db/schema';
 
 import { ForbiddenError } from '@/server/auth';
@@ -23,7 +23,10 @@ export default async (args: Args): Promise<Array<ActualPost>> => {
   }
 
   const matchingActualPosts = await db.query.actualPost.findMany({
-    where: eq(actualPost.userId, userId),
+    where: and(
+      eq(actualPost.userId, userId),
+      isNotNull(actualPost.mediaUrlExpiresAt)
+    ),
     columns: {
       caption: true,
       instagramId: true,

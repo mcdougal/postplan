@@ -16,6 +16,7 @@ type Args = {
   };
 };
 
+// todo - rename function because it's not just thumbnails anymore
 export default async (args: Args): Promise<void> => {
   const { currentUserId } = args.auth;
   const { actualPostId } = args.where;
@@ -38,6 +39,15 @@ export default async (args: Args): Promise<void> => {
 
   const blob = await mediaResponse.blob();
 
+  await uploadUserFile({
+    auth: { currentUserId: matchingPost.userId },
+    data: {
+      file: blob,
+      fileName: matchingPost.fileName,
+      userId: matchingPost.userId,
+    },
+  });
+
   const resizedBuffer = await sharp(Buffer.from(await blob.arrayBuffer()))
     .resize(250, 250)
     .jpeg()
@@ -57,6 +67,12 @@ export default async (args: Args): Promise<void> => {
   const expiresIn = ms(`7 days`);
   const expiresAt = new Date(Date.now() + expiresIn);
 
+  const mediaUrl = await generateFileDownloadUrl({
+    auth: { currentUserId: matchingPost.userId },
+    where: { fileName: matchingPost.fileName, userId: matchingPost.userId },
+    expiresIn,
+  });
+
   const mediaThumbnailUrl = await generateFileDownloadUrl({
     auth: { currentUserId: matchingPost.userId },
     where: { fileName: thumbnailFileName, userId: matchingPost.userId },
@@ -66,6 +82,8 @@ export default async (args: Args): Promise<void> => {
   await db
     .update(actualPost)
     .set({
+      mediaUrl,
+      mediaUrlExpiresAt: expiresAt,
       mediaThumbnailUrl,
       mediaThumbnailUrlExpiresAt: expiresAt,
     })

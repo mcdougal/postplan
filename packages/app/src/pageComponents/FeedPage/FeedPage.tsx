@@ -22,6 +22,7 @@ const FeedPage: Page = async () => {
     redirect(LogInRoute.getPath());
   }
 
+  // todo - ask for user's IG username
   // const isInstagramConnected = await hasActiveInstagramConnection({
   //   auth: { currentUserId: currentUser.id },
   //   where: { userId: currentUser.id },

@@ -47,6 +47,7 @@ export const user = schema.table(
 
 const userId = () => user.id;
 
+// todo - add width and height from API when available and update UI
 export const actualPost = schema.table(`actual_post`, {
   caption: text(`caption`),
   createdAt: timestamp(`created_at`).defaultNow().notNull(),
@@ -57,6 +58,7 @@ export const actualPost = schema.table(`actual_post`, {
   mediaThumbnailUrlExpiresAt: timestamp(`media_thumbnail_url_expires_at`),
   mediaType: actualPostMediaType(`media_type`).notNull(),
   mediaUrl: text(`media_url`).notNull(),
+  mediaUrlExpiresAt: timestamp(`media_url_expires_at`),
   permalink: text(`permalink`).notNull(),
   postedAt: timestamp(`posted_at`).notNull(),
   updatedAt: timestamp(`updated_at`).defaultNow().notNull(),

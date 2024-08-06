@@ -5,6 +5,7 @@ import { uploadActualPostThumbnail } from '@/server/actualPosts';
 import { addJobToQueue } from '@/server/jobsQueue';
 import { uploadPlannedPostMediaItemThumbnail } from '@/server/plannedPosts';
 
+// todo - rename function because it's not just thumbnails anymore
 export default async (): Promise<void> => {
   const plannedWithoutThumbnail = await db.query.plannedPostMediaItem.findFirst(
     {

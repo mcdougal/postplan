@@ -15,6 +15,7 @@ type Args = {
 const InstagramApiMediaItemSchema = z.object({
   caption: z.object({ text: z.string() }).optional(),
   code: z.string(),
+  // todo - use different image candidate for reels
   display_uri_original: z.string(),
   media_type: z.union([z.literal(1), z.literal(2), z.literal(8)]),
   pk: z.string(),
@@ -39,7 +40,7 @@ const InstagramApiMediaResponseSchema = z.object({
 export default async (args: Args): Promise<Array<InstagramMediaItem>> => {
   const { currentUserId } = args.auth;
   const { userId } = args.where;
-  const { limit } = args;
+  const { limit } = args; // todo - make multiple requests to pull more items
 
   if (currentUserId !== userId) {
     throw new ForbiddenError();

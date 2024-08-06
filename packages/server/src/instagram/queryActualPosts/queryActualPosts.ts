@@ -3,7 +3,7 @@ import { actualPost } from '@/db/schema';
 
 import { ForbiddenError } from '@/server/auth';
 
-import fetchInstagramMediaItems from '../fetchInstagramMediaItems';
+import fetchInstagramMediaItemsFromRapidApi from '../fetchInstagramMediaItemsFromRapidApi';
 import instagramMediaItemToActualPost from '../instagramMediaItemToActualPost';
 import { ActualPost } from '../types';
 
@@ -41,11 +41,13 @@ export default async (args: Args): Promise<Array<ActualPost>> => {
     return matchingActualPosts;
   }
 
-  const mediaItems = await fetchInstagramMediaItems({
-    auth: { currentUserId },
-    where: { userId },
-    limit,
-  });
+  // const mediaItems = await fetchInstagramMediaItemsFromRapidApi({
+  //   auth: { currentUserId },
+  //   where: { userId },
+  //   limit,
+  // });
 
-  return mediaItems.map(instagramMediaItemToActualPost);
+  // return mediaItems.map(instagramMediaItemToActualPost);
+
+  return [];
 };

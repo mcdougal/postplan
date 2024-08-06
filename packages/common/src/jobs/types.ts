@@ -28,12 +28,20 @@ export const SyncInstagramJobSchema = z.object({
   }),
 });
 
+export const SyncInstagramFromRapidApiJobSchema = z.object({
+  name: z.literal(`syncInstagramFromRapidApi`),
+  data: z.object({
+    userId: z.string().optional(),
+  }),
+});
+
 export const JobSchema = z.union([
   CreateThumbnailsJobSchema,
   RefreshInstagramConnectionsJobSchema,
   RefreshMediaUrlsJobSchema,
   RunNightlyTasksJobSchema,
   SyncInstagramJobSchema,
+  SyncInstagramFromRapidApiJobSchema,
 ]);
 
 export type Job = z.infer<typeof JobSchema>;
@@ -44,3 +52,6 @@ export type RefreshInstagramConnectionsJob = z.infer<
 export type RefreshMediaUrlsJob = z.infer<typeof RefreshMediaUrlsJobSchema>;
 export type RunNightlyTasksJob = z.infer<typeof RunNightlyTasksJobSchema>;
 export type SyncInstagramJob = z.infer<typeof SyncInstagramJobSchema>;
+export type SyncInstagramFromRapidApiJob = z.infer<
+  typeof SyncInstagramFromRapidApiJobSchema
+>;

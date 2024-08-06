@@ -27,7 +27,7 @@ const FeedPageContent = ({
   currentUser,
   plannedPosts,
 }: Props): React.ReactElement => {
-  useSyncNewActualPosts(currentUser);
+  // useSyncNewActualPosts(currentUser);
 
   const [optimisticPlannedPosts, setOptimisticPlannedPosts] =
     useState(plannedPosts);

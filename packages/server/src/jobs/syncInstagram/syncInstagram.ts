@@ -5,8 +5,8 @@ import { instagramConnection } from '@/db/schema';
 import { isConnectionActive, syncDataFromInstagram } from '@/server/instagram';
 import { addJobToQueue } from '@/server/jobsQueue';
 
-export default async (data: SyncInstagramJob['data']): Promise<void> => {
-  const { connectionId, single } = data;
+export default async (job: SyncInstagramJob): Promise<void> => {
+  const { connectionId, single } = job.data;
 
   const connection = await db.query.instagramConnection.findFirst({
     where: connectionId ? eq(instagramConnection.id, connectionId) : undefined,

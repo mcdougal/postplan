@@ -22,14 +22,14 @@ const FeedPage: Page = async () => {
     redirect(LogInRoute.getPath());
   }
 
-  const isInstagramConnected = await hasActiveInstagramConnection({
-    auth: { currentUserId: currentUser.id },
-    where: { userId: currentUser.id },
-  });
+  // const isInstagramConnected = await hasActiveInstagramConnection({
+  //   auth: { currentUserId: currentUser.id },
+  //   where: { userId: currentUser.id },
+  // });
 
-  if (!isInstagramConnected) {
-    return <ConnectInstagram />;
-  }
+  // if (!isInstagramConnected) {
+  //   return <ConnectInstagram />;
+  // }
 
   const [plannedPosts, actualPosts] = await Promise.all([
     queryPlannedPosts({

@@ -1,4 +1,4 @@
-import { and, DrizzleTransaction, eq, inArray } from '@/db/connection';
+import { and, db, eq, inArray } from '@/db/connection';
 import { actualPost } from '@/db/schema';
 import { createId } from '@paralleldrive/cuid2';
 import { forEachSeries } from 'p-iteration';
@@ -8,9 +8,8 @@ import instagramMediaItemToActualPost from '../instagramMediaItemToActualPost';
 import { InstagramMediaItem } from '../types';
 
 export default async (
-  tx: DrizzleTransaction,
   userId: string,
-  batchId: string,
+  syncJobId: string,
   instagramMediaItems: Array<InstagramMediaItem>
 ): Promise<void> => {
   if (instagramMediaItems.length === 0) {
@@ -21,7 +20,7 @@ export default async (
     return item.id;
   });
 
-  const existingPosts = await tx.query.actualPost.findMany({
+  const existingPosts = await db.query.actualPost.findMany({
     where: and(
       eq(actualPost.userId, userId),
       inArray(actualPost.instagramId, fetchedInstagramIds)
@@ -45,20 +44,20 @@ export default async (
     const existingPost = existingPostsMap.get(asActualPost.instagramId);
 
     if (!existingPost) {
-      await tx
+      await db
         .insert(actualPost)
         .values({
           ...asActualPost,
           fileName: `${uuidv4()}.jpg`,
           id: createId(),
-          syncedFromBatchId: batchId,
+          syncJobId,
           userId,
         })
         .returning({
           id: actualPost.id,
         });
     } else {
-      await tx
+      await db
         .update(actualPost)
         .set({ caption: asActualPost.caption })
         .where(eq(actualPost.id, existingPost.id));

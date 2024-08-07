@@ -2,9 +2,9 @@
 
 ## Todo
 
+- Remove deleted actual posts
 - Test Automatic refreshing of IG access token
 - Test what happens when someone unchecks content permission in IG oauth
-- Upload actual post images to Supabase
 - Enter a date?
 - Doesn't show post when someone collaborates with you (<https://developers.facebook.com/community/threads/1011039596753699/>)
 - Submit Meta app for approval

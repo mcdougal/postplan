@@ -3,7 +3,7 @@ import { z } from 'zod';
 export const CreateThumbnailsJobSchema = z.object({
   name: z.literal(`createThumbnails`),
   data: z.object({
-    batchId: z.string().optional(),
+    instagramSyncJobId: z.string().optional(),
   }),
 });
 
@@ -36,7 +36,7 @@ export const SyncInstagramFromRapidApiJobSchema = z.object({
     batchId: z.string().optional(),
     cursor: z.string().optional(),
     force: z.boolean(),
-    maxApiCalls: z.number(),
+    maxApiCalls: z.number().optional(),
     userId: z.string(),
   }),
 });

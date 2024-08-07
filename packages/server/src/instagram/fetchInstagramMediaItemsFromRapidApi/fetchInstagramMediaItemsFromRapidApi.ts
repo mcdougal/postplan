@@ -1,5 +1,6 @@
 import { getRequiredEnvVar } from '@/common/env';
 import axios from 'axios';
+import ms from 'ms';
 import { z } from 'zod';
 
 import { ForbiddenError } from '@/server/auth';
@@ -70,6 +71,7 @@ export default async (
       'x-rapidapi-key': getRequiredEnvVar(`RAPID_API_KEY`),
       ig: `fairytalefolkdorset`,
     },
+    timeout: ms(`5000`),
   });
 
   // todo

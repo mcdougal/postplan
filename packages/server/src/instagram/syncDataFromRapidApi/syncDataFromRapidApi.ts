@@ -1,4 +1,3 @@
-import { db } from '@/db/connection';
 import ms from 'ms';
 
 import { ForbiddenError } from '@/server/auth';
@@ -6,10 +5,10 @@ import { addJobToQueue } from '@/server/jobsQueue';
 
 import fetchInstagramMediaItemsFromRapidApi from '../fetchInstagramMediaItemsFromRapidApi';
 
-import addSyncHistoryItem from './addSyncHistoryItem';
+import createSyncJobRecord from './createSyncJobRecord';
 import hasSyncedInLast from './hasSyncedInLast';
 import queryNumApiCallsForBatch from './queryNumApiCallsForBatch';
-import removeDeletedPosts from './removeDeletedPosts';
+import setSyncJobStatusToFinished from './setSyncJobStatusToFinished';
 import upsertPosts from './upsertPosts';
 
 type Args = {
@@ -40,44 +39,41 @@ export default async (args: Args): Promise<void> => {
   }
 
   if (!force && (await hasSyncedInLast(ms(`24 hours`), userId))) {
-    console.log(`!!!!!!! SYNCED IN LAST 24 HOURS... SKIPPING`);
-    await addJobToQueue({ name: `createThumbnails`, data: {} });
     return;
   }
 
-  console.log(`!!!!!!!!! SYNCING...`);
+  const syncJobId = await createSyncJobRecord(userId, batchId, cursor);
 
-  const newCursor = await db.transaction(async (tx) => {
-    await addSyncHistoryItem(tx, userId, batchId, cursor);
+  try {
+    const { cursor: newCursor, instagramMediaItems } =
+      await fetchInstagramMediaItemsFromRapidApi({
+        auth: { currentUserId },
+        where: { cursor, userId },
+      });
 
-    const response = await fetchInstagramMediaItemsFromRapidApi({
-      auth: { currentUserId },
-      where: { cursor, userId },
-    });
-
-    await removeDeletedPosts(tx, userId, response.instagramMediaItems);
-    await upsertPosts(tx, userId, batchId, response.instagramMediaItems);
-    await addJobToQueue({ name: `createThumbnails`, data: {} });
-
-    return response.cursor;
-  });
-
-  const numApiCallsForBatch = await queryNumApiCallsForBatch(userId, batchId);
-
-  if (numApiCallsForBatch >= maxApiCalls) {
-    console.log(`!!!!!!! MAX ${maxApiCalls} API CALLS REACHED`);
-  }
-
-  if (newCursor && numApiCallsForBatch < maxApiCalls) {
+    await upsertPosts(userId, syncJobId, instagramMediaItems);
+    await setSyncJobStatusToFinished(syncJobId, { error: false });
     await addJobToQueue({
-      name: `syncInstagramFromRapidApi`,
-      data: {
-        batchId,
-        cursor: newCursor,
-        force: true,
-        maxApiCalls,
-        userId,
-      },
+      name: `createThumbnails`,
+      data: { instagramSyncJobId: syncJobId },
     });
+
+    const numApiCallsForBatch = await queryNumApiCallsForBatch(userId, batchId);
+
+    if (newCursor && numApiCallsForBatch < maxApiCalls) {
+      await addJobToQueue({
+        name: `syncInstagramFromRapidApi`,
+        data: {
+          batchId,
+          cursor: newCursor,
+          force: true,
+          maxApiCalls,
+          userId,
+        },
+      });
+    }
+  } catch (err) {
+    await setSyncJobStatusToFinished(syncJobId, { error: true });
+    throw err;
   }
 };

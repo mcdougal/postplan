@@ -16,7 +16,7 @@ export default async (ms: number, userId: string): Promise<boolean> => {
     return false;
   }
 
-  const msSinceLastSync = Date.now() - mostRecentJob.startedAt.getTime();
+  const msSinceMostRecentJob = Date.now() - mostRecentJob.startedAt.getTime();
 
-  return msSinceLastSync < ms;
+  return msSinceMostRecentJob < ms;
 };

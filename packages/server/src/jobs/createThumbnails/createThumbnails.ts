@@ -7,9 +7,9 @@ import { addJobToQueue } from '@/server/jobsQueue';
 import { uploadPlannedPostMediaItemThumbnail } from '@/server/plannedPosts';
 
 export default async (job: CreateThumbnailsJob): Promise<void> => {
-  const { batchId } = job.data;
+  const { instagramSyncJobId } = job.data;
 
-  if (!batchId) {
+  if (!instagramSyncJobId) {
     const plannedWithoutThumbnail =
       await db.query.plannedPostMediaItem.findFirst({
         where: isNull(plannedPostMediaItem.mediaThumbnailUrl),
@@ -41,8 +41,8 @@ export default async (job: CreateThumbnailsJob): Promise<void> => {
   );
 
   const actualWithoutThumbnail = await db.query.actualPost.findFirst({
-    where: batchId
-      ? and(eq(actualPost.syncedFromBatchId, batchId), actualQueryWhere)
+    where: instagramSyncJobId
+      ? and(eq(actualPost.syncJobId, instagramSyncJobId), actualQueryWhere)
       : actualQueryWhere,
     columns: {
       id: true,
@@ -57,9 +57,7 @@ export default async (job: CreateThumbnailsJob): Promise<void> => {
     });
     await addJobToQueue({
       name: `createThumbnails`,
-      data: {
-        batchId,
-      },
+      data: { instagramSyncJobId },
     });
   }
 };

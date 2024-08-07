@@ -27,8 +27,6 @@ const FeedPageContent = ({
   currentUser,
   plannedPosts,
 }: Props): React.ReactElement => {
-  // todo - use Supabase realtime to send actual posts to client when synced
-  // todo - only allow one sync per user per day
   const syncNewActualPostsRequest = useSyncNewActualPostsRequest(currentUser);
 
   const [optimisticPlannedPosts, setOptimisticPlannedPosts] =

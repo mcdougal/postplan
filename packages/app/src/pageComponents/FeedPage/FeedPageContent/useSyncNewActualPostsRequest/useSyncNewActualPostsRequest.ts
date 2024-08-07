@@ -31,8 +31,8 @@ export default (currentUser: CurrentUser): Request => {
       }, ms(`2 seconds`));
 
       await syncNewActualPostsServerAction({
-        force: options.force,
         where: { userId: currentUser.id },
+        options: { force: options.force },
       });
 
       if (intervalRef.current) {
@@ -40,7 +40,6 @@ export default (currentUser: CurrentUser): Request => {
       }
       const intervalStartTime = new Date();
       intervalRef.current = setInterval(async () => {
-        console.log(`Revalidating layout...`);
         await revalidatePathServerAction();
         const msSinceStart = new Date().getTime() - intervalStartTime.getTime();
 

@@ -14,7 +14,7 @@ import PlannedPostDetails from './PlannedPostDetails';
 import sliceActualPosts from './sliceActualPosts';
 import useActualPostHider from './useActualPostHider';
 import usePostSelector from './usePostSelector';
-import useSyncNewActualPosts from './useSyncNewActualPosts';
+import useSyncNewActualPostsRequest from './useSyncNewActualPostsRequest';
 
 type Props = {
   actualPosts: Array<ActualPost>;
@@ -29,7 +29,7 @@ const FeedPageContent = ({
 }: Props): React.ReactElement => {
   // todo - use Supabase realtime to send actual posts to client when synced
   // todo - only allow one sync per user per day
-  // useSyncNewActualPosts(currentUser);
+  const syncNewActualPostsRequest = useSyncNewActualPostsRequest(currentUser);
 
   const [optimisticPlannedPosts, setOptimisticPlannedPosts] =
     useState(plannedPosts);
@@ -53,6 +53,12 @@ const FeedPageContent = ({
         <FeedGrid
           actualPostHider={actualPostHider}
           actualPosts={actualPosts}
+          currentUser={currentUser}
+          onRefreshPosts={
+            syncNewActualPostsRequest.loading
+              ? null
+              : syncNewActualPostsRequest.refreshActualPosts
+          }
           onSelectPost={selectPost}
           optimisticPlannedPosts={optimisticPlannedPosts}
           setOptimisticPlannedPosts={setOptimisticPlannedPosts}

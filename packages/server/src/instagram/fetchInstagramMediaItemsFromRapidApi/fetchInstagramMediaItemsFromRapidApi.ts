@@ -69,6 +69,11 @@ export default async (args: Args): Promise<Array<InstagramMediaItem>> => {
     },
   });
 
+  console.log(`instagramMediaItems:`);
+  console.log(mediaResponse.status);
+  console.log(mediaResponse.statusText);
+  console.log(JSON.stringify(mediaResponse.data, null, 2));
+
   const mediaResponseParsed = InstagramApiMediaResponseSchema.parse(
     mediaResponse.data
   );

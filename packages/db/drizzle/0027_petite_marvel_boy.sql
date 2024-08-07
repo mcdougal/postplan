@@ -1,1 +1,0 @@
-ALTER TABLE "postplan"."actual_post" ADD COLUMN "media_url_expires_at" timestamp;

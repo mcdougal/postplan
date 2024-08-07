@@ -1,1 +1,0 @@
-ALTER TABLE "postplan"."instagram_sync_history_item" ADD COLUMN "batch_id" text NOT NULL;

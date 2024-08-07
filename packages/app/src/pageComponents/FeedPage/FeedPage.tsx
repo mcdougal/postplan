@@ -1,6 +1,7 @@
 import { LogInRoute } from '@/common/routes';
 import {
   hasActiveInstagramConnection,
+  hasInstagramUsername,
   queryActualPosts,
 } from '@/server/instagram';
 import { queryPlannedPosts } from '@/server/plannedPosts';
@@ -13,6 +14,7 @@ import { Page } from '@/app/pageUtils';
 
 import ConnectInstagram from './ConnectInstagram';
 import FeedPageContent from './FeedPageContent';
+import InstagramUsernameForm from './InstagramUsernameForm';
 import MobileFeed from './MobileFeed';
 import sortPlannedPosts from './sortPlannedPosts';
 
@@ -22,15 +24,22 @@ const FeedPage: Page = async () => {
     redirect(LogInRoute.getPath());
   }
 
-  // todo - ask for user's IG username
+  // [IG_API_CODE]
   // const isInstagramConnected = await hasActiveInstagramConnection({
   //   auth: { currentUserId: currentUser.id },
   //   where: { userId: currentUser.id },
   // });
-
   // if (!isInstagramConnected) {
   //   return <ConnectInstagram />;
   // }
+
+  const isInstagramConnected = await hasInstagramUsername({
+    auth: { currentUserId: currentUser.id },
+    where: { userId: currentUser.id },
+  });
+  if (!isInstagramConnected) {
+    return <InstagramUsernameForm />;
+  }
 
   const [plannedPosts, actualPosts] = await Promise.all([
     queryPlannedPosts({

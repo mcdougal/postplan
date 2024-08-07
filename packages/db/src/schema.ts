@@ -36,6 +36,7 @@ export const user = schema.table(
     createdAt: timestamp(`created_at`).defaultNow().notNull(),
     email: text(`email`).notNull(),
     id: text(`id`).primaryKey(),
+    instagramUsername: text(`instagram_username`),
     updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
   },
   (table) => ({
@@ -52,6 +53,7 @@ export const actualPost = schema.table(`actual_post`, {
   caption: text(`caption`),
   createdAt: timestamp(`created_at`).defaultNow().notNull(),
   fileName: text(`file_name`).notNull(),
+  height: integer(`height`),
   id: text(`id`).primaryKey(),
   instagramId: text(`instagram_id`).notNull(),
   mediaThumbnailUrl: text(`media_thumbnail_url`),
@@ -63,6 +65,7 @@ export const actualPost = schema.table(`actual_post`, {
   postedAt: timestamp(`posted_at`).notNull(),
   updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
   userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
+  width: integer(`width`),
 });
 
 export const hashtagGroup = schema.table(`hashtag_group`, {
@@ -85,6 +88,19 @@ export const instagramConnection = schema.table(`instagram_connection`, {
   updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
   userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
 });
+
+export const instagramSyncHistoryItem = schema.table(
+  `instagram_sync_history_item`,
+  {
+    createdAt: timestamp(`created_at`).defaultNow().notNull(),
+    id: text(`id`).primaryKey(),
+    syncStartedAt: timestamp(`sync_started_at`).notNull(),
+    updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
+    userId: text(`user_id`)
+      .references(userId, { onDelete: `cascade` })
+      .notNull(),
+  }
+);
 
 export const plannedPost = schema.table(`planned_post`, {
   caption: text(`caption`),
@@ -123,6 +139,7 @@ export const userRelations = relations(user, ({ many, one }) => ({
   actualPosts: many(actualPost),
   hashtagGroups: many(hashtagGroup),
   instagramConnection: one(instagramConnection),
+  instagramSyncHistoryItems: many(instagramSyncHistoryItem),
   plannedPosts: many(plannedPost),
 }));
 
@@ -145,6 +162,16 @@ export const instagramConnectionRelations = relations(
   ({ one }) => ({
     user: one(user, {
       fields: [instagramConnection.userId],
+      references: [user.id],
+    }),
+  })
+);
+
+export const instagramSyncHistoryItemRelations = relations(
+  instagramSyncHistoryItem,
+  ({ one }) => ({
+    user: one(user, {
+      fields: [instagramSyncHistoryItem.userId],
       references: [user.id],
     }),
   })

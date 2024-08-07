@@ -1,29 +1,24 @@
 'use client';
 
-import { EnvelopeIcon, LockClosedIcon } from '@heroicons/react/24/outline';
 import { useFormStatus } from 'react-dom';
 
-import { Button, Input, Typography } from '@/app/components';
+import { Button, Input, InstagramIcon, Typography } from '@/app/components';
 
 type Props = {
   errorMessage: string | null;
 };
 
-const LogInFormFields = ({ errorMessage }: Props): React.ReactElement => {
+const InstagramUsernameFormFields = ({
+  errorMessage,
+}: Props): React.ReactElement => {
   const status = useFormStatus();
 
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center gap-2">
-        <EnvelopeIcon className="h-6 w-6" />
+        <InstagramIcon className="h-6 w-6" />
         <div className="flex-1">
-          <Input name="email" placeholder="Email" type="email" />
-        </div>
-      </div>
-      <div className="flex items-center gap-2">
-        <LockClosedIcon className="h-6 w-6" />
-        <div className="flex-1">
-          <Input name="password" placeholder="Password" type="password" />
+          <Input name="instagramUsername" placeholder="Instagram username" />
         </div>
       </div>
       <Button className="mt-3" loading={status.pending} size="xl" type="submit">
@@ -38,4 +33,4 @@ const LogInFormFields = ({ errorMessage }: Props): React.ReactElement => {
   );
 };
 
-export default LogInFormFields;
+export default InstagramUsernameFormFields;

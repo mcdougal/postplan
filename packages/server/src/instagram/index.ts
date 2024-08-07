@@ -6,11 +6,13 @@ import fetchRefreshedAccessToken from './fetchRefreshedAccessToken';
 import generateLongLivedToken from './generateLongLivedToken';
 import getInstagramOAuthUrl from './getInstagramOAuthUrl';
 import hasActiveInstagramConnection from './hasActiveInstagramConnection';
+import hasInstagramUsername from './hasInstagramUsername';
 import instagramMediaItemToActualPost from './instagramMediaItemToActualPost';
 import isConnectionActive from './isConnectionActive';
 import queryActiveConnection from './queryActiveConnection';
 import queryActualPosts from './queryActualPosts';
 import refreshAccessToken from './refreshAccessToken';
+import setInstagramUsername from './setInstagramUsername';
 import syncDataFromInstagram from './syncDataFromInstagram';
 import syncDataFromRapidApi from './syncDataFromRapidApi';
 import { ActualPost, InstagramMediaItem } from './types';
@@ -27,11 +29,13 @@ export {
   generateLongLivedToken,
   getInstagramOAuthUrl,
   hasActiveInstagramConnection,
+  hasInstagramUsername,
   instagramMediaItemToActualPost,
   isConnectionActive,
   queryActiveConnection,
   queryActualPosts,
   refreshAccessToken,
+  setInstagramUsername,
   syncDataFromInstagram,
   syncDataFromRapidApi,
   upsertAccessToken,

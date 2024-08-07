@@ -43,11 +43,11 @@ export default (currentUser: CurrentUser): Request => {
         await revalidatePathServerAction();
         const msSinceStart = new Date().getTime() - intervalStartTime.getTime();
 
-        if (msSinceStart > ms(`1 minute`) && intervalRef.current) {
+        if (msSinceStart > ms(`3 minutes`) && intervalRef.current) {
           clearInterval(intervalRef.current);
           intervalRef.current = null;
         }
-      }, ms(`3 seconds`));
+      }, ms(`10 seconds`));
     },
     [currentUser.id]
   );

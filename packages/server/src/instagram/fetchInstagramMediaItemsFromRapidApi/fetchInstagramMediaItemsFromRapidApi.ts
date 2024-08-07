@@ -1,12 +1,17 @@
 import { getRequiredEnvVar } from '@/common/env';
 import axios from 'axios';
 import ms from 'ms';
-import { z } from 'zod';
 
 import { ForbiddenError } from '@/server/auth';
 
 import queryInstagramUsername from '../queryInstagramUsername';
 import { InstagramMediaItem } from '../types';
+
+import findHighestResolutionImage from './findHighestResolutionImage';
+import {
+  InstagramApiMediaItem,
+  InstagramApiMediaResponseSchema,
+} from './types';
 
 type Args = {
   auth: {
@@ -17,23 +22,6 @@ type Args = {
     userId: string;
   };
 };
-
-const InstagramApiMediaItemSchema = z.object({
-  caption: z.object({ text: z.string() }).optional(),
-  code: z.string(),
-  // todo - use different image candidate for reels
-  display_uri_original: z.string(),
-  media_type: z.union([z.literal(1), z.literal(2), z.literal(8)]),
-  pk: z.string(),
-  taken_at: z.number(),
-});
-
-type InstagramApiMediaItem = z.infer<typeof InstagramApiMediaItemSchema>;
-
-const InstagramApiMediaResponseSchema = z.object({
-  items: z.array(InstagramApiMediaItemSchema),
-  next_max_id: z.string().nullable().optional(),
-});
 
 export default async (
   args: Args
@@ -74,17 +62,6 @@ export default async (
     timeout: ms(`5000`),
   });
 
-  // todo
-  console.log(
-    `media response:`,
-    mediaResponse.status,
-    mediaResponse.statusText
-  );
-  // eslint-disable-next-line @postplan/no-type-assertion, @typescript-eslint/no-explicit-any
-  if (!(mediaResponse.data as any)?.items) {
-    console.log(JSON.stringify(mediaResponse.data, null, 2));
-  }
-
   const mediaResponseParsed = InstagramApiMediaResponseSchema.parse(
     mediaResponse.data
   );
@@ -108,14 +85,18 @@ export default async (
 
     const mediaType = mediaTypeMap[mediaItem.media_type];
 
+    const highestResolutionImage = findHighestResolutionImage(mediaItem);
+
     return {
       caption: mediaItem.caption?.text,
+      height: highestResolutionImage.height,
       id: mediaItem.pk,
       mediaType,
-      mediaUrl: mediaItem.display_uri_original,
+      mediaUrl: highestResolutionImage.url,
       permalink: `https://www.instagram.com/${permalinkUrlPartMap[mediaType]}/${mediaItem.code}/`,
-      thumbnailUrl: mediaItem.display_uri_original,
+      thumbnailUrl: highestResolutionImage.url,
       timestamp: new Date(mediaItem.taken_at * 1000).toISOString(),
+      width: highestResolutionImage.width,
     };
   });
 

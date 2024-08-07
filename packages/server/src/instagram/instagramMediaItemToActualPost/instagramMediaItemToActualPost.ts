@@ -11,11 +11,13 @@ export default (instagramMediaItem: InstagramMediaItem): ActualPost => {
 
   return {
     caption: instagramMediaItem.caption || null,
+    height: instagramMediaItem.height || null,
     instagramId: instagramMediaItem.id,
     mediaThumbnailUrl: null,
     mediaType: mediaTypeMap[instagramMediaItem.mediaType],
     mediaUrl: instagramMediaItem.thumbnailUrl || instagramMediaItem.mediaUrl,
     permalink: instagramMediaItem.permalink,
     postedAt: new Date(instagramMediaItem.timestamp),
+    width: instagramMediaItem.width || null,
   };
 };

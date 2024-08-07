@@ -9,9 +9,17 @@ export type Resolution = {
 };
 
 export default (actualPost: ActualPost): Resolution | null => {
-  const [resolution, setResolution] = useState<Resolution | null>(null);
+  const [resolution, setResolution] = useState<Resolution | null>(
+    actualPost.height && actualPost.width
+      ? { height: actualPost.height, width: actualPost.width }
+      : null
+  );
 
   useEffect(() => {
+    if (actualPost.height && actualPost.width) {
+      return;
+    }
+
     if (actualPost.mediaType === `Video`) {
       setResolution({ height: 620, width: 348 });
       return;
@@ -26,7 +34,12 @@ export default (actualPost: ActualPost): Resolution | null => {
       }
     };
     run();
-  }, [actualPost.mediaType, actualPost.mediaUrl]);
+  }, [
+    actualPost.mediaType,
+    actualPost.mediaUrl,
+    actualPost.height,
+    actualPost.width,
+  ]);
 
   return resolution;
 };

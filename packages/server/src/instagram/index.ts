@@ -5,13 +5,13 @@ import fetchInstagramMediaItemsFromRapidApi from './fetchInstagramMediaItemsFrom
 import fetchRefreshedAccessToken from './fetchRefreshedAccessToken';
 import generateLongLivedToken from './generateLongLivedToken';
 import getInstagramOAuthUrl from './getInstagramOAuthUrl';
-import queryInstagramUsername from './queryInstagramUsername';
 import hasActiveInstagramConnection from './hasActiveInstagramConnection';
 import hasInstagramUsername from './hasInstagramUsername';
 import instagramMediaItemToActualPost from './instagramMediaItemToActualPost';
 import isConnectionActive from './isConnectionActive';
 import queryActiveConnection from './queryActiveConnection';
 import queryActualPosts from './queryActualPosts';
+import queryInstagramUsername from './queryInstagramUsername';
 import refreshAccessToken from './refreshAccessToken';
 import setInstagramUsername from './setInstagramUsername';
 import syncDataFromInstagram from './syncDataFromInstagram';

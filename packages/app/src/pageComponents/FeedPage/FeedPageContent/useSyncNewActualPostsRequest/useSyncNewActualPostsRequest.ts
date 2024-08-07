@@ -52,9 +52,14 @@ export default (currentUser: CurrentUser): Request => {
     [currentUser.id]
   );
 
+  const syncInitiatedRef = useRef(false);
+
   useEffect(() => {
-    // todo
-    // syncNewActualPosts({ force: false, notify: false });
+    if (syncInitiatedRef.current) {
+      return;
+    }
+    syncInitiatedRef.current = true;
+    syncNewActualPosts({ force: false, notify: false });
   }, [syncNewActualPosts]);
 
   const refreshActualPosts: Request['refreshActualPosts'] = () => {

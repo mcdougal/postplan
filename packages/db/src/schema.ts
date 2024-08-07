@@ -74,7 +74,6 @@ export const instagramSyncJob = schema.table(`instagram_sync_job`, {
 
 const instagramSyncJobId = () => instagramSyncJob.id;
 
-// todo - add width and height from API when available and update UI
 export const actualPost = schema.table(`actual_post`, {
   caption: text(`caption`),
   createdAt: timestamp(`created_at`).defaultNow().notNull(),

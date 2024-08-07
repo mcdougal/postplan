@@ -8,9 +8,13 @@ import queryInstagramUsername from '../queryInstagramUsername';
 import { InstagramMediaItem } from '../types';
 
 type Args = {
-  auth: { currentUserId: string };
-  where: { userId: string };
-  limit: number;
+  auth: {
+    currentUserId: string;
+  };
+  where: {
+    cursor: string | undefined;
+    userId: string;
+  };
 };
 
 const InstagramApiMediaItemSchema = z.object({
@@ -23,25 +27,21 @@ const InstagramApiMediaItemSchema = z.object({
   taken_at: z.number(),
 });
 
-// const InstagramApiMediaItemSchema = z.object({
-//   caption: z.object({ text: z.string() }).optional(),
-//   code: z.string(),
-//   id: z.string(),
-//   media_name: z.enum([`album`, `post`, `reel`]),
-//   taken_at_ts: z.number(),
-//   thumbnail_url: z.string(),
-// });
-
 type InstagramApiMediaItem = z.infer<typeof InstagramApiMediaItemSchema>;
 
 const InstagramApiMediaResponseSchema = z.object({
   items: z.array(InstagramApiMediaItemSchema),
+  next_max_id: z.string().nullable().optional(),
 });
 
-export default async (args: Args): Promise<Array<InstagramMediaItem>> => {
+export default async (
+  args: Args
+): Promise<{
+  cursor: string | null;
+  instagramMediaItems: Array<InstagramMediaItem>;
+}> => {
   const { currentUserId } = args.auth;
-  const { userId } = args.where;
-  const { limit } = args; // todo - make multiple requests to pull more items
+  const { cursor, userId } = args.where;
 
   if (currentUserId !== userId) {
     throw new ForbiddenError();
@@ -59,7 +59,10 @@ export default async (args: Args): Promise<Array<InstagramMediaItem>> => {
   const mediaUrl = `https://instagram-bulk-profile-scrapper.p.rapidapi.com/clients/api/ig/feeds?${[
     `ig=${instagramUsername}`,
     `corsEnabled=true`,
-  ].join(`&`)}`;
+    cursor ? `nextMaxId=${cursor}` : null,
+  ]
+    .filter(Boolean)
+    .join(`&`)}`;
 
   const mediaResponse = await axios.get<unknown>(mediaUrl, {
     headers: {
@@ -69,16 +72,22 @@ export default async (args: Args): Promise<Array<InstagramMediaItem>> => {
     },
   });
 
-  console.log(`instagramMediaItems:`);
-  console.log(mediaResponse.status);
-  console.log(mediaResponse.statusText);
-  console.log(JSON.stringify(mediaResponse.data, null, 2));
+  // todo
+  console.log(
+    `media response:`,
+    mediaResponse.status,
+    mediaResponse.statusText
+  );
+  // eslint-disable-next-line @postplan/no-type-assertion, @typescript-eslint/no-explicit-any
+  if (!(mediaResponse.data as any)?.items) {
+    console.log(JSON.stringify(mediaResponse.data, null, 2));
+  }
 
   const mediaResponseParsed = InstagramApiMediaResponseSchema.parse(
     mediaResponse.data
   );
 
-  return mediaResponseParsed.items.map((mediaItem) => {
+  const instagramMediaItems = mediaResponseParsed.items.map((mediaItem) => {
     const mediaTypeMap: {
       [key in InstagramApiMediaItem['media_type']]: InstagramMediaItem['mediaType'];
     } = {
@@ -108,46 +117,8 @@ export default async (args: Args): Promise<Array<InstagramMediaItem>> => {
     };
   });
 
-  // const mediaUrl = `https://instagram-scraper-api2.p.rapidapi.com/v1.2/posts?${[
-  //   `username_or_id_or_url=deanna_troy_travels`,
-  // ].join(`&`)}`;
-
-  // const mediaResponse = await axios.get<unknown>(mediaUrl, {
-  //   headers: {
-  //     'x-rapidapi-host': `instagram-scraper-api2.p.rapidapi.com`,
-  //     'x-rapidapi-key': getRequiredEnvVar(`RAPID_API_KEY`),
-  //   },
-  // });
-
-  // const mediaResponseParsed = InstagramApiMediaResponseSchema.parse(
-  //   mediaResponse.data
-  // );
-
-  // return mediaResponseParsed.data.items.map((mediaItem) => {
-  //   const mediaTypeMap: {
-  //     [key in InstagramApiMediaItem['media_name']]: InstagramMediaItem['mediaType'];
-  //   } = {
-  //     album: `CAROUSEL_ALBUM`,
-  //     post: `IMAGE`,
-  //     reel: `VIDEO`,
-  //   };
-
-  //   const permalinkUrlPartMap: {
-  //     [key in InstagramApiMediaItem['media_name']]: string;
-  //   } = {
-  //     album: `p`,
-  //     post: `p`,
-  //     reel: `reel`,
-  //   };
-
-  //   return {
-  //     caption: mediaItem.caption?.text,
-  //     id: mediaItem.id,
-  //     mediaType: mediaTypeMap[mediaItem.media_name],
-  //     mediaUrl: mediaItem.thumbnail_url,
-  //     permalink: `https://www.instagram.com/${permalinkUrlPartMap[mediaItem.media_name]}/${mediaItem.code}/`,
-  //     thumbnailUrl: mediaItem.thumbnail_url,
-  //     timestamp: new Date(mediaItem.taken_at_ts * 1000).toISOString(),
-  //   };
-  // });
+  return {
+    cursor: mediaResponseParsed.next_max_id || null,
+    instagramMediaItems,
+  };
 };

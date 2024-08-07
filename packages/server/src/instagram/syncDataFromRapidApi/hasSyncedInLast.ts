@@ -1,19 +1,22 @@
-import { db, desc, eq } from '@/db/connection';
-import { instagramSyncHistoryItem } from '@/db/schema';
+import { and, db, desc, eq, not } from '@/db/connection';
+import { instagramSyncJob } from '@/db/schema';
 
 export default async (ms: number, userId: string): Promise<boolean> => {
-  const mostRecentHistoryItem =
-    await db.query.instagramSyncHistoryItem.findFirst({
-      where: eq(instagramSyncHistoryItem.userId, userId),
-      orderBy: desc(instagramSyncHistoryItem.syncStartedAt),
-    });
+  const mostRecentJob = await db.query.instagramSyncJob.findFirst({
+    where: and(
+      eq(instagramSyncJob.userId, userId),
+      not(eq(instagramSyncJob.status, `Failed`)),
+      eq(instagramSyncJob.apiSource, `RapidApiInstagramBulkProfileScrapper`)
+    ),
+    orderBy: desc(instagramSyncJob.startedAt),
+    columns: { startedAt: true },
+  });
 
-  if (!mostRecentHistoryItem) {
+  if (!mostRecentJob) {
     return false;
   }
 
-  const msSinceLastSync =
-    Date.now() - mostRecentHistoryItem.syncStartedAt.getTime();
+  const msSinceLastSync = Date.now() - mostRecentJob.startedAt.getTime();
 
   return msSinceLastSync < ms;
 };

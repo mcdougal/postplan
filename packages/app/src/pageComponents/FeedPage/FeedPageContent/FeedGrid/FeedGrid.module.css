@@ -12,6 +12,7 @@
   border-bottom-right-radius: 42px;
   height: calc(100vh - 200px);
   max-height: 620px;
+  position: relative;
   overflow: auto;
   overscroll-behavior: contain;
   scrollbar-width: none;

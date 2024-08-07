@@ -71,6 +71,15 @@ const FeedGrid = ({
             startIndex={optimisticPlannedPosts.length}
           />
         </div>
+        {actualPosts.length === 0 && optimisticPlannedPosts.length === 0 && (
+          <div className="absolute inset-0 flex items-center justify-center p-4 pb-32">
+            <Typography className="text-center" color="gray" size="sm">
+              Your feed is loading.
+              <br />
+              This may take a minute.
+            </Typography>
+          </div>
+        )}
       </div>
     </div>
   );

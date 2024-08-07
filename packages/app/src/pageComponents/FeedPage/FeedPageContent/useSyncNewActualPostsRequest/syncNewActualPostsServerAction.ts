@@ -21,7 +21,7 @@ export default authenticatedServerAction<Args>({
 
     await addJobToQueue({
       name: `syncInstagramFromRapidApi`,
-      data: { force, userId },
+      data: { force, maxApiCalls: 5, userId },
     });
 
     return { status: `success` };

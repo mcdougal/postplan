@@ -10,6 +10,7 @@ import { InstagramMediaItem } from '../types';
 export default async (
   tx: DrizzleTransaction,
   userId: string,
+  batchId: string,
   instagramMediaItems: Array<InstagramMediaItem>
 ): Promise<void> => {
   if (instagramMediaItems.length === 0) {
@@ -50,6 +51,7 @@ export default async (
           ...asActualPost,
           fileName: `${uuidv4()}.jpg`,
           id: createId(),
+          syncedFromBatchId: batchId,
           userId,
         })
         .returning({
@@ -58,10 +60,7 @@ export default async (
     } else {
       await tx
         .update(actualPost)
-        .set({
-          caption: asActualPost.caption,
-          mediaUrl: asActualPost.mediaUrl,
-        })
+        .set({ caption: asActualPost.caption })
         .where(eq(actualPost.id, existingPost.id));
     }
   });

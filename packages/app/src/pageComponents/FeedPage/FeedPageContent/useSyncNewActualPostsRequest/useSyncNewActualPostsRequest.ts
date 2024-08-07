@@ -54,7 +54,8 @@ export default (currentUser: CurrentUser): Request => {
   );
 
   useEffect(() => {
-    syncNewActualPosts({ force: false, notify: false });
+    // todo
+    // syncNewActualPosts({ force: false, notify: false });
   }, [syncNewActualPosts]);
 
   const refreshActualPosts: Request['refreshActualPosts'] = () => {

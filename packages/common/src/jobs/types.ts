@@ -2,7 +2,9 @@ import { z } from 'zod';
 
 export const CreateThumbnailsJobSchema = z.object({
   name: z.literal(`createThumbnails`),
-  data: z.object({}),
+  data: z.object({
+    batchId: z.string().optional(),
+  }),
 });
 
 export const RefreshInstagramConnectionsJobSchema = z.object({
@@ -31,7 +33,10 @@ export const SyncInstagramJobSchema = z.object({
 export const SyncInstagramFromRapidApiJobSchema = z.object({
   name: z.literal(`syncInstagramFromRapidApi`),
   data: z.object({
+    batchId: z.string().optional(),
+    cursor: z.string().optional(),
     force: z.boolean(),
+    maxApiCalls: z.number(),
     userId: z.string(),
   }),
 });

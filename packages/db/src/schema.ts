@@ -25,9 +25,15 @@ export const actualPostMediaType = pgEnum(`actual_post_media_type`, [
   `Video`,
 ]);
 
-export const instagramSyncSource = pgEnum(`instagram_sync_source`, [
+export const instagramApiSource = pgEnum(`instagram_api_source`, [
   `InstagramBasicApi`,
   `RapidApiInstagramBulkProfileScrapper`,
+]);
+
+export const instagramSyncJobStatus = pgEnum(`instagram_sync_job_status`, [
+  `Failed`,
+  `InProgress`,
+  `Succeeded`,
 ]);
 
 // -----------------------------------------------------------------------------
@@ -53,6 +59,21 @@ export const user = schema.table(
 
 const userId = () => user.id;
 
+export const instagramSyncJob = schema.table(`instagram_sync_job`, {
+  apiSource: instagramApiSource(`api_source`).notNull(),
+  batchId: text(`batch_id`).notNull(),
+  createdAt: timestamp(`created_at`).defaultNow().notNull(),
+  cursor: text(`cursor`),
+  endedAt: timestamp(`ended_at`),
+  id: text(`id`).primaryKey(),
+  startedAt: timestamp(`started_at`).notNull(),
+  status: instagramSyncJobStatus(`status`).notNull(),
+  updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
+  userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
+});
+
+const instagramSyncJobId = () => instagramSyncJob.id;
+
 // todo - add width and height from API when available and update UI
 export const actualPost = schema.table(`actual_post`, {
   caption: text(`caption`),
@@ -68,6 +89,9 @@ export const actualPost = schema.table(`actual_post`, {
   mediaUrlExpiresAt: timestamp(`media_url_expires_at`),
   permalink: text(`permalink`).notNull(),
   postedAt: timestamp(`posted_at`).notNull(),
+  syncJobId: text(`sync_job_id`).references(instagramSyncJobId, {
+    onDelete: `set null`,
+  }),
   updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
   userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
   width: integer(`width`),
@@ -93,20 +117,6 @@ export const instagramConnection = schema.table(`instagram_connection`, {
   updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
   userId: text(`user_id`).references(userId, { onDelete: `cascade` }).notNull(),
 });
-
-export const instagramSyncHistoryItem = schema.table(
-  `instagram_sync_history_item`,
-  {
-    createdAt: timestamp(`created_at`).defaultNow().notNull(),
-    id: text(`id`).primaryKey(),
-    syncSource: instagramSyncSource(`sync_source`).notNull(),
-    syncStartedAt: timestamp(`sync_started_at`).notNull(),
-    updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
-    userId: text(`user_id`)
-      .references(userId, { onDelete: `cascade` })
-      .notNull(),
-  }
-);
 
 export const plannedPost = schema.table(`planned_post`, {
   caption: text(`caption`),
@@ -145,11 +155,26 @@ export const userRelations = relations(user, ({ many, one }) => ({
   actualPosts: many(actualPost),
   hashtagGroups: many(hashtagGroup),
   instagramConnection: one(instagramConnection),
-  instagramSyncHistoryItems: many(instagramSyncHistoryItem),
+  instagramSyncJobs: many(instagramSyncJob),
   plannedPosts: many(plannedPost),
 }));
 
+export const instagramSyncJobRelations = relations(
+  instagramSyncJob,
+  ({ many, one }) => ({
+    actualPosts: many(actualPost),
+    user: one(user, {
+      fields: [instagramSyncJob.userId],
+      references: [user.id],
+    }),
+  })
+);
+
 export const actualPostRelations = relations(actualPost, ({ one }) => ({
+  syncJob: one(instagramSyncJob, {
+    fields: [actualPost.syncJobId],
+    references: [instagramSyncJob.id],
+  }),
   user: one(user, {
     fields: [actualPost.userId],
     references: [user.id],
@@ -168,16 +193,6 @@ export const instagramConnectionRelations = relations(
   ({ one }) => ({
     user: one(user, {
       fields: [instagramConnection.userId],
-      references: [user.id],
-    }),
-  })
-);
-
-export const instagramSyncHistoryItemRelations = relations(
-  instagramSyncHistoryItem,
-  ({ one }) => ({
-    user: one(user, {
-      fields: [instagramSyncHistoryItem.userId],
       references: [user.id],
     }),
   })

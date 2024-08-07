@@ -3,8 +3,6 @@ import { actualPost } from '@/db/schema';
 
 import { ForbiddenError } from '@/server/auth';
 
-import fetchInstagramMediaItemsFromRapidApi from '../fetchInstagramMediaItemsFromRapidApi';
-import instagramMediaItemToActualPost from '../instagramMediaItemToActualPost';
 import { ActualPost } from '../types';
 
 type Args = {
@@ -22,7 +20,7 @@ export default async (args: Args): Promise<Array<ActualPost>> => {
     throw new ForbiddenError();
   }
 
-  const matchingActualPosts = await db.query.actualPost.findMany({
+  return db.query.actualPost.findMany({
     where: and(
       eq(actualPost.userId, userId),
       isNotNull(actualPost.mediaUrlExpiresAt)
@@ -39,18 +37,4 @@ export default async (args: Args): Promise<Array<ActualPost>> => {
     orderBy: desc(actualPost.postedAt),
     limit,
   });
-
-  if (matchingActualPosts.length > 0) {
-    return matchingActualPosts;
-  }
-
-  // const mediaItems = await fetchInstagramMediaItemsFromRapidApi({
-  //   auth: { currentUserId },
-  //   where: { userId },
-  //   limit,
-  // });
-
-  // return mediaItems.map(instagramMediaItemToActualPost);
-
-  return [];
 };

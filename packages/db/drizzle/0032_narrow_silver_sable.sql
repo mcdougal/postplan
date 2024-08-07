@@ -1,0 +1,1 @@
+ALTER TABLE "postplan"."actual_post" ADD COLUMN "synced_from_batch_id" text;

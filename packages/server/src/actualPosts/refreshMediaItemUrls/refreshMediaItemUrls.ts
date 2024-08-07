@@ -15,7 +15,6 @@ type Args = {
   };
 };
 
-// todo - rename function because it's not just thumbnails anymore
 export default async (args: Args): Promise<void> => {
   const { currentUserId } = args.auth;
   const { actualPostId } = args.where;

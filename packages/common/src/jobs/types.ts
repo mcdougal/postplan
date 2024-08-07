@@ -31,7 +31,7 @@ export const SyncInstagramJobSchema = z.object({
 export const SyncInstagramFromRapidApiJobSchema = z.object({
   name: z.literal(`syncInstagramFromRapidApi`),
   data: z.object({
-    userId: z.string().optional(),
+    userId: z.string(),
   }),
 });
 

@@ -1,7 +1,6 @@
-import { db, eq } from '@/db/connection';
-import { user } from '@/db/schema';
-
 import { ForbiddenError } from '@/server/auth';
+
+import queryInstagramUsername from '../queryInstagramUsername';
 
 type Args = {
   auth: { currentUserId: string };
@@ -16,10 +15,10 @@ export default async (args: Args): Promise<boolean> => {
     throw new ForbiddenError();
   }
 
-  const matchingUser = await db.query.user.findFirst({
-    where: eq(user.id, userId),
-    columns: { instagramUsername: true },
+  const instagramUsername = await queryInstagramUsername({
+    auth: { currentUserId },
+    where: { userId },
   });
 
-  return Boolean(matchingUser?.instagramUsername);
+  return Boolean(instagramUsername);
 };

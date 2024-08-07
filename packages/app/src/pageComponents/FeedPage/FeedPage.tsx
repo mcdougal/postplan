@@ -1,9 +1,5 @@
 import { LogInRoute } from '@/common/routes';
-import {
-  hasActiveInstagramConnection,
-  hasInstagramUsername,
-  queryActualPosts,
-} from '@/server/instagram';
+import { hasInstagramUsername, queryActualPosts } from '@/server/instagram';
 import { queryPlannedPosts } from '@/server/plannedPosts';
 import { getCurrentUser } from '@/server/users';
 import { cookies } from 'next/headers';
@@ -12,7 +8,6 @@ import { redirect } from 'next/navigation';
 import { SiteTopBar } from '@/app/components';
 import { Page } from '@/app/pageUtils';
 
-import ConnectInstagram from './ConnectInstagram';
 import FeedPageContent from './FeedPageContent';
 import InstagramUsernameForm from './InstagramUsernameForm';
 import MobileFeed from './MobileFeed';

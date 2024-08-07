@@ -25,6 +25,11 @@ export const actualPostMediaType = pgEnum(`actual_post_media_type`, [
   `Video`,
 ]);
 
+export const instagramSyncSource = pgEnum(`instagram_sync_source`, [
+  `InstagramBasicApi`,
+  `RapidApiInstagramBulkProfileScrapper`,
+]);
+
 // -----------------------------------------------------------------------------
 // Tables
 // -----------------------------------------------------------------------------
@@ -94,6 +99,7 @@ export const instagramSyncHistoryItem = schema.table(
   {
     createdAt: timestamp(`created_at`).defaultNow().notNull(),
     id: text(`id`).primaryKey(),
+    syncSource: instagramSyncSource(`sync_source`).notNull(),
     syncStartedAt: timestamp(`sync_started_at`).notNull(),
     updatedAt: timestamp(`updated_at`).defaultNow().notNull(),
     userId: text(`user_id`)

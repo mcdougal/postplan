@@ -1,9 +1,17 @@
-import { and, db, eq, gte, inArray, not } from '@/db/connection';
+import {
+  and,
+  DrizzleTransaction,
+  eq,
+  gte,
+  inArray,
+  not,
+} from '@/db/connection';
 import { actualPost } from '@/db/schema';
 
 import { InstagramMediaItem } from '../types';
 
 export default async (
+  tx: DrizzleTransaction,
   userId: string,
   instagramMediaItems: Array<InstagramMediaItem>
 ): Promise<void> => {
@@ -23,7 +31,7 @@ export default async (
     return item.id;
   });
 
-  await db
+  await tx
     .delete(actualPost)
     .where(
       and(

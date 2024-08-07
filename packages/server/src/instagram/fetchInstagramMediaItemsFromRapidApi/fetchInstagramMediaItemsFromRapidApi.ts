@@ -4,6 +4,7 @@ import { z } from 'zod';
 
 import { ForbiddenError } from '@/server/auth';
 
+import queryInstagramUsername from '../queryInstagramUsername';
 import { InstagramMediaItem } from '../types';
 
 type Args = {
@@ -46,11 +47,17 @@ export default async (args: Args): Promise<Array<InstagramMediaItem>> => {
     throw new ForbiddenError();
   }
 
-  const twelveMonthsAgo = new Date();
-  twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
+  const instagramUsername = await queryInstagramUsername({
+    auth: { currentUserId },
+    where: { userId },
+  });
+
+  if (!instagramUsername) {
+    throw new Error(`User does not have an Instagram username set`);
+  }
 
   const mediaUrl = `https://instagram-bulk-profile-scrapper.p.rapidapi.com/clients/api/ig/feeds?${[
-    `ig=deanna_troy_travels`,
+    `ig=${instagramUsername}`,
     `corsEnabled=true`,
   ].join(`&`)}`;
 

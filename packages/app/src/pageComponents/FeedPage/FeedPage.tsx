@@ -19,15 +19,6 @@ const FeedPage: Page = async () => {
     redirect(LogInRoute.getPath());
   }
 
-  // [IG_API_CODE]
-  // const isInstagramConnected = await hasActiveInstagramConnection({
-  //   auth: { currentUserId: currentUser.id },
-  //   where: { userId: currentUser.id },
-  // });
-  // if (!isInstagramConnected) {
-  //   return <ConnectInstagram />;
-  // }
-
   const isInstagramConnected = await hasInstagramUsername({
     auth: { currentUserId: currentUser.id },
     where: { userId: currentUser.id },

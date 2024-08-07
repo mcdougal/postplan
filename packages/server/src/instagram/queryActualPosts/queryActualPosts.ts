@@ -1,10 +1,8 @@
-import { db, desc, eq } from '@/db/connection';
+import { and, db, desc, eq, isNotNull } from '@/db/connection';
 import { actualPost } from '@/db/schema';
 
 import { ForbiddenError } from '@/server/auth';
 
-import fetchInstagramMediaItems from '../fetchInstagramMediaItems';
-import instagramMediaItemToActualPost from '../instagramMediaItemToActualPost';
 import { ActualPost } from '../types';
 
 type Args = {
@@ -22,30 +20,23 @@ export default async (args: Args): Promise<Array<ActualPost>> => {
     throw new ForbiddenError();
   }
 
-  const matchingActualPosts = await db.query.actualPost.findMany({
-    where: eq(actualPost.userId, userId),
+  return db.query.actualPost.findMany({
+    where: and(
+      eq(actualPost.userId, userId),
+      isNotNull(actualPost.mediaUrlExpiresAt)
+    ),
     columns: {
       caption: true,
+      height: true,
       instagramId: true,
       mediaThumbnailUrl: true,
       mediaType: true,
       mediaUrl: true,
       permalink: true,
       postedAt: true,
+      width: true,
     },
     orderBy: desc(actualPost.postedAt),
     limit,
   });
-
-  if (matchingActualPosts.length > 0) {
-    return matchingActualPosts;
-  }
-
-  const mediaItems = await fetchInstagramMediaItems({
-    auth: { currentUserId },
-    where: { userId },
-    limit,
-  });
-
-  return mediaItems.map(instagramMediaItemToActualPost);
 };

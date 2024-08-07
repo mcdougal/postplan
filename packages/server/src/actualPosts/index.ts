@@ -1,11 +1,11 @@
 import getMostUsedHashtags from './getMostUsedHashtags';
 import getRecentHashtags from './getRecentHashtags';
-import refreshMediaThumbnailUrl from './refreshMediaThumbnailUrl';
+import refreshMediaItemUrls from './refreshMediaItemUrls';
 import uploadActualPostThumbnail from './uploadActualPostThumbnail';
 
 export {
   getMostUsedHashtags,
   getRecentHashtags,
-  refreshMediaThumbnailUrl,
+  refreshMediaItemUrls,
   uploadActualPostThumbnail,
 };

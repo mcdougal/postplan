@@ -13,7 +13,7 @@ export default async (cookies: CookieMethods): Promise<CurrentUser | null> => {
 
   const matchingUser = first(
     await db
-      .select({ id: user.id })
+      .select({ id: user.id, instagramUsername: user.instagramUsername })
       .from(user)
       .where(eq(user.authUserId, authUser.id))
   );
@@ -24,5 +24,6 @@ export default async (cookies: CookieMethods): Promise<CurrentUser | null> => {
 
   return {
     id: matchingUser.id,
+    instagramUsername: matchingUser.instagramUsername,
   };
 };

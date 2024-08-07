@@ -27,7 +27,7 @@ export default async (args: Args): Promise<void> => {
   }
 
   const instagramMediaItems = await fetchInstagramMediaItems({
-    auth: { currentUserId: connection.userId },
+    auth: { currentUserId },
     where: { userId: connection.userId },
     limit: 100,
   });

@@ -1,0 +1,614 @@
+{
+  "id": "d5c1bd96-5601-4250-95d3-396b28299bd9",
+  "prevId": "29b797f6-d3b5-45d3-b5b0-cf3aca402fd2",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "postplan.actual_post": {
+      "name": "actual_post",
+      "schema": "postplan",
+      "columns": {
+        "caption": {
+          "name": "caption",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "file_name": {
+          "name": "file_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "height": {
+          "name": "height",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "instagram_id": {
+          "name": "instagram_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "media_thumbnail_url": {
+          "name": "media_thumbnail_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "media_thumbnail_url_expires_at": {
+          "name": "media_thumbnail_url_expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "media_type": {
+          "name": "media_type",
+          "type": "actual_post_media_type",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "media_url": {
+          "name": "media_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "media_url_expires_at": {
+          "name": "media_url_expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "permalink": {
+          "name": "permalink",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "posted_at": {
+          "name": "posted_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "sync_job_id": {
+          "name": "sync_job_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "width": {
+          "name": "width",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "actual_post_sync_job_id_instagram_sync_job_id_fk": {
+          "name": "actual_post_sync_job_id_instagram_sync_job_id_fk",
+          "tableFrom": "actual_post",
+          "tableTo": "instagram_sync_job",
+          "schemaTo": "postplan",
+          "columnsFrom": ["sync_job_id"],
+          "columnsTo": ["id"],
+          "onDelete": "set null",
+          "onUpdate": "no action"
+        },
+        "actual_post_user_id_user_id_fk": {
+          "name": "actual_post_user_id_user_id_fk",
+          "tableFrom": "actual_post",
+          "tableTo": "user",
+          "schemaTo": "postplan",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "postplan.hashtag_group": {
+      "name": "hashtag_group",
+      "schema": "postplan",
+      "columns": {
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "display_name": {
+          "name": "display_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hashtags": {
+          "name": "hashtags",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "hashtag_group_user_id_user_id_fk": {
+          "name": "hashtag_group_user_id_user_id_fk",
+          "tableFrom": "hashtag_group",
+          "tableTo": "user",
+          "schemaTo": "postplan",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "postplan.instagram_connection": {
+      "name": "instagram_connection",
+      "schema": "postplan",
+      "columns": {
+        "access_token": {
+          "name": "access_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "instagram_user_id": {
+          "name": "instagram_user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "permissions": {
+          "name": "permissions",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "refreshed_at": {
+          "name": "refreshed_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "instagram_connection_user_id_user_id_fk": {
+          "name": "instagram_connection_user_id_user_id_fk",
+          "tableFrom": "instagram_connection",
+          "tableTo": "user",
+          "schemaTo": "postplan",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "postplan.instagram_sync_job": {
+      "name": "instagram_sync_job",
+      "schema": "postplan",
+      "columns": {
+        "api_source": {
+          "name": "api_source",
+          "type": "instagram_api_source",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "batch_id": {
+          "name": "batch_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "cursor": {
+          "name": "cursor",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "ended_at": {
+          "name": "ended_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "instagram_sync_job_status",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "instagram_sync_job_user_id_user_id_fk": {
+          "name": "instagram_sync_job_user_id_user_id_fk",
+          "tableFrom": "instagram_sync_job",
+          "tableTo": "user",
+          "schemaTo": "postplan",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "postplan.planned_post": {
+      "name": "planned_post",
+      "schema": "postplan",
+      "columns": {
+        "caption": {
+          "name": "caption",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "is_reel": {
+          "name": "is_reel",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "planned_post_user_id_user_id_fk": {
+          "name": "planned_post_user_id_user_id_fk",
+          "tableFrom": "planned_post",
+          "tableTo": "user",
+          "schemaTo": "postplan",
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "postplan.planned_post_media_item": {
+      "name": "planned_post_media_item",
+      "schema": "postplan",
+      "columns": {
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "file_name": {
+          "name": "file_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "height": {
+          "name": "height",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "media_thumbnail_url": {
+          "name": "media_thumbnail_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "media_thumbnail_url_expires_at": {
+          "name": "media_thumbnail_url_expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "media_url": {
+          "name": "media_url",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "media_url_expires_at": {
+          "name": "media_url_expires_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "order": {
+          "name": "order",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "planned_post_id": {
+          "name": "planned_post_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "width": {
+          "name": "width",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "planned_post_media_item_planned_post_id_planned_post_id_fk": {
+          "name": "planned_post_media_item_planned_post_id_planned_post_id_fk",
+          "tableFrom": "planned_post_media_item",
+          "tableTo": "planned_post",
+          "schemaTo": "postplan",
+          "columnsFrom": ["planned_post_id"],
+          "columnsTo": ["id"],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "postplan.user": {
+      "name": "user",
+      "schema": "postplan",
+      "columns": {
+        "auth_user_id": {
+          "name": "auth_user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "email": {
+          "name": "email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "instagram_username": {
+          "name": "instagram_username",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "emailUniqueIndex": {
+          "name": "emailUniqueIndex",
+          "columns": [
+            {
+              "expression": "lower(\"email\")",
+              "asc": true,
+              "isExpression": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    }
+  },
+  "enums": {
+    "public.actual_post_media_type": {
+      "name": "actual_post_media_type",
+      "schema": "public",
+      "values": ["CarouselAlbum", "Image", "Video"]
+    },
+    "public.instagram_api_source": {
+      "name": "instagram_api_source",
+      "schema": "public",
+      "values": ["InstagramBasicApi", "RapidApiInstagramBulkProfileScrapper"]
+    },
+    "public.instagram_sync_job_status": {
+      "name": "instagram_sync_job_status",
+      "schema": "public",
+      "values": ["Failed", "InProgress", "Succeeded"]
+    }
+  },
+  "schemas": {
+    "postplan": "postplan"
+  },
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

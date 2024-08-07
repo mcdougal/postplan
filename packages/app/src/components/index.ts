@@ -11,6 +11,7 @@ import DropdownItem from './DropdownItem';
 import FileUpload from './FileUpload';
 import IconButton, { IconButtonIcon } from './IconButton';
 import Input from './Input';
+import InstagramIcon from './InstagramIcon';
 import Loading from './Loading';
 import Logo from './Logo';
 import NotProse from './NotProse';
@@ -52,6 +53,7 @@ export {
   FileUpload,
   IconButton,
   Input,
+  InstagramIcon,
   Loading,
   Logo,
   NotProse,

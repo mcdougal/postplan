@@ -2,9 +2,9 @@ import { db, isNull, lt, or } from '@/db/connection';
 import { actualPost, plannedPostMediaItem } from '@/db/schema';
 import ms from 'ms';
 
-import { refreshMediaThumbnailUrl } from '@/server/actualPosts';
+import { refreshMediaItemUrls as refreshActualMediaItemUrls } from '@/server/actualPosts';
 import { addJobToQueue } from '@/server/jobsQueue';
-import { refreshMediaItemUrls } from '@/server/plannedPosts';
+import { refreshMediaItemUrls as refreshPlannedMediaItemUrls } from '@/server/plannedPosts';
 
 export default async (): Promise<void> => {
   const threeDaysFromNow = new Date(Date.now() + ms(`3 days`));
@@ -29,7 +29,7 @@ export default async (): Promise<void> => {
   });
 
   if (expiringPlanned) {
-    await refreshMediaItemUrls({
+    await refreshPlannedMediaItemUrls({
       auth: { currentUserId: expiringPlanned.plannedPost.userId },
       where: { plannedPostMediaItemId: expiringPlanned.id },
     });
@@ -49,7 +49,7 @@ export default async (): Promise<void> => {
   });
 
   if (expiringActual) {
-    await refreshMediaThumbnailUrl({
+    await refreshActualMediaItemUrls({
       auth: { currentUserId: expiringActual.userId },
       where: { actualPostId: expiringActual.id },
     });

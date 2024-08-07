@@ -17,7 +17,7 @@ const LogInFormFields = ({ errorMessage }: Props): React.ReactElement => {
       <div className="flex items-center gap-2">
         <EnvelopeIcon className="h-6 w-6" />
         <div className="flex-1">
-          <Input autoFocus name="email" placeholder="Email" type="email" />
+          <Input name="email" placeholder="Email" type="email" />
         </div>
       </div>
       <div className="flex items-center gap-2">

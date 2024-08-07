@@ -47,6 +47,7 @@ const FeedGrid = ({
           {currentUser.instagramUsername}
         </Typography>
         <IconButton
+          className="hidden"
           disabled={!onRefreshPosts}
           icon={ArrowPathIcon}
           iconStyle="icon"
@@ -76,7 +77,7 @@ const FeedGrid = ({
             <Typography className="text-center" color="gray" size="sm">
               Your feed is loading.
               <br />
-              This may take a minute.
+              This may take a few minutes.
             </Typography>
           </div>
         )}

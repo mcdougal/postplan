@@ -62,7 +62,7 @@ const DragAndDrop = ({
       {posts.length === 0 ? (
         <div className="m-auto flex flex-col items-center gap-3 self-center">
           <ArrowUpOnSquareIcon className="h-10 w-10 text-blue-400" />
-          <Typography size="md">Drag & Drop to upload</Typography>
+          <Typography size="md">Drag & Drop images to upload</Typography>
         </div>
       ) : (
         <div className="flex flex-wrap gap-3 p-3">

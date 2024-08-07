@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Logo, Typography } from '@/app/components';
 
 import InstagramUsernameFormFields from './InstagramUsernameFormFields';
+import revalidatePathServerAction from './revalidatePathServerAction';
 import setInstagramUsernameServerAction from './setInstagramUsernameServerAction';
 
 const InstagramUsernameForm = (): React.ReactElement => {
@@ -25,7 +26,7 @@ const InstagramUsernameForm = (): React.ReactElement => {
             const response = await setInstagramUsernameServerAction(formData);
 
             if (response.status === `success`) {
-              window.location.reload();
+              revalidatePathServerAction();
             } else if (response.status === `error`) {
               setErrorMessage(response.message);
             } else {

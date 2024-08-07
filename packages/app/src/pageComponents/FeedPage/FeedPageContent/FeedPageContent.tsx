@@ -15,6 +15,7 @@ import sliceActualPosts from './sliceActualPosts';
 import useActualPostHider from './useActualPostHider';
 import usePostSelector from './usePostSelector';
 import useSyncNewActualPostsRequest from './useSyncNewActualPostsRequest';
+import WelcomeCard from './WelcomeCard';
 
 type Props = {
   actualPosts: Array<ActualPost>;
@@ -77,7 +78,7 @@ const FeedPageContent = ({
         <div className="absolute inset-0 bg-black bg-opacity-70" />
         {((): React.ReactNode => {
           if (!selectedPost) {
-            return null;
+            return <WelcomeCard currentUser={currentUser} />;
           }
           if (selectedPost?.type === `actual`) {
             return (

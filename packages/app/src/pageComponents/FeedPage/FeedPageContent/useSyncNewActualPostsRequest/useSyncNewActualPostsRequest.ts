@@ -19,7 +19,9 @@ export default (currentUser: CurrentUser): Request => {
   const syncNewActualPosts = useCallback(
     async (options: { force: boolean; notify: boolean }) => {
       if (options.notify) {
-        toast.loading(`Loading new posts...`);
+        toast(`Loading new posts. This may take a minute.`, {
+          icon: `⏳`,
+        });
       }
 
       if (loadingTimeoutRef.current) {

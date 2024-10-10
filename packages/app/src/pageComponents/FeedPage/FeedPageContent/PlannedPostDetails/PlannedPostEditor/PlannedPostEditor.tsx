@@ -30,10 +30,6 @@ const PlannedPostEditor = ({
   const [isHashtagFinderOpen, setIsHashtagFinderOpen] = useState(false);
   const captionContainerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    setCaption(plannedPost.caption);
-  }, [plannedPost.caption]);
-
   const { updateCaption } = useUpdateCaptionRequest(setOptimisticPlannedPosts);
 
   useEffect(() => {

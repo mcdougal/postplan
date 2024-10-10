@@ -4,7 +4,11 @@ export default (
 ): string => {
   let newCaption = caption || ``;
 
-  updates.forEach(({ hashtag, selected }) => {
+  const sortedUpdates = [...updates].sort((a, b) => {
+    return b.hashtag.length - a.hashtag.length;
+  });
+
+  sortedUpdates.forEach(({ hashtag, selected }) => {
     if (selected) {
       newCaption = newCaption.replace(/[ ]+$/, ``);
       newCaption =

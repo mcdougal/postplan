@@ -86,6 +86,7 @@ const PlannedPostEditor = ({
         }}
         onUpdateCaption={async (plannedPostId, newCaption) => {
           await updateCaption(plannedPostId, newCaption);
+          setCaption(newCaption);
           if (captionContainerRef.current) {
             captionContainerRef.current.scrollTo(0, 99999999);
           }

@@ -17,7 +17,6 @@ import getNumTags from './getNumTags';
 import useDeleteRequest from './useDeleteRequest';
 
 type Props = {
-  caption: string | null;
   carousel: Carousel;
   onOpenHashtagFinder: () => void;
   plannedPost: PlannedPost;
@@ -25,7 +24,6 @@ type Props = {
 };
 
 const PlannedPostEditorActions = ({
-  caption,
   carousel,
   onOpenHashtagFinder,
   plannedPost,
@@ -33,6 +31,7 @@ const PlannedPostEditorActions = ({
 }: Props): React.ReactElement => {
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const { deletePlannedPost } = useDeleteRequest(setOptimisticPlannedPosts);
+  const { caption } = plannedPost;
 
   return (
     <>

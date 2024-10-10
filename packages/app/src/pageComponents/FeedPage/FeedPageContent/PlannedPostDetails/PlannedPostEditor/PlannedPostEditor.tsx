@@ -72,12 +72,11 @@ const PlannedPostEditor = ({
         />
       </div>
       <PlannedPostEditorActions
-        caption={caption}
         carousel={carousel}
         onOpenHashtagFinder={() => {
           setIsHashtagFinderOpen(true);
         }}
-        plannedPost={plannedPost}
+        plannedPost={{ ...plannedPost, caption }}
         setOptimisticPlannedPosts={setOptimisticPlannedPosts}
       />
       <HashtagFinder
@@ -85,14 +84,14 @@ const PlannedPostEditor = ({
           setIsHashtagFinderOpen(false);
         }}
         onUpdateCaption={async (plannedPostId, newCaption) => {
-          await updateCaption(plannedPostId, newCaption);
           setCaption(newCaption);
+          await updateCaption(plannedPostId, newCaption);
           if (captionContainerRef.current) {
             captionContainerRef.current.scrollTo(0, 99999999);
           }
         }}
         open={isHashtagFinderOpen}
-        plannedPost={plannedPost}
+        plannedPost={{ ...plannedPost, caption }}
       />
     </div>
   );

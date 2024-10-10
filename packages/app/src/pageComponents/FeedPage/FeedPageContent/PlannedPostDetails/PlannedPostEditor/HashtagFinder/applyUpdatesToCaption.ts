@@ -4,11 +4,7 @@ export default (
 ): string => {
   let newCaption = caption || ``;
 
-  const sortedUpdates = [...updates].sort((a, b) => {
-    return b.hashtag.length - a.hashtag.length;
-  });
-
-  sortedUpdates.forEach(({ hashtag, selected }) => {
+  updates.forEach(({ hashtag, selected }) => {
     if (selected) {
       newCaption = newCaption.replace(/[ ]+$/, ``);
       newCaption =
@@ -16,7 +12,7 @@ export default (
           ? `${newCaption}${hashtag}`
           : `${newCaption} ${hashtag}`;
     } else {
-      newCaption = newCaption.replace(new RegExp(`${hashtag}`, `g`), ``);
+      newCaption = newCaption.replace(new RegExp(`${hashtag}(\\s|$)`, `g`), ``);
     }
   });
 

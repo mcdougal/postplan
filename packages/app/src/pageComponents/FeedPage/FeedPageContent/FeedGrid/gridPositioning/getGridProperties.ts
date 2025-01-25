@@ -7,7 +7,7 @@ type GridProperties = {
 export default (): GridProperties => {
   return {
     gapSize: 1,
-    itemSize: { height: 132, width: 106 },
+    itemSize: { height: 141, width: 106 },
     numColumns: 3,
   };
 };

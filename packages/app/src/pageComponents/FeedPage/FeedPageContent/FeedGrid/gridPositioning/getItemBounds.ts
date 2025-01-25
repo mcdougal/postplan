@@ -1,6 +1,7 @@
 import getGridProperties from './getGridProperties';
 
 type Args = {
+  aspectRatio: 'square' | 'rectangle';
   index: number;
 };
 
@@ -11,8 +12,8 @@ type ItemBounds = {
   y: number;
 };
 
-export default ({ index }: Args): ItemBounds => {
-  const { gapSize, itemSize, numColumns } = getGridProperties();
+export default ({ aspectRatio, index }: Args): ItemBounds => {
+  const { gapSize, itemSize, numColumns } = getGridProperties(aspectRatio);
 
   const row = Math.floor(index / numColumns);
   const column = index % numColumns;

@@ -11,6 +11,7 @@ import calculateReorderedIndex from '../calculateReorderedIndex';
 import getTypeIcon from './getTypeIcon';
 
 type Props = {
+  aspectRatio: 'square' | 'rectangle';
   draggingIndex: number | null;
   dragOverIndex: number | null;
   onClick: () => void;
@@ -23,6 +24,7 @@ type Props = {
 };
 
 const PlannedFeedItem = ({
+  aspectRatio,
   draggingIndex,
   dragOverIndex,
   onClick,
@@ -33,13 +35,13 @@ const PlannedFeedItem = ({
   plannedPost,
   plannedPostIndex,
 }: Props): React.ReactElement => {
-  const bounds = getItemBounds({ index: plannedPostIndex });
+  const bounds = getItemBounds({ aspectRatio, index: plannedPostIndex });
   const reorderedIndex = calculateReorderedIndex(
     plannedPostIndex,
     draggingIndex,
     dragOverIndex
   );
-  const reorderedBounds = getItemBounds({ index: reorderedIndex });
+  const reorderedBounds = getItemBounds({ aspectRatio, index: reorderedIndex });
   const isDragging = draggingIndex === plannedPostIndex;
   const firstMediaItem = getFirstMediaItem(plannedPost);
   const dropZoneActive =

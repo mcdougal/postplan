@@ -9,12 +9,14 @@ import PlannedFeedItem from './PlannedFeedItem';
 import useReorderRequest from './useReorderRequest';
 
 type Props = {
+  aspectRatio: 'square' | 'rectangle';
   onSelectPost: (selectedPostId: SelectedPostId) => void;
   optimisticPlannedPosts: Array<PlannedPost>;
   setOptimisticPlannedPosts: Dispatch<SetStateAction<Array<PlannedPost>>>;
 };
 
 const PlannedFeedItems = ({
+  aspectRatio,
   onSelectPost,
   optimisticPlannedPosts,
   setOptimisticPlannedPosts,
@@ -35,6 +37,7 @@ const PlannedFeedItems = ({
         return (
           <PlannedFeedItem
             key={plannedPost.id}
+            aspectRatio={aspectRatio}
             draggingIndex={draggingIndex}
             dragOverIndex={dragOverIndex}
             onClick={() => {

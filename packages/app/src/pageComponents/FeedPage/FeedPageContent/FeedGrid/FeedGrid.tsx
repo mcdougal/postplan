@@ -3,7 +3,7 @@
 import { CurrentUser } from '@/common/users';
 import { ActualPost } from '@/server/instagram';
 import { PlannedPost } from '@/server/plannedPosts';
-import { ArrowPathIcon } from '@heroicons/react/24/outline';
+import { Squares2X2Icon } from '@heroicons/react/24/outline';
 import { Dispatch, SetStateAction } from 'react';
 import { twMerge } from 'tailwind-merge';
 
@@ -20,7 +20,9 @@ import PlannedFeedItems from './PlannedFeedItems';
 type Props = {
   actualPostHider: ActualPostHider;
   actualPosts: Array<ActualPost>;
+  aspectRatio: 'square' | 'rectangle';
   currentUser: CurrentUser;
+  onChangeAspectRatio: (aspectRatio: 'square' | 'rectangle') => void;
   onRefreshPosts: (() => void) | null;
   onSelectPost: (selectedPostId: SelectedPostId) => void;
   optimisticPlannedPosts: Array<PlannedPost>;
@@ -30,13 +32,16 @@ type Props = {
 const FeedGrid = ({
   actualPostHider,
   actualPosts,
+  aspectRatio,
   currentUser,
+  onChangeAspectRatio,
   onRefreshPosts,
   onSelectPost,
   optimisticPlannedPosts,
   setOptimisticPlannedPosts,
 }: Props): React.ReactElement => {
   const gridSize = getGridSize({
+    aspectRatio,
     numItems: actualPosts.length + optimisticPlannedPosts.length,
   });
 
@@ -47,12 +52,15 @@ const FeedGrid = ({
           {currentUser.instagramUsername}
         </Typography>
         <IconButton
-          className="hidden"
           disabled={!onRefreshPosts}
-          icon={ArrowPathIcon}
+          icon={Squares2X2Icon}
           iconStyle="icon"
-          label="Load new posts"
-          onClick={onRefreshPosts || undefined}
+          label="Change aspect ratio"
+          onClick={() => {
+            onChangeAspectRatio(
+              aspectRatio === `square` ? `rectangle` : `square`
+            );
+          }}
           size="sm"
         />
       </div>
@@ -61,6 +69,7 @@ const FeedGrid = ({
           className="relative"
           style={{ height: gridSize.height, width: gridSize.width }}>
           <PlannedFeedItems
+            aspectRatio={aspectRatio}
             onSelectPost={onSelectPost}
             optimisticPlannedPosts={optimisticPlannedPosts}
             setOptimisticPlannedPosts={setOptimisticPlannedPosts}
@@ -68,6 +77,7 @@ const FeedGrid = ({
           <ActualFeedItems
             actualPostHider={actualPostHider}
             actualPosts={actualPosts}
+            aspectRatio={aspectRatio}
             onSelectPost={onSelectPost}
             startIndex={optimisticPlannedPosts.length}
           />

@@ -4,10 +4,13 @@ type GridProperties = {
   numColumns: number;
 };
 
-export default (): GridProperties => {
+export default (aspectRatio: 'square' | 'rectangle'): GridProperties => {
   return {
     gapSize: 1,
-    itemSize: { height: 141, width: 106 },
+    itemSize:
+      aspectRatio === `square`
+        ? { height: 106, width: 106 }
+        : { height: 141, width: 106 },
     numColumns: 3,
   };
 };

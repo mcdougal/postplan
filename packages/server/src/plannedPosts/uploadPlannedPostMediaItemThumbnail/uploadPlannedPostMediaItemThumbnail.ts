@@ -51,7 +51,7 @@ export default async (args: Args): Promise<void> => {
   const blob = await mediaResponse.blob();
 
   const resizedBuffer = await sharp(Buffer.from(await blob.arrayBuffer()))
-    .resize(250, 250)
+    .resize(250, 333)
     .jpeg()
     .toBuffer();
 

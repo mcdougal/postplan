@@ -28,6 +28,10 @@ const FeedPageContent = ({
   currentUser,
   plannedPosts,
 }: Props): React.ReactElement => {
+  const [aspectRatio, setAspectRatio] = useState<'square' | 'rectangle'>(
+    `rectangle`
+  );
+
   const syncNewActualPostsRequest = useSyncNewActualPostsRequest(currentUser);
 
   const [optimisticPlannedPosts, setOptimisticPlannedPosts] =
@@ -52,7 +56,9 @@ const FeedPageContent = ({
         <FeedGrid
           actualPostHider={actualPostHider}
           actualPosts={actualPosts}
+          aspectRatio={aspectRatio}
           currentUser={currentUser}
+          onChangeAspectRatio={setAspectRatio}
           onRefreshPosts={
             syncNewActualPostsRequest.loading
               ? null

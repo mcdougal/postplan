@@ -10,6 +10,7 @@ import ActualFeedItem from './ActualFeedItem';
 type Props = {
   actualPostHider: ActualPostHider;
   actualPosts: Array<ActualPost>;
+  aspectRatio: 'square' | 'rectangle';
   onSelectPost: (selectedPostId: SelectedPostId) => void;
   startIndex: number;
 };
@@ -17,6 +18,7 @@ type Props = {
 const ActualFeedItems = ({
   actualPostHider,
   actualPosts,
+  aspectRatio,
   onSelectPost,
   startIndex,
 }: Props): React.ReactElement => {
@@ -30,7 +32,7 @@ const ActualFeedItems = ({
     return (
       <>
         {visiblePosts.map((actualPost, i) => {
-          const bounds = getItemBounds({ index: startIndex + i });
+          const bounds = getItemBounds({ aspectRatio, index: startIndex + i });
 
           return (
             <ActualFeedItem
@@ -48,7 +50,7 @@ const ActualFeedItems = ({
         })}
       </>
     );
-  }, [actualPosts, startIndex, hiddenPostIds, onSelectPost]);
+  }, [actualPosts, aspectRatio, startIndex, hiddenPostIds, onSelectPost]);
 };
 
 export default ActualFeedItems;

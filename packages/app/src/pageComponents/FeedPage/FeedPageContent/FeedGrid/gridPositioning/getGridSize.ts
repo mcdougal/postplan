@@ -1,6 +1,7 @@
 import getGridProperties from './getGridProperties';
 
 type Args = {
+  aspectRatio: 'square' | 'rectangle';
   numItems: number;
 };
 
@@ -9,8 +10,8 @@ type GridSize = {
   width: number;
 };
 
-export default ({ numItems }: Args): GridSize => {
-  const { gapSize, itemSize, numColumns } = getGridProperties();
+export default ({ aspectRatio, numItems }: Args): GridSize => {
+  const { gapSize, itemSize, numColumns } = getGridProperties(aspectRatio);
 
   const numRows = Math.ceil(numItems / numColumns);
   const height = numRows * itemSize.height + (numRows - 1) * gapSize;

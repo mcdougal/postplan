@@ -17,10 +17,10 @@ export default ({ index }: Args): ItemBounds => {
   const row = Math.floor(index / numColumns);
   const column = index % numColumns;
 
-  const height = itemSize;
-  const width = itemSize;
-  const x = column * (itemSize + gapSize);
-  const y = row * (itemSize + gapSize);
+  const height = itemSize.height;
+  const width = itemSize.width;
+  const x = column * (itemSize.width + gapSize);
+  const y = row * (itemSize.height + gapSize);
 
   return {
     height,

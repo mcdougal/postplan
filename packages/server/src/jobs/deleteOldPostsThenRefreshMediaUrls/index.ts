@@ -1,0 +1,3 @@
+import deleteOldPostsThenRefreshMediaUrls from './deleteOldPostsThenRefreshMediaUrls';
+
+export default deleteOldPostsThenRefreshMediaUrls;

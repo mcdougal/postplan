@@ -7,6 +7,11 @@ export const CreateThumbnailsJobSchema = z.object({
   }),
 });
 
+export const DeleteOldPostsThenRefreshMediaUrlsJobSchema = z.object({
+  name: z.literal(`deleteOldPostsThenRefreshMediaUrls`),
+  data: z.object({}),
+});
+
 export const RefreshInstagramConnectionsJobSchema = z.object({
   name: z.literal(`refreshInstagramConnections`),
   data: z.object({}),
@@ -43,6 +48,7 @@ export const SyncInstagramFromRapidApiJobSchema = z.object({
 
 export const JobSchema = z.union([
   CreateThumbnailsJobSchema,
+  DeleteOldPostsThenRefreshMediaUrlsJobSchema,
   RefreshInstagramConnectionsJobSchema,
   RefreshMediaUrlsJobSchema,
   RunNightlyTasksJobSchema,
@@ -52,6 +58,9 @@ export const JobSchema = z.union([
 
 export type Job = z.infer<typeof JobSchema>;
 export type CreateThumbnailsJob = z.infer<typeof CreateThumbnailsJobSchema>;
+export type DeleteOldPostsThenRefreshMediaUrlsJob = z.infer<
+  typeof DeleteOldPostsThenRefreshMediaUrlsJobSchema
+>;
 export type RefreshInstagramConnectionsJob = z.infer<
   typeof RefreshInstagramConnectionsJobSchema
 >;

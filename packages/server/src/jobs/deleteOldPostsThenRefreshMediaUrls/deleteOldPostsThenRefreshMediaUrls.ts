@@ -8,27 +8,31 @@ import { addJobToQueue } from '@/server/jobsQueue';
 const NUM_POSTS_VISIBLE = 30;
 
 export default async (): Promise<void> => {
-  const users = await db.query.user.findMany({
-    columns: { id: true },
-  });
-
-  await forEachSeries(users, async (user) => {
-    const allPosts = await db.query.actualPost.findMany({
-      where: eq(actualPost.userId, user.id),
+  try {
+    const users = await db.query.user.findMany({
       columns: { id: true },
-      orderBy: [desc(actualPost.postedAt)],
     });
 
-    const postsToDelete = allPosts.slice(NUM_POSTS_VISIBLE);
-    const postIdsToDelete = postsToDelete.map((post) => {
-      return post.id;
-    });
+    await forEachSeries(users, async (user) => {
+      const allPosts = await db.query.actualPost.findMany({
+        where: eq(actualPost.userId, user.id),
+        columns: { id: true },
+        orderBy: [desc(actualPost.postedAt)],
+      });
 
-    await deleteActualPosts({
-      auth: { currentUserId: user.id },
-      where: { actualPostIds: postIdsToDelete },
-    });
-  });
+      const postsToDelete = allPosts.slice(NUM_POSTS_VISIBLE);
+      const postIdsToDelete = postsToDelete.map((post) => {
+        return post.id;
+      });
 
-  await addJobToQueue({ name: `refreshMediaUrls`, data: {} });
+      if (postIdsToDelete.length > 0) {
+        await deleteActualPosts({
+          auth: { currentUserId: user.id },
+          where: { actualPostIds: postIdsToDelete },
+        });
+      }
+    });
+  } finally {
+    await addJobToQueue({ name: `refreshMediaUrls`, data: {} });
+  }
 };

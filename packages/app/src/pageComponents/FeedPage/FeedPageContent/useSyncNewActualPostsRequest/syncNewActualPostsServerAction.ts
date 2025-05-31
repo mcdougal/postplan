@@ -23,10 +23,17 @@ export default authenticatedServerAction<Args>({
       return { status: `error`, message: `Not authorized` };
     }
 
-    await addJobToQueue({
-      name: `syncInstagramFromRapidApi`,
-      data: { force, userId },
-    });
+    if (force) {
+      await addJobToQueue({
+        name: `recreateActualPosts`,
+        data: { userId },
+      });
+    } else {
+      await addJobToQueue({
+        name: `syncInstagramFromRapidApi`,
+        data: { force, userId },
+      });
+    }
 
     return { status: `success` };
   },

@@ -5,6 +5,7 @@ import { serve } from 'inngest/next';
 import {
   createThumbnails,
   deleteOldPostsThenRefreshMediaUrls,
+  recreateActualPosts,
   refreshInstagramConnections,
   refreshMediaUrls,
   runNightlyTasks,
@@ -34,6 +35,10 @@ const functions: { [key in Job['name']]: InngestFunction.Any } = {
   deleteOldPostsThenRefreshMediaUrls: makeJobFunction(
     `deleteOldPostsThenRefreshMediaUrls`,
     deleteOldPostsThenRefreshMediaUrls
+  ),
+  recreateActualPosts: makeJobFunction(
+    `recreateActualPosts`,
+    recreateActualPosts
   ),
   refreshInstagramConnections: makeJobFunction(
     `refreshInstagramConnections`,

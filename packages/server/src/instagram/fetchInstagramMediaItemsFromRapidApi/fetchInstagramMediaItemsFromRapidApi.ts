@@ -59,7 +59,7 @@ export default async (
       'x-rapidapi-key': getRequiredEnvVar(`RAPID_API_KEY`),
       ig: `fairytalefolkdorset`,
     },
-    timeout: ms(`5000`),
+    timeout: ms(`30000`),
   });
 
   const mediaResponseParsed = InstagramApiMediaResponseSchema.parse(

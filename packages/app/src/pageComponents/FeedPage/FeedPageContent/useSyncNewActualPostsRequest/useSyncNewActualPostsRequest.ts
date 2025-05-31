@@ -18,6 +18,10 @@ export default (currentUser: CurrentUser): Request => {
 
   const syncNewActualPosts = useCallback(
     async (options: { force: boolean; notify: boolean }) => {
+      const revalidateDuration = options.force
+        ? ms(`5 minutes`)
+        : ms(`2 minutes`);
+
       if (options.notify) {
         toast(`Loading new posts. This may take a minute.`, {
           icon: `⏳`,
@@ -45,7 +49,7 @@ export default (currentUser: CurrentUser): Request => {
         await revalidatePathServerAction();
         const msSinceStart = new Date().getTime() - intervalStartTime.getTime();
 
-        if (msSinceStart > ms(`2 minutes`) && intervalRef.current) {
+        if (msSinceStart > revalidateDuration && intervalRef.current) {
           clearInterval(intervalRef.current);
           intervalRef.current = null;
         }

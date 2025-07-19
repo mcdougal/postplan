@@ -2,7 +2,10 @@ import { db, desc, eq } from '@/db/connection';
 import { actualPost } from '@/db/schema';
 import { forEachSeries } from 'p-iteration';
 
-import { deleteActualPosts } from '@/server/actualPosts';
+import {
+  deleteActualPosts,
+  deleteOrphanedMediaItems,
+} from '@/server/actualPosts';
 import { addJobToQueue } from '@/server/jobsQueue';
 
 const NUM_POSTS_VISIBLE = 30;
@@ -14,6 +17,11 @@ export default async (): Promise<void> => {
     });
 
     await forEachSeries(users, async (user) => {
+      await deleteOrphanedMediaItems({
+        auth: { currentUserId: user.id },
+        where: { userId: user.id },
+      });
+
       const allPosts = await db.query.actualPost.findMany({
         where: eq(actualPost.userId, user.id),
         columns: { id: true },

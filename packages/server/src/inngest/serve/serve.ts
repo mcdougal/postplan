@@ -22,8 +22,7 @@ const makeJobFunction = <J extends Job>(
   return inngest.createFunction(
     { id: jobName },
     { event: jobName },
-    async ({ event, step }) => {
-      step.log(`Starting job:`, jobName);
+    async ({ event }) => {
       // eslint-disable-next-line @postplan/no-type-assertion, @typescript-eslint/no-explicit-any
       await jobHandler({ name: jobName, data: event.data } as any);
       return { event };

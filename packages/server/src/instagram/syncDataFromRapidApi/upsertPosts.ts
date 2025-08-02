@@ -2,7 +2,6 @@ import { and, db, eq, inArray } from '@/db/connection';
 import { actualPost } from '@/db/schema';
 import { createId } from '@paralleldrive/cuid2';
 import { forEachSeries } from 'p-iteration';
-import { v4 as uuidv4 } from 'uuid';
 
 import instagramMediaItemToActualPost from '../instagramMediaItemToActualPost';
 import { InstagramMediaItem } from '../types';
@@ -48,7 +47,7 @@ export default async (
         .insert(actualPost)
         .values({
           ...asActualPost,
-          fileName: `${uuidv4()}.jpg`,
+          fileName: `${asActualPost.instagramId}.jpg`,
           id: createId(),
           syncJobId,
           userId,

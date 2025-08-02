@@ -37,6 +37,13 @@ export default async (formData: FormData): Promise<Response> => {
   const { email, password } = parsed.data;
   const isExistingUser = await userExists({ where: { email } });
 
+  if (email !== `deanna.troy.henry@gmail.com`) {
+    return {
+      status: `error`,
+      message: `Signup failed. Postplan is in private beta. Contact deanna.troy.henry@gmail.com for access.`,
+    };
+  }
+
   if (isExistingUser) {
     const logInResult = await logIn(email, password, cookies());
 

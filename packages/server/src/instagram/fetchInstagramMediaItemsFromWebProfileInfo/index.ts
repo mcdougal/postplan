@@ -1,0 +1,3 @@
+import fetchInstagramMediaItemsFromWebProfileInfo from './fetchInstagramMediaItemsFromWebProfileInfo';
+
+export default fetchInstagramMediaItemsFromWebProfileInfo;

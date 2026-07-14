@@ -3,11 +3,10 @@ import ms from 'ms';
 import { ForbiddenError } from '@/server/auth';
 import { addJobToQueue } from '@/server/jobsQueue';
 
-import fetchInstagramMediaItemsFromRapidApi from '../fetchInstagramMediaItemsFromRapidApi';
+import fetchInstagramMediaItemsFromWebProfileInfo from '../fetchInstagramMediaItemsFromWebProfileInfo';
 
 import createSyncJobRecord from './createSyncJobRecord';
 import hasSyncedInLast from './hasSyncedInLast';
-import queryNumApiCallsForBatch from './queryNumApiCallsForBatch';
 import setSyncJobStatusToFinished from './setSyncJobStatusToFinished';
 import upsertPosts from './upsertPosts';
 
@@ -32,7 +31,7 @@ export default async (args: Args): Promise<void> => {
   const { currentUserId } = args.auth;
   const { batchId } = args.data;
   const { cursor, userId } = args.where;
-  const { force, maxApiCalls } = args.options;
+  const { force } = args.options;
 
   if (currentUserId !== userId) {
     throw new ForbiddenError();
@@ -45,10 +44,10 @@ export default async (args: Args): Promise<void> => {
   const syncJobId = await createSyncJobRecord(userId, batchId, cursor);
 
   try {
-    const { cursor: newCursor, instagramMediaItems } =
-      await fetchInstagramMediaItemsFromRapidApi({
+    const instagramMediaItems =
+      await fetchInstagramMediaItemsFromWebProfileInfo({
         auth: { currentUserId },
-        where: { cursor, userId },
+        where: { userId },
       });
 
     await upsertPosts(userId, syncJobId, instagramMediaItems);
@@ -57,21 +56,6 @@ export default async (args: Args): Promise<void> => {
       name: `createThumbnails`,
       data: { instagramSyncJobId: syncJobId },
     });
-
-    const numApiCallsForBatch = await queryNumApiCallsForBatch(userId, batchId);
-
-    if (newCursor && numApiCallsForBatch < maxApiCalls) {
-      await addJobToQueue({
-        name: `syncInstagramFromRapidApi`,
-        data: {
-          batchId,
-          cursor: newCursor,
-          force: true,
-          maxApiCalls,
-          userId,
-        },
-      });
-    }
   } catch (err) {
     await setSyncJobStatusToFinished(syncJobId, { error: true });
     throw err;

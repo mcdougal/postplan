@@ -25,7 +25,7 @@ export default async (job: RecreateActualPostsJob): Promise<void> => {
   }
 
   await addJobToQueue({
-    name: `syncInstagramFromRapidApi`,
+    name: `syncInstagram`,
     data: { force: true, userId },
   });
 };

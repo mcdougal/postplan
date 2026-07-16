@@ -1,3 +1,4 @@
+import { NUM_ACTUAL_POSTS_VISIBLE } from '@/common/actualPosts';
 import { db, desc, eq } from '@/db/connection';
 import { actualPost } from '@/db/schema';
 import { forEachSeries } from 'p-iteration';
@@ -7,8 +8,6 @@ import {
   deleteOrphanedMediaItems,
 } from '@/server/actualPosts';
 import { addJobToQueue } from '@/server/jobsQueue';
-
-const NUM_POSTS_VISIBLE = 30;
 
 export default async (): Promise<void> => {
   try {
@@ -28,7 +27,7 @@ export default async (): Promise<void> => {
         orderBy: [desc(actualPost.postedAt)],
       });
 
-      const postsToDelete = allPosts.slice(NUM_POSTS_VISIBLE);
+      const postsToDelete = allPosts.slice(NUM_ACTUAL_POSTS_VISIBLE);
       const postIdsToDelete = postsToDelete.map((post) => {
         return post.id;
       });

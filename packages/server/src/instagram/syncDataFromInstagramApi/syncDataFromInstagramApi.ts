@@ -1,9 +1,10 @@
+import { NUM_ACTUAL_POSTS_VISIBLE } from '@/common/actualPosts';
 import ms from 'ms';
 
 import { ForbiddenError } from '@/server/auth';
 import { addJobToQueue } from '@/server/jobsQueue';
 
-import fetchInstagramMediaItemsFromWebProfileInfo from '../fetchInstagramMediaItemsFromWebProfileInfo';
+import fetchInstagramMediaItems from '../fetchInstagramMediaItems';
 
 import createSyncJobRecord from './createSyncJobRecord';
 import hasSyncedInLast from './hasSyncedInLast';
@@ -18,19 +19,17 @@ type Args = {
     batchId: string;
   };
   where: {
-    cursor: string | undefined;
     userId: string;
   };
   options: {
     force: boolean;
-    maxApiCalls: number;
   };
 };
 
 export default async (args: Args): Promise<void> => {
   const { currentUserId } = args.auth;
   const { batchId } = args.data;
-  const { cursor, userId } = args.where;
+  const { userId } = args.where;
   const { force } = args.options;
 
   if (currentUserId !== userId) {
@@ -41,14 +40,14 @@ export default async (args: Args): Promise<void> => {
     return;
   }
 
-  const syncJobId = await createSyncJobRecord(userId, batchId, cursor);
+  const syncJobId = await createSyncJobRecord(userId, batchId);
 
   try {
-    const instagramMediaItems =
-      await fetchInstagramMediaItemsFromWebProfileInfo({
-        auth: { currentUserId },
-        where: { userId },
-      });
+    const instagramMediaItems = await fetchInstagramMediaItems({
+      auth: { currentUserId },
+      limit: NUM_ACTUAL_POSTS_VISIBLE,
+      where: { userId },
+    });
 
     await upsertPosts(userId, syncJobId, instagramMediaItems);
     await setSyncJobStatusToFinished(syncJobId, { error: false });

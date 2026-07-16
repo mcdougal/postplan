@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { LogOutRoute, LogInRoute } from '@/common/routes';
+import {
+  InstagramConnectRoute,
+  LogInRoute,
+  LogOutRoute,
+} from '@/common/routes';
 import { CurrentUser } from '@/common/users';
 import { HTMLAttributes, forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -28,11 +32,19 @@ const SiteTopBar = forwardRef<any, Props>(
             Postplan
           </Typography>
         </div>
-        <Typography size="sm">
+        <Typography className="flex items-center gap-3" size="sm">
           {currentUser ? (
-            <TextLink as="a" color="default" href={LogOutRoute.getPath()}>
-              Log Out
-            </TextLink>
+            <>
+              <TextLink
+                as="a"
+                color="default"
+                href={InstagramConnectRoute.getAbsoluteUrl()}>
+                Connect Instagram
+              </TextLink>
+              <TextLink as="a" color="default" href={LogOutRoute.getPath()}>
+                Log Out
+              </TextLink>
+            </>
           ) : (
             <TextLink as="a" color="default" href={LogInRoute.getPath()}>
               Log In

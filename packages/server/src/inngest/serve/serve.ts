@@ -10,7 +10,6 @@ import {
   refreshMediaUrls,
   runNightlyTasks,
   syncInstagram,
-  syncInstagramFromRapidApi,
 } from '@/server/jobs';
 
 const inngest = new Inngest({ id: `postplan` });
@@ -47,10 +46,6 @@ const functions: { [key in Job['name']]: InngestFunction.Any } = {
   refreshMediaUrls: makeJobFunction(`refreshMediaUrls`, refreshMediaUrls),
   runNightlyTasks: makeJobFunction(`runNightlyTasks`, runNightlyTasks),
   syncInstagram: makeJobFunction(`syncInstagram`, syncInstagram),
-  syncInstagramFromRapidApi: makeJobFunction(
-    `syncInstagramFromRapidApi`,
-    syncInstagramFromRapidApi
-  ),
 };
 
 export default serve({

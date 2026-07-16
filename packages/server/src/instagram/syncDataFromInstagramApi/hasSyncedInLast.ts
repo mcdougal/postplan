@@ -6,7 +6,7 @@ export default async (ms: number, userId: string): Promise<boolean> => {
     where: and(
       eq(instagramSyncJob.userId, userId),
       not(eq(instagramSyncJob.status, `Failed`)),
-      eq(instagramSyncJob.apiSource, `RapidApiInstagramBulkProfileScrapper`)
+      eq(instagramSyncJob.apiSource, `InstagramBasicApi`)
     ),
     orderBy: desc(instagramSyncJob.startedAt),
     columns: { startedAt: true },

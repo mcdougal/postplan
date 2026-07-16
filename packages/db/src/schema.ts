@@ -27,7 +27,6 @@ export const actualPostMediaType = pgEnum(`actual_post_media_type`, [
 
 export const instagramApiSource = pgEnum(`instagram_api_source`, [
   `InstagramBasicApi`,
-  `RapidApiInstagramBulkProfileScrapper`,
 ]);
 
 export const instagramSyncJobStatus = pgEnum(`instagram_sync_job_status`, [

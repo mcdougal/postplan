@@ -37,18 +37,8 @@ export const RunNightlyTasksJobSchema = z.object({
 export const SyncInstagramJobSchema = z.object({
   name: z.literal(`syncInstagram`),
   data: z.object({
-    connectionId: z.string().optional(),
-    single: z.boolean().optional(),
-  }),
-});
-
-export const SyncInstagramFromRapidApiJobSchema = z.object({
-  name: z.literal(`syncInstagramFromRapidApi`),
-  data: z.object({
     batchId: z.string().optional(),
-    cursor: z.string().optional(),
     force: z.boolean(),
-    maxApiCalls: z.number().optional(),
     userId: z.string(),
   }),
 });
@@ -61,7 +51,6 @@ export const JobSchema = z.union([
   RefreshMediaUrlsJobSchema,
   RunNightlyTasksJobSchema,
   SyncInstagramJobSchema,
-  SyncInstagramFromRapidApiJobSchema,
 ]);
 
 export type Job = z.infer<typeof JobSchema>;
@@ -76,6 +65,3 @@ export type RefreshInstagramConnectionsJob = z.infer<
 export type RefreshMediaUrlsJob = z.infer<typeof RefreshMediaUrlsJobSchema>;
 export type RunNightlyTasksJob = z.infer<typeof RunNightlyTasksJobSchema>;
 export type SyncInstagramJob = z.infer<typeof SyncInstagramJobSchema>;
-export type SyncInstagramFromRapidApiJob = z.infer<
-  typeof SyncInstagramFromRapidApiJobSchema
->;

@@ -1,0 +1,1 @@
+export const NUM_ACTUAL_POSTS_VISIBLE = 30;

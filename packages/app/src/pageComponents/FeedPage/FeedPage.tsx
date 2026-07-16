@@ -1,3 +1,4 @@
+import { NUM_ACTUAL_POSTS_VISIBLE } from '@/common/actualPosts';
 import { LogInRoute } from '@/common/routes';
 import { hasInstagramUsername, queryActualPosts } from '@/server/instagram';
 import { queryPlannedPosts } from '@/server/plannedPosts';
@@ -35,7 +36,7 @@ const FeedPage: Page = async () => {
     queryActualPosts({
       auth: { currentUserId: currentUser.id },
       where: { userId: currentUser.id },
-      limit: 100,
+      limit: NUM_ACTUAL_POSTS_VISIBLE,
     }),
   ]);
 

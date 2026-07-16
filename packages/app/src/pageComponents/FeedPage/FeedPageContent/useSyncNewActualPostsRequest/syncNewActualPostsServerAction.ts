@@ -30,7 +30,7 @@ export default authenticatedServerAction<Args>({
       });
     } else {
       await addJobToQueue({
-        name: `syncInstagramFromRapidApi`,
+        name: `syncInstagram`,
         data: { force, userId },
       });
     }

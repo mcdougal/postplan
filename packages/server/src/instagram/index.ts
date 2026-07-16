@@ -1,7 +1,7 @@
 import canRefreshAccessToken from './canRefreshAccessToken';
 import exchangeCodeForToken from './exchangeCodeForToken';
+import fetchInstagramAccount from './fetchInstagramAccount';
 import fetchInstagramMediaItems from './fetchInstagramMediaItems';
-import fetchInstagramMediaItemsFromRapidApi from './fetchInstagramMediaItemsFromRapidApi';
 import fetchRefreshedAccessToken from './fetchRefreshedAccessToken';
 import generateLongLivedToken from './generateLongLivedToken';
 import getInstagramOAuthUrl from './getInstagramOAuthUrl';
@@ -14,8 +14,7 @@ import queryActualPosts from './queryActualPosts';
 import queryInstagramUsername from './queryInstagramUsername';
 import refreshAccessToken from './refreshAccessToken';
 import setInstagramUsername from './setInstagramUsername';
-import syncDataFromInstagram from './syncDataFromInstagram';
-import syncDataFromRapidApi from './syncDataFromRapidApi';
+import syncDataFromInstagramApi from './syncDataFromInstagramApi';
 import { ActualPost, InstagramMediaItem } from './types';
 import upsertAccessToken from './upsertAccessToken';
 
@@ -24,8 +23,8 @@ export type { ActualPost, InstagramMediaItem };
 export {
   canRefreshAccessToken,
   exchangeCodeForToken,
+  fetchInstagramAccount,
   fetchInstagramMediaItems,
-  fetchInstagramMediaItemsFromRapidApi,
   fetchRefreshedAccessToken,
   generateLongLivedToken,
   getInstagramOAuthUrl,
@@ -38,7 +37,6 @@ export {
   queryInstagramUsername,
   refreshAccessToken,
   setInstagramUsername,
-  syncDataFromInstagram,
-  syncDataFromRapidApi,
+  syncDataFromInstagramApi,
   upsertAccessToken,
 };
